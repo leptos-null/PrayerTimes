@@ -6,12 +6,10 @@
 //
 
 import UIKit
+import SwiftUI
 
-class ViewController: UIViewController {
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
+class ViewController: UIHostingController<ContentView> {
+    @MainActor @objc required dynamic init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder, rootView: ContentView())
     }
-    
 }
