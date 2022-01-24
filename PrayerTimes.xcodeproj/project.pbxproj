@@ -15,6 +15,7 @@
 		FA57312C279D069100E5C9A6 /* Prayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57312B279D069100E5C9A6 /* Prayer.swift */; };
 		FA57312E279D0F3200E5C9A6 /* Arithmetic.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57312D279D0F3200E5C9A6 /* Arithmetic.swift */; };
 		FA573130279DEE5100E5C9A6 /* CalculationConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57312F279DEE5100E5C9A6 /* CalculationConfiguration.swift */; };
+		FA573132279DF10200E5C9A6 /* DailyPrayersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA573131279DF10200E5C9A6 /* DailyPrayersTests.swift */; };
 		FAB8F8542797DF7400F21628 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB8F8532797DF7400F21628 /* AppDelegate.swift */; };
 		FAB8F8562797DF7400F21628 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB8F8552797DF7400F21628 /* SceneDelegate.swift */; };
 		FAB8F8582797DF7400F21628 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB8F8572797DF7400F21628 /* ViewController.swift */; };
@@ -43,6 +44,7 @@
 		FA57312B279D069100E5C9A6 /* Prayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prayer.swift; sourceTree = "<group>"; };
 		FA57312D279D0F3200E5C9A6 /* Arithmetic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Arithmetic.swift; sourceTree = "<group>"; };
 		FA57312F279DEE5100E5C9A6 /* CalculationConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationConfiguration.swift; sourceTree = "<group>"; };
+		FA573131279DF10200E5C9A6 /* DailyPrayersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPrayersTests.swift; sourceTree = "<group>"; };
 		FAB8F8502797DF7400F21628 /* PrayerTimes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrayerTimes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAB8F8532797DF7400F21628 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FAB8F8552797DF7400F21628 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				FA57311E279CE54100E5C9A6 /* PrayerTimesKitTests.swift */,
+				FA573131279DF10200E5C9A6 /* DailyPrayersTests.swift */,
 			);
 			path = PrayerTimesKitTests;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA573132279DF10200E5C9A6 /* DailyPrayersTests.swift in Sources */,
 				FA57311F279CE54100E5C9A6 /* PrayerTimesKitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -361,7 +365,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,6";
+				TARGETED_DEVICE_FAMILY = "1,2,3,4,6";
 			};
 			name = Debug;
 		};
@@ -392,7 +396,7 @@
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,6";
+				TARGETED_DEVICE_FAMILY = "1,2,3,4,6";
 			};
 			name = Release;
 		};
