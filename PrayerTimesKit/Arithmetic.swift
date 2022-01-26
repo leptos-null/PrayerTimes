@@ -7,8 +7,8 @@
 
 import Foundation
 
-typealias AngleDegree = Double
-typealias AngleRadians = Double
+public typealias AngleDegree = Double
+public typealias AngleRadians = Double
 
 enum Arithmetic {
     static let secondsPerMinute: TimeInterval = 60

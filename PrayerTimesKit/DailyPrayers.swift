@@ -8,19 +8,19 @@
 import Foundation
 import CoreLocation
 
-struct DailyPrayers {
-    let timezone: TimeZone
-    let location: CLLocation
-    let configuration: CalculationConfiguration
+public struct DailyPrayers {
+    public let timezone: TimeZone
+    public let location: CLLocation
+    public let configuration: CalculationConfiguration
     
-    let qiyam: Prayer
-    let fajr: Prayer
-    let dhuhr: Prayer
-    let asr: Prayer
-    let maghrib: Prayer
-    let isha: Prayer
+    public let qiyam: Prayer
+    public let fajr: Prayer
+    public let dhuhr: Prayer
+    public let asr: Prayer
+    public let maghrib: Prayer
+    public let isha: Prayer
     
-    init(day: Date, timezone: TimeZone, location: CLLocation, configuration: CalculationConfiguration) {
+    public init(day: Date, timezone: TimeZone, location: CLLocation, configuration: CalculationConfiguration) {
         let timezoneSeconds = timezone.secondsFromGMT(for: day)
         var calculationCalendar = Calendar(identifier: .gregorian)
         guard let frozenTimezone = TimeZone(secondsFromGMT: timezoneSeconds) else { fatalError() }
@@ -78,7 +78,7 @@ struct DailyPrayers {
 }
 
 extension DailyPrayers {
-    var ordered: [Prayer] {
+    public var ordered: [Prayer] {
         [
             qiyam,
             fajr,
@@ -89,7 +89,7 @@ extension DailyPrayers {
         ]
     }
     
-    func prayer(named name: Prayer.Name) -> Prayer {
+    public func prayer(named name: Prayer.Name) -> Prayer {
         switch name {
         case .qiyam: return qiyam
         case .fajr: return fajr
