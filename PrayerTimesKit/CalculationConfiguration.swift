@@ -11,6 +11,12 @@ public struct CalculationConfiguration {
     public let asrFactor: Double
     public let fajrAngle: AngleDegree
     public let ishaAngle: AngleDegree
+    
+    public init(asrFactor: Double, fajrAngle: AngleDegree, ishaAngle: AngleDegree) {
+        self.asrFactor = asrFactor
+        self.fajrAngle = fajrAngle
+        self.ishaAngle = ishaAngle
+    }
 }
 
 // http://praytimes.org/wiki/Calculation_Methods
