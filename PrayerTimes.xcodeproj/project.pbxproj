@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		FA57311A279CE54100E5C9A6 /* PrayerTimesKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA573112279CE54100E5C9A6 /* PrayerTimesKit.framework */; };
-		FA57311F279CE54100E5C9A6 /* PrayerTimesKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57311E279CE54100E5C9A6 /* PrayerTimesKitTests.swift */; };
 		FA573120279CE54100E5C9A6 /* PrayerTimesKit.h in Headers */ = {isa = PBXBuildFile; fileRef = FA573114279CE54100E5C9A6 /* PrayerTimesKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FA573128279D01DA00E5C9A6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA573127279D01DA00E5C9A6 /* ContentView.swift */; };
 		FA57312A279D066300E5C9A6 /* DailyPrayers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA573129279D066300E5C9A6 /* DailyPrayers.swift */; };
@@ -62,7 +61,6 @@
 		FA573112279CE54100E5C9A6 /* PrayerTimesKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PrayerTimesKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA573114279CE54100E5C9A6 /* PrayerTimesKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrayerTimesKit.h; sourceTree = "<group>"; };
 		FA573119279CE54100E5C9A6 /* PrayerTimesKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PrayerTimesKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FA57311E279CE54100E5C9A6 /* PrayerTimesKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerTimesKitTests.swift; sourceTree = "<group>"; };
 		FA573127279D01DA00E5C9A6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FA573129279D066300E5C9A6 /* DailyPrayers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPrayers.swift; sourceTree = "<group>"; };
 		FA57312B279D069100E5C9A6 /* Prayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prayer.swift; sourceTree = "<group>"; };
@@ -124,7 +122,6 @@
 		FA57311D279CE54100E5C9A6 /* PrayerTimesKitTests */ = {
 			isa = PBXGroup;
 			children = (
-				FA57311E279CE54100E5C9A6 /* PrayerTimesKitTests.swift */,
 				FA573131279DF10200E5C9A6 /* DailyPrayersTests.swift */,
 			);
 			path = PrayerTimesKitTests;
@@ -330,7 +327,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA573132279DF10200E5C9A6 /* DailyPrayersTests.swift in Sources */,
-				FA57311F279CE54100E5C9A6 /* PrayerTimesKitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
