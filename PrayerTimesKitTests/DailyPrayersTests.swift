@@ -39,23 +39,23 @@ class DailyPrayersTests: XCTestCase {
         // based on https://gml.noaa.gov/grad/solcalc/
         // relatively high tolerance on these values, because of the lack of seconds
         //   and these values should not change, regardless of implementation
-        XCTAssert(dailyJan.dhuhr.dateInterval.start.timeBetween(dateComponents, 12, 32, 30) < 60)
-        XCTAssert(dailyJan.fajr.dateInterval.end.timeBetween(dateComponents, 07, 01) < 120)
-        XCTAssert(dailyJan.maghrib.dateInterval.start.timeBetween(dateComponents, 18, 05) < 120)
+        XCTAssert(dailyJan.dhuhr.start.timeBetween(dateComponents, 12, 32, 30) < 60)
+        XCTAssert(dailyJan.fajr.end.timeBetween(dateComponents, 07, 01) < 120)
+        XCTAssert(dailyJan.maghrib.start.timeBetween(dateComponents, 18, 05) < 120)
         
         // based on previous calculations
         // as the implementation is updated, these values may be updated
         // i.e. the purpose of these tests are to let us know if a change
         //   inadvertently results in different output
         //   (as opposed to these tests strictly representing the desired output)
-        XCTAssert(dailyJan.fajr.dateInterval.start.timeBetween(dateComponents, 05, 40, 55) < 2)
-        XCTAssert(dailyJan.asr.dateInterval.start.timeBetween(dateComponents, 15, 41, 57) < 2)
-        XCTAssert(dailyJan.isha.dateInterval.start.timeBetween(dateComponents, 19, 26, 04) < 2)
+        XCTAssert(dailyJan.fajr.start.timeBetween(dateComponents, 05, 40, 55) < 2)
+        XCTAssert(dailyJan.asr.start.timeBetween(dateComponents, 15, 41, 57) < 2)
+        XCTAssert(dailyJan.isha.start.timeBetween(dateComponents, 19, 26, 04) < 2)
         
         // failure cases to make sure logic is working
-        XCTAssertFalse(dailyJan.fajr.dateInterval.start.timeBetween(dateComponents, 12, 00, 00) < 200)
-        XCTAssertFalse(dailyJan.dhuhr.dateInterval.start.timeBetween(dateComponents, 18, 00, 00) < 200)
-        XCTAssertFalse(dailyJan.isha.dateInterval.start.timeBetween(dateComponents, 4, 00, 00) < 200)
+        XCTAssertFalse(dailyJan.fajr.start.timeBetween(dateComponents, 12, 00, 00) < 200)
+        XCTAssertFalse(dailyJan.dhuhr.start.timeBetween(dateComponents, 18, 00, 00) < 200)
+        XCTAssertFalse(dailyJan.isha.start.timeBetween(dateComponents, 4, 00, 00) < 200)
         
         // randomly selected date
         dateComponents.year = 2022
@@ -67,23 +67,23 @@ class DailyPrayersTests: XCTestCase {
         // based on https://gml.noaa.gov/grad/solcalc/
         // relatively high tolerance on these values, because of the lack of seconds
         //   and these values should not change, regardless of implementation
-        XCTAssert(dailyNov.dhuhr.dateInterval.start.timeBetween(dateComponents, 12, 06, 30) < 60)
-        XCTAssert(dailyNov.fajr.dateInterval.end.timeBetween(dateComponents, 06, 35) < 120)
-        XCTAssert(dailyNov.maghrib.dateInterval.start.timeBetween(dateComponents, 17, 38) < 120)
+        XCTAssert(dailyNov.dhuhr.start.timeBetween(dateComponents, 12, 06, 30) < 60)
+        XCTAssert(dailyNov.fajr.end.timeBetween(dateComponents, 06, 35) < 120)
+        XCTAssert(dailyNov.maghrib.start.timeBetween(dateComponents, 17, 38) < 120)
         
         // based on previous calculations
         // as the implementation is updated, these values may be updated
         // i.e. the purpose of these tests are to let us know if a change
         //   inadvertently results in different output
         //   (as opposed to these tests strictly representing the desired output)
-        XCTAssert(dailyNov.fajr.dateInterval.start.timeBetween(dateComponents, 05, 15, 25) < 2)
-        XCTAssert(dailyNov.asr.dateInterval.start.timeBetween(dateComponents, 15, 15, 30) < 2)
-        XCTAssert(dailyNov.isha.dateInterval.start.timeBetween(dateComponents, 18, 59, 38) < 2)
+        XCTAssert(dailyNov.fajr.start.timeBetween(dateComponents, 05, 15, 25) < 2)
+        XCTAssert(dailyNov.asr.start.timeBetween(dateComponents, 15, 15, 30) < 2)
+        XCTAssert(dailyNov.isha.start.timeBetween(dateComponents, 18, 59, 38) < 2)
         
         // failure cases to make sure logic is working
-        XCTAssertFalse(dailyNov.fajr.dateInterval.start.timeBetween(dateComponents, 12, 00, 00) < 200)
-        XCTAssertFalse(dailyNov.dhuhr.dateInterval.start.timeBetween(dateComponents, 18, 00, 00) < 200)
-        XCTAssertFalse(dailyNov.isha.dateInterval.start.timeBetween(dateComponents, 4, 00, 00) < 200)
+        XCTAssertFalse(dailyNov.fajr.start.timeBetween(dateComponents, 12, 00, 00) < 200)
+        XCTAssertFalse(dailyNov.dhuhr.start.timeBetween(dateComponents, 18, 00, 00) < 200)
+        XCTAssertFalse(dailyNov.isha.start.timeBetween(dateComponents, 4, 00, 00) < 200)
     }
     
     func testNorthWest() {
@@ -104,23 +104,23 @@ class DailyPrayersTests: XCTestCase {
         // based on https://gml.noaa.gov/grad/solcalc/
         // relatively high tolerance on these values, because of the lack of seconds
         //   and these values should not change, regardless of implementation
-        XCTAssert(dailyJan.dhuhr.dateInterval.start.timeBetween(dateComponents, 12, 19, 58) < 60)
-        XCTAssert(dailyJan.fajr.dateInterval.end.timeBetween(dateComponents, 07, 17) < 120)
-        XCTAssert(dailyJan.maghrib.dateInterval.start.timeBetween(dateComponents, 17, 23) < 120)
+        XCTAssert(dailyJan.dhuhr.start.timeBetween(dateComponents, 12, 19, 58) < 60)
+        XCTAssert(dailyJan.fajr.end.timeBetween(dateComponents, 07, 17) < 120)
+        XCTAssert(dailyJan.maghrib.start.timeBetween(dateComponents, 17, 23) < 120)
         
         // based on previous calculations
         // as the implementation is updated, these values may be updated
         // i.e. the purpose of these tests are to let us know if a change
         //   inadvertently results in different output
         //   (as opposed to these tests strictly representing the desired output)
-        XCTAssert(dailyJan.fajr.dateInterval.start.timeBetween(dateComponents, 06, 02, 28) < 2)
-        XCTAssert(dailyJan.asr.dateInterval.start.timeBetween(dateComponents, 15, 01, 42) < 2)
-        XCTAssert(dailyJan.isha.dateInterval.start.timeBetween(dateComponents, 18, 36, 59) < 2)
+        XCTAssert(dailyJan.fajr.start.timeBetween(dateComponents, 06, 02, 28) < 2)
+        XCTAssert(dailyJan.asr.start.timeBetween(dateComponents, 15, 01, 42) < 2)
+        XCTAssert(dailyJan.isha.start.timeBetween(dateComponents, 18, 36, 59) < 2)
         
         // failure cases to make sure logic is working
-        XCTAssertFalse(dailyJan.fajr.dateInterval.start.timeBetween(dateComponents, 12, 00, 00) < 200)
-        XCTAssertFalse(dailyJan.dhuhr.dateInterval.start.timeBetween(dateComponents, 18, 00, 00) < 200)
-        XCTAssertFalse(dailyJan.isha.dateInterval.start.timeBetween(dateComponents, 4, 00, 00) < 200)
+        XCTAssertFalse(dailyJan.fajr.start.timeBetween(dateComponents, 12, 00, 00) < 200)
+        XCTAssertFalse(dailyJan.dhuhr.start.timeBetween(dateComponents, 18, 00, 00) < 200)
+        XCTAssertFalse(dailyJan.isha.start.timeBetween(dateComponents, 4, 00, 00) < 200)
         
         // day of time change, before the change
         dateComponents.year = 2022
@@ -134,23 +134,23 @@ class DailyPrayersTests: XCTestCase {
         // based on https://gml.noaa.gov/grad/solcalc/
         // relatively high tolerance on these values, because of the lack of seconds
         //   and these values should not change, regardless of implementation
-        XCTAssert(dailyMarPre.dhuhr.dateInterval.start.timeBetween(dateComponents, 13, 17, 23) < 60)
-        XCTAssert(dailyMarPre.fajr.dateInterval.end.timeBetween(dateComponents, 07, 22) < 120)
-        XCTAssert(dailyMarPre.maghrib.dateInterval.start.timeBetween(dateComponents, 19, 14) < 120)
+        XCTAssert(dailyMarPre.dhuhr.start.timeBetween(dateComponents, 13, 17, 23) < 60)
+        XCTAssert(dailyMarPre.fajr.end.timeBetween(dateComponents, 07, 22) < 120)
+        XCTAssert(dailyMarPre.maghrib.start.timeBetween(dateComponents, 19, 14) < 120)
         
         // based on previous calculations
         // as the implementation is updated, these values may be updated
         // i.e. the purpose of these tests are to let us know if a change
         //   inadvertently results in different output
         //   (as opposed to these tests strictly representing the desired output)
-        XCTAssert(dailyMarPre.fajr.dateInterval.start.timeBetween(dateComponents, 06, 11, 13) < 2)
-        XCTAssert(dailyMarPre.asr.dateInterval.start.timeBetween(dateComponents, 16, 38, 43) < 2)
-        XCTAssert(dailyMarPre.isha.dateInterval.start.timeBetween(dateComponents, 20, 24, 03) < 2)
+        XCTAssert(dailyMarPre.fajr.start.timeBetween(dateComponents, 06, 11, 13) < 2)
+        XCTAssert(dailyMarPre.asr.start.timeBetween(dateComponents, 16, 38, 43) < 2)
+        XCTAssert(dailyMarPre.isha.start.timeBetween(dateComponents, 20, 24, 03) < 2)
         
         // failure cases to make sure logic is working
-        XCTAssertFalse(dailyMarPre.fajr.dateInterval.start.timeBetween(dateComponents, 12, 00, 00) < 200)
-        XCTAssertFalse(dailyMarPre.dhuhr.dateInterval.start.timeBetween(dateComponents, 18, 00, 00) < 200)
-        XCTAssertFalse(dailyMarPre.isha.dateInterval.start.timeBetween(dateComponents, 4, 00, 00) < 200)
+        XCTAssertFalse(dailyMarPre.fajr.start.timeBetween(dateComponents, 12, 00, 00) < 200)
+        XCTAssertFalse(dailyMarPre.dhuhr.start.timeBetween(dateComponents, 18, 00, 00) < 200)
+        XCTAssertFalse(dailyMarPre.isha.start.timeBetween(dateComponents, 4, 00, 00) < 200)
         
         // day of time change, after the change
         dateComponents.year = 2022
@@ -163,23 +163,23 @@ class DailyPrayersTests: XCTestCase {
         // based on https://gml.noaa.gov/grad/solcalc/
         // relatively high tolerance on these values, because of the lack of seconds
         //   and these values should not change, regardless of implementation
-        XCTAssert(dailyMarPost.dhuhr.dateInterval.start.timeBetween(dateComponents, 13, 17, 23) < 60)
-        XCTAssert(dailyMarPost.fajr.dateInterval.end.timeBetween(dateComponents, 07, 22) < 120)
-        XCTAssert(dailyMarPost.maghrib.dateInterval.start.timeBetween(dateComponents, 19, 14) < 120)
+        XCTAssert(dailyMarPost.dhuhr.start.timeBetween(dateComponents, 13, 17, 23) < 60)
+        XCTAssert(dailyMarPost.fajr.end.timeBetween(dateComponents, 07, 22) < 120)
+        XCTAssert(dailyMarPost.maghrib.start.timeBetween(dateComponents, 19, 14) < 120)
         
         // based on previous calculations
         // as the implementation is updated, these values may be updated
         // i.e. the purpose of these tests are to let us know if a change
         //   inadvertently results in different output
         //   (as opposed to these tests strictly representing the desired output)
-        XCTAssert(dailyMarPost.fajr.dateInterval.start.timeBetween(dateComponents, 06, 11, 13) < 2)
-        XCTAssert(dailyMarPost.asr.dateInterval.start.timeBetween(dateComponents, 16, 38, 43) < 2)
-        XCTAssert(dailyMarPost.isha.dateInterval.start.timeBetween(dateComponents, 20, 24, 03) < 2)
+        XCTAssert(dailyMarPost.fajr.start.timeBetween(dateComponents, 06, 11, 13) < 2)
+        XCTAssert(dailyMarPost.asr.start.timeBetween(dateComponents, 16, 38, 43) < 2)
+        XCTAssert(dailyMarPost.isha.start.timeBetween(dateComponents, 20, 24, 03) < 2)
         
         // failure cases to make sure logic is working
-        XCTAssertFalse(dailyMarPost.fajr.dateInterval.start.timeBetween(dateComponents, 12, 00, 00) < 200)
-        XCTAssertFalse(dailyMarPost.dhuhr.dateInterval.start.timeBetween(dateComponents, 18, 00, 00) < 200)
-        XCTAssertFalse(dailyMarPost.isha.dateInterval.start.timeBetween(dateComponents, 4, 00, 00) < 200)
+        XCTAssertFalse(dailyMarPost.fajr.start.timeBetween(dateComponents, 12, 00, 00) < 200)
+        XCTAssertFalse(dailyMarPost.dhuhr.start.timeBetween(dateComponents, 18, 00, 00) < 200)
+        XCTAssertFalse(dailyMarPost.isha.start.timeBetween(dateComponents, 4, 00, 00) < 200)
         
         // day of time change, before the change
         dateComponents.year = 2022
@@ -193,23 +193,23 @@ class DailyPrayersTests: XCTestCase {
         // based on https://gml.noaa.gov/grad/solcalc/
         // relatively high tolerance on these values, because of the lack of seconds
         //   and these values should not change, regardless of implementation
-        XCTAssert(dailyNovPre.dhuhr.dateInterval.start.timeBetween(dateComponents, 11, 51, 38) < 60)
-        XCTAssert(dailyNovPre.fajr.dateInterval.end.timeBetween(dateComponents, 06, 38) < 120)
-        XCTAssert(dailyNovPre.maghrib.dateInterval.start.timeBetween(dateComponents, 17, 05) < 120)
+        XCTAssert(dailyNovPre.dhuhr.start.timeBetween(dateComponents, 11, 51, 38) < 60)
+        XCTAssert(dailyNovPre.fajr.end.timeBetween(dateComponents, 06, 38) < 120)
+        XCTAssert(dailyNovPre.maghrib.start.timeBetween(dateComponents, 17, 05) < 120)
         
         // based on previous calculations
         // as the implementation is updated, these values may be updated
         // i.e. the purpose of these tests are to let us know if a change
         //   inadvertently results in different output
         //   (as opposed to these tests strictly representing the desired output)
-        XCTAssert(dailyNovPre.fajr.dateInterval.start.timeBetween(dateComponents, 05, 23, 48) < 2)
-        XCTAssert(dailyNovPre.asr.dateInterval.start.timeBetween(dateComponents, 14, 43, 35) < 2)
-        XCTAssert(dailyNovPre.isha.dateInterval.start.timeBetween(dateComponents, 18, 19, 28) < 2)
+        XCTAssert(dailyNovPre.fajr.start.timeBetween(dateComponents, 05, 23, 48) < 2)
+        XCTAssert(dailyNovPre.asr.start.timeBetween(dateComponents, 14, 43, 35) < 2)
+        XCTAssert(dailyNovPre.isha.start.timeBetween(dateComponents, 18, 19, 28) < 2)
         
         // failure cases to make sure logic is working
-        XCTAssertFalse(dailyNovPre.fajr.dateInterval.start.timeBetween(dateComponents, 12, 00, 00) < 200)
-        XCTAssertFalse(dailyNovPre.dhuhr.dateInterval.start.timeBetween(dateComponents, 18, 00, 00) < 200)
-        XCTAssertFalse(dailyNovPre.isha.dateInterval.start.timeBetween(dateComponents, 4, 00, 00) < 200)
+        XCTAssertFalse(dailyNovPre.fajr.start.timeBetween(dateComponents, 12, 00, 00) < 200)
+        XCTAssertFalse(dailyNovPre.dhuhr.start.timeBetween(dateComponents, 18, 00, 00) < 200)
+        XCTAssertFalse(dailyNovPre.isha.start.timeBetween(dateComponents, 4, 00, 00) < 200)
         
         // day of time change, after the change
         dateComponents.year = 2022
@@ -222,23 +222,23 @@ class DailyPrayersTests: XCTestCase {
         // based on https://gml.noaa.gov/grad/solcalc/
         // relatively high tolerance on these values, because of the lack of seconds
         //   and these values should not change, regardless of implementation
-        XCTAssert(dailyNovPost.dhuhr.dateInterval.start.timeBetween(dateComponents, 11, 51, 38) < 60)
-        XCTAssert(dailyNovPost.fajr.dateInterval.end.timeBetween(dateComponents, 06, 38) < 120)
-        XCTAssert(dailyNovPost.maghrib.dateInterval.start.timeBetween(dateComponents, 17, 05) < 120)
+        XCTAssert(dailyNovPost.dhuhr.start.timeBetween(dateComponents, 11, 51, 38) < 60)
+        XCTAssert(dailyNovPost.fajr.end.timeBetween(dateComponents, 06, 38) < 120)
+        XCTAssert(dailyNovPost.maghrib.start.timeBetween(dateComponents, 17, 05) < 120)
         
         // based on previous calculations
         // as the implementation is updated, these values may be updated
         // i.e. the purpose of these tests are to let us know if a change
         //   inadvertently results in different output
         //   (as opposed to these tests strictly representing the desired output)
-        XCTAssert(dailyNovPost.fajr.dateInterval.start.timeBetween(dateComponents, 05, 23, 48) < 2)
-        XCTAssert(dailyNovPost.asr.dateInterval.start.timeBetween(dateComponents, 14, 43, 35) < 2)
-        XCTAssert(dailyNovPost.isha.dateInterval.start.timeBetween(dateComponents, 18, 19, 28) < 2)
+        XCTAssert(dailyNovPost.fajr.start.timeBetween(dateComponents, 05, 23, 48) < 2)
+        XCTAssert(dailyNovPost.asr.start.timeBetween(dateComponents, 14, 43, 35) < 2)
+        XCTAssert(dailyNovPost.isha.start.timeBetween(dateComponents, 18, 19, 28) < 2)
         
         // failure cases to make sure logic is working
-        XCTAssertFalse(dailyNovPost.fajr.dateInterval.start.timeBetween(dateComponents, 12, 00, 00) < 200)
-        XCTAssertFalse(dailyNovPost.dhuhr.dateInterval.start.timeBetween(dateComponents, 18, 00, 00) < 200)
-        XCTAssertFalse(dailyNovPost.isha.dateInterval.start.timeBetween(dateComponents, 4, 00, 00) < 200)
+        XCTAssertFalse(dailyNovPost.fajr.start.timeBetween(dateComponents, 12, 00, 00) < 200)
+        XCTAssertFalse(dailyNovPost.dhuhr.start.timeBetween(dateComponents, 18, 00, 00) < 200)
+        XCTAssertFalse(dailyNovPost.isha.start.timeBetween(dateComponents, 4, 00, 00) < 200)
     }
     
     func testSouthWest() {
@@ -259,23 +259,23 @@ class DailyPrayersTests: XCTestCase {
         // based on https://gml.noaa.gov/grad/solcalc/
         // relatively high tolerance on these values, because of the lack of seconds
         //   and these values should not change, regardless of implementation
-        XCTAssert(dailyJan.dhuhr.dateInterval.start.timeBetween(dateComponents, 12, 04, 49) < 60)
-        XCTAssert(dailyJan.fajr.dateInterval.end.timeBetween(dateComponents, 05, 27) < 120)
-        XCTAssert(dailyJan.maghrib.dateInterval.start.timeBetween(dateComponents, 18, 43) < 120)
+        XCTAssert(dailyJan.dhuhr.start.timeBetween(dateComponents, 12, 04, 49) < 60)
+        XCTAssert(dailyJan.fajr.end.timeBetween(dateComponents, 05, 27) < 120)
+        XCTAssert(dailyJan.maghrib.start.timeBetween(dateComponents, 18, 43) < 120)
         
         // based on previous calculations
         // as the implementation is updated, these values may be updated
         // i.e. the purpose of these tests are to let us know if a change
         //   inadvertently results in different output
         //   (as opposed to these tests strictly representing the desired output)
-        XCTAssert(dailyJan.fajr.dateInterval.start.timeBetween(dateComponents, 04, 03, 09) < 2)
-        XCTAssert(dailyJan.asr.dateInterval.start.timeBetween(dateComponents, 15, 25, 16) < 2)
-        XCTAssert(dailyJan.isha.dateInterval.start.timeBetween(dateComponents, 20, 01, 05) < 2)
+        XCTAssert(dailyJan.fajr.start.timeBetween(dateComponents, 04, 03, 09) < 2)
+        XCTAssert(dailyJan.asr.start.timeBetween(dateComponents, 15, 25, 16) < 2)
+        XCTAssert(dailyJan.isha.start.timeBetween(dateComponents, 20, 01, 05) < 2)
         
         // failure cases to make sure logic is working
-        XCTAssertFalse(dailyJan.fajr.dateInterval.start.timeBetween(dateComponents, 12, 00, 00) < 200)
-        XCTAssertFalse(dailyJan.dhuhr.dateInterval.start.timeBetween(dateComponents, 18, 00, 00) < 200)
-        XCTAssertFalse(dailyJan.isha.dateInterval.start.timeBetween(dateComponents, 4, 00, 00) < 200)
+        XCTAssertFalse(dailyJan.fajr.start.timeBetween(dateComponents, 12, 00, 00) < 200)
+        XCTAssertFalse(dailyJan.dhuhr.start.timeBetween(dateComponents, 18, 00, 00) < 200)
+        XCTAssertFalse(dailyJan.isha.start.timeBetween(dateComponents, 4, 00, 00) < 200)
         
         // randomly selected date
         dateComponents.year = 2022
@@ -287,23 +287,23 @@ class DailyPrayersTests: XCTestCase {
         // based on https://gml.noaa.gov/grad/solcalc/
         // relatively high tolerance on these values, because of the lack of seconds
         //   and these values should not change, regardless of implementation
-        XCTAssert(dailyApr.dhuhr.dateInterval.start.timeBetween(dateComponents, 11, 55, 19) < 60)
-        XCTAssert(dailyApr.fajr.dateInterval.end.timeBetween(dateComponents, 06, 03) < 120)
-        XCTAssert(dailyApr.maghrib.dateInterval.start.timeBetween(dateComponents, 17, 48) < 120)
+        XCTAssert(dailyApr.dhuhr.start.timeBetween(dateComponents, 11, 55, 19) < 60)
+        XCTAssert(dailyApr.fajr.end.timeBetween(dateComponents, 06, 03) < 120)
+        XCTAssert(dailyApr.maghrib.start.timeBetween(dateComponents, 17, 48) < 120)
         
         // based on previous calculations
         // as the implementation is updated, these values may be updated
         // i.e. the purpose of these tests are to let us know if a change
         //   inadvertently results in different output
         //   (as opposed to these tests strictly representing the desired output)
-        XCTAssert(dailyApr.fajr.dateInterval.start.timeBetween(dateComponents, 04, 47, 58) < 2)
-        XCTAssert(dailyApr.asr.dateInterval.start.timeBetween(dateComponents, 15, 17, 23) < 2)
-        XCTAssert(dailyApr.isha.dateInterval.start.timeBetween(dateComponents, 18, 58, 42) < 2)
+        XCTAssert(dailyApr.fajr.start.timeBetween(dateComponents, 04, 47, 58) < 2)
+        XCTAssert(dailyApr.asr.start.timeBetween(dateComponents, 15, 17, 23) < 2)
+        XCTAssert(dailyApr.isha.start.timeBetween(dateComponents, 18, 58, 42) < 2)
         
         // failure cases to make sure logic is working
-        XCTAssertFalse(dailyApr.fajr.dateInterval.start.timeBetween(dateComponents, 12, 00, 00) < 200)
-        XCTAssertFalse(dailyApr.dhuhr.dateInterval.start.timeBetween(dateComponents, 18, 00, 00) < 200)
-        XCTAssertFalse(dailyApr.isha.dateInterval.start.timeBetween(dateComponents, 4, 00, 00) < 200)
+        XCTAssertFalse(dailyApr.fajr.start.timeBetween(dateComponents, 12, 00, 00) < 200)
+        XCTAssertFalse(dailyApr.dhuhr.start.timeBetween(dateComponents, 18, 00, 00) < 200)
+        XCTAssertFalse(dailyApr.isha.start.timeBetween(dateComponents, 4, 00, 00) < 200)
     }
     
     func testSouthEast() {
@@ -324,23 +324,23 @@ class DailyPrayersTests: XCTestCase {
         // based on https://gml.noaa.gov/grad/solcalc/
         // relatively high tolerance on these values, because of the lack of seconds
         //   and these values should not change, regardless of implementation
-        XCTAssert(dailyJan.dhuhr.dateInterval.start.timeBetween(dateComponents, 12, 07, 45) < 60)
-        XCTAssert(dailyJan.fajr.dateInterval.end.timeBetween(dateComponents, 05, 17) < 120)
-        XCTAssert(dailyJan.maghrib.dateInterval.start.timeBetween(dateComponents, 18, 58) < 120)
+        XCTAssert(dailyJan.dhuhr.start.timeBetween(dateComponents, 12, 07, 45) < 60)
+        XCTAssert(dailyJan.fajr.end.timeBetween(dateComponents, 05, 17) < 120)
+        XCTAssert(dailyJan.maghrib.start.timeBetween(dateComponents, 18, 58) < 120)
         
         // based on previous calculations
         // as the implementation is updated, these values may be updated
         // i.e. the purpose of these tests are to let us know if a change
         //   inadvertently results in different output
         //   (as opposed to these tests strictly representing the desired output)
-        XCTAssert(dailyJan.fajr.dateInterval.start.timeBetween(dateComponents, 03, 45, 29) < 2)
-        XCTAssert(dailyJan.asr.dateInterval.start.timeBetween(dateComponents, 15, 44, 00) < 2)
-        XCTAssert(dailyJan.isha.dateInterval.start.timeBetween(dateComponents, 20, 24, 05) < 2)
+        XCTAssert(dailyJan.fajr.start.timeBetween(dateComponents, 03, 45, 29) < 2)
+        XCTAssert(dailyJan.asr.start.timeBetween(dateComponents, 15, 44, 00) < 2)
+        XCTAssert(dailyJan.isha.start.timeBetween(dateComponents, 20, 24, 05) < 2)
         
         // failure cases to make sure logic is working
-        XCTAssertFalse(dailyJan.fajr.dateInterval.start.timeBetween(dateComponents, 12, 00, 00) < 200)
-        XCTAssertFalse(dailyJan.dhuhr.dateInterval.start.timeBetween(dateComponents, 18, 00, 00) < 200)
-        XCTAssertFalse(dailyJan.isha.dateInterval.start.timeBetween(dateComponents, 4, 00, 00) < 200)
+        XCTAssertFalse(dailyJan.fajr.start.timeBetween(dateComponents, 12, 00, 00) < 200)
+        XCTAssertFalse(dailyJan.dhuhr.start.timeBetween(dateComponents, 18, 00, 00) < 200)
+        XCTAssertFalse(dailyJan.isha.start.timeBetween(dateComponents, 4, 00, 00) < 200)
         
         // randomly selected date
         dateComponents.year = 2022
@@ -352,23 +352,23 @@ class DailyPrayersTests: XCTestCase {
         // based on https://gml.noaa.gov/grad/solcalc/
         // relatively high tolerance on these values, because of the lack of seconds
         //   and these values should not change, regardless of implementation
-        XCTAssert(dailyMay.dhuhr.dateInterval.start.timeBetween(dateComponents, 11, 52, 18) < 60)
-        XCTAssert(dailyMay.fajr.dateInterval.end.timeBetween(dateComponents, 06, 33) < 120)
-        XCTAssert(dailyMay.maghrib.dateInterval.start.timeBetween(dateComponents, 17, 11) < 120)
+        XCTAssert(dailyMay.dhuhr.start.timeBetween(dateComponents, 11, 52, 18) < 60)
+        XCTAssert(dailyMay.fajr.end.timeBetween(dateComponents, 06, 33) < 120)
+        XCTAssert(dailyMay.maghrib.start.timeBetween(dateComponents, 17, 11) < 120)
         
         // based on previous calculations
         // as the implementation is updated, these values may be updated
         // i.e. the purpose of these tests are to let us know if a change
         //   inadvertently results in different output
         //   (as opposed to these tests strictly representing the desired output)
-        XCTAssert(dailyMay.fajr.dateInterval.start.timeBetween(dateComponents, 05, 10, 36) < 2)
-        XCTAssert(dailyMay.asr.dateInterval.start.timeBetween(dateComponents, 14, 50, 45) < 2)
-        XCTAssert(dailyMay.isha.dateInterval.start.timeBetween(dateComponents, 18, 29, 15) < 2)
+        XCTAssert(dailyMay.fajr.start.timeBetween(dateComponents, 05, 10, 36) < 2)
+        XCTAssert(dailyMay.asr.start.timeBetween(dateComponents, 14, 50, 45) < 2)
+        XCTAssert(dailyMay.isha.start.timeBetween(dateComponents, 18, 29, 15) < 2)
         
         // failure cases to make sure logic is working
-        XCTAssertFalse(dailyMay.fajr.dateInterval.start.timeBetween(dateComponents, 12, 00, 00) < 200)
-        XCTAssertFalse(dailyMay.dhuhr.dateInterval.start.timeBetween(dateComponents, 18, 00, 00) < 200)
-        XCTAssertFalse(dailyMay.isha.dateInterval.start.timeBetween(dateComponents, 4, 00, 00) < 200)
+        XCTAssertFalse(dailyMay.fajr.start.timeBetween(dateComponents, 12, 00, 00) < 200)
+        XCTAssertFalse(dailyMay.dhuhr.start.timeBetween(dateComponents, 18, 00, 00) < 200)
+        XCTAssertFalse(dailyMay.isha.start.timeBetween(dateComponents, 4, 00, 00) < 200)
     }
     
 }

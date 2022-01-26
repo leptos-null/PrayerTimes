@@ -68,11 +68,35 @@ struct DailyPrayers {
         self.location = location
         self.configuration = configuration
         
-        self.qiyam = Prayer(dateInterval: DateInterval(start: qiyam, end: fajr))
-        self.fajr = Prayer(dateInterval: DateInterval(start: fajr, end: sunrise))
-        self.dhuhr = Prayer(dateInterval: DateInterval(start: dhuhr, end: asr))
-        self.asr = Prayer(dateInterval: DateInterval(start: asr, end: maghrib))
-        self.maghrib = Prayer(dateInterval: DateInterval(start: maghrib, end: isha))
-        self.isha = Prayer(dateInterval: DateInterval(start: isha, end: nightEnd))
+        self.qiyam = Prayer(.qiyam, start: qiyam, end: fajr)
+        self.fajr = Prayer(.fajr, start: fajr, end: sunrise)
+        self.dhuhr = Prayer(.dhuhr, start: dhuhr, end: asr)
+        self.asr = Prayer(.asr, start: asr, end: maghrib)
+        self.maghrib = Prayer(.maghrib, start: maghrib, end: isha)
+        self.isha = Prayer(.isha, start: isha, end: nightEnd)
+    }
+}
+
+extension DailyPrayers {
+    var ordered: [Prayer] {
+        [
+            qiyam,
+            fajr,
+            dhuhr,
+            asr,
+            maghrib,
+            isha
+        ]
+    }
+    
+    func prayer(named name: Prayer.Name) -> Prayer {
+        switch name {
+        case .qiyam: return qiyam
+        case .fajr: return fajr
+        case .dhuhr: return dhuhr
+        case .asr: return asr
+        case .maghrib: return maghrib
+        case .isha: return isha
+        }
     }
 }
