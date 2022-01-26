@@ -38,33 +38,19 @@ struct DailyPrayers {
         let solarNoonTime: TimeInterval = (TimeInterval.day/2 - coordinate.longitude/Arithmetic.degreesInCircle * TimeInterval.day - equationOfTime)
             .constrict(to: TimeInterval.day) + TimeInterval(timezoneSeconds)
         
+        let solarPosition = SolarPosition(latitude: latitude, declination: declination)
+        
         let altitude = (location.verticalAccuracy > 0) ? location.altitude : 0
         let atmosphericRefraction: AngleDegree = 0.833 + 0.0347 * altitude.signedSqrt()
-        let horizonOffset = timeIntervalTo(
-            angle: Arithmetic.radians(from: atmosphericRefraction),
-            latitude: latitude,
-            declination: declination
-        )
+        let horizonOffset = solarPosition.timeIntervalTo(angle: atmosphericRefraction.radians())
         
         let sunriseTime = solarNoonTime - horizonOffset
         let sunsetTime = solarNoonTime + horizonOffset
         
-        let fajrTime = solarNoonTime - timeIntervalTo(
-            angle: Arithmetic.radians(from: configuration.fajrAngle),
-            latitude: latitude,
-            declination: declination
-        )
-        let ishaTime = solarNoonTime + timeIntervalTo(
-            angle: Arithmetic.radians(from: configuration.ishaAngle),
-            latitude: latitude,
-            declination: declination
-        )
+        let fajrTime = solarNoonTime - solarPosition.timeIntervalTo(angle: configuration.fajrAngle.radians())
+        let ishaTime = solarNoonTime + solarPosition.timeIntervalTo(angle: configuration.ishaAngle.radians())
         
-        let asrTime = solarNoonTime + timeIntervalTo(
-            shadowFactor: configuration.asrFactor,
-            latitude: latitude,
-            declination: declination
-        )
+        let asrTime = solarNoonTime + solarPosition.timeIntervalTo(shadowFactor: configuration.asrFactor)
         
         let qiyamTime = (fajrTime + .day - ishaTime) * 2/3.0 + ishaTime - .day
         
@@ -82,7 +68,7 @@ struct DailyPrayers {
         self.location = location
         self.configuration = configuration
         
-        self.qiyam = Prayer(dateInterval: DateInterval(start: qiyam, end: nightEnd))
+        self.qiyam = Prayer(dateInterval: DateInterval(start: qiyam, end: fajr))
         self.fajr = Prayer(dateInterval: DateInterval(start: fajr, end: sunrise))
         self.dhuhr = Prayer(dateInterval: DateInterval(start: dhuhr, end: asr))
         self.asr = Prayer(dateInterval: DateInterval(start: asr, end: maghrib))

@@ -38,17 +38,43 @@ extension AngleRadians {
     }
 }
 
-// http://praytimes.org/calculation
-func timeIntervalTo(angle: AngleRadians, latitude: AngleRadians, declination: AngleRadians) -> TimeInterval {
-    let a = -sin(angle) - sin(latitude) * sin(declination)
-    let b = cos(latitude) * cos(declination)
-    return acos(a/b) / Arithmetic.radiansInCircle * TimeInterval.day
-}
-
-func timeIntervalTo(shadowFactor: Double, latitude: AngleRadians, declination: AngleRadians) -> TimeInterval {
-    let length = shadowFactor + tan(latitude - declination)
-    let angle = -atan(1/length)
-    return timeIntervalTo(angle: angle, latitude: latitude, declination: declination)
+// https://www.astronomycenter.net/pdf/mohamoud_2017.pdf
+struct SolarPosition {
+    /// Latitude of the observer
+    let latitude: AngleRadians
+    /// Declination of the Sun
+    let declination: AngleRadians
+    
+    private let sin_latitude: Double
+    private let sin_declination: Double
+    private let cos_latitude: Double
+    private let cos_declination: Double
+    
+    init(latitude: AngleRadians, declination: AngleRadians) {
+        self.latitude = latitude
+        self.declination = declination
+        
+        self.sin_latitude = sin(latitude)
+        self.sin_declination = sin(declination)
+        self.cos_latitude = cos(latitude)
+        self.cos_declination = cos(declination)
+    }
+    
+    func timeIntervalTo(angle: AngleRadians) -> TimeInterval {
+        return timeIntervalTo(elevationAngle: -angle)
+    }
+    
+    func timeIntervalTo(elevationAngle: AngleRadians) -> TimeInterval {
+        let a = sin(elevationAngle) - sin_latitude * sin_declination
+        let b = cos_latitude * cos_declination
+        return acos(a/b) / Arithmetic.radiansInCircle * .day
+    }
+    
+    func timeIntervalTo(shadowFactor: Double) -> TimeInterval {
+        let length = shadowFactor + tan(abs(latitude - declination))
+        let angle = atan(1/length)
+        return timeIntervalTo(elevationAngle: angle)
+    }
 }
 
 // based on https://quasar.as.utexas.edu/BillInfo/JulianDatesG.html
@@ -65,7 +91,7 @@ func julianDay(calendar: Calendar, date: Date) -> Double {
     }
     let centuries: Int = year/100
     let leapYears: Int = centuries/4
-    let patchedYears: Int = (centuries - leapYears)
+    let leapYearDiscrepancy: Int = (centuries - leapYears)
     
     let daysPerYear = 365.25
     // https://www.hpmuseum.org/cgi-sys/cgiwrap/hpmuseum/archv011.cgi?read=31650
@@ -74,7 +100,7 @@ func julianDay(calendar: Calendar, date: Date) -> Double {
     let yearsDays: Int = Int(daysPerYear * Double(year + 4716))
     let monthsDays: Int = Int(daysPerMonth * Double(month + 1))
     
-    return Double(yearsDays - patchedYears + monthsDays + day) - 1522.5
+    return Double(yearsDays - leapYearDiscrepancy + monthsDays + day) - 1522.5
 }
 
 // https://aa.usno.navy.mil/faq/sun_approx
@@ -95,6 +121,8 @@ func solarApproximations(julianDay: Double) -> (declination: AngleRadians, equat
     let meanAnomalyDailyDelta = Arithmetic.radiansInCircle/daysPerAnomalisticYear // 0.98560027053632315 deg
     let meanSolarLngDailyDelta = Arithmetic.radiansInCircle/daysPerTropicalYear   // 0.98564735908521416 deg
     
+    let earthEclipticObliquityDailyDelta = Arithmetic.radiansInCircle/1e9
+    
     let meanSolarAnomaly = (meanAnomalyReference + meanAnomalyDailyDelta * julianReference)
         .constrict(to: Arithmetic.radiansInCircle)
     let meanSolarLng = (meanSolarLngReference + meanSolarLngDailyDelta * julianReference)
@@ -102,7 +130,7 @@ func solarApproximations(julianDay: Double) -> (declination: AngleRadians, equat
     let eclipticLng = (meanSolarLng + Arithmetic.radians(from: 1.915) * sin(meanSolarAnomaly) + Arithmetic.radians(from: 0.02) * sin(2 * meanSolarAnomaly))
         .constrict(to: Arithmetic.radiansInCircle)
     
-    let eclipticObliquity = earthEclipticObliquityReference - Arithmetic.radians(from: 0.00000036) * julianReference
+    let eclipticObliquity = earthEclipticObliquityReference - earthEclipticObliquityDailyDelta * julianReference
     let declination = asin(sin(eclipticObliquity) * sin(eclipticLng))
     
     let rightAscension = atan2(
@@ -112,7 +140,7 @@ func solarApproximations(julianDay: Double) -> (declination: AngleRadians, equat
         .constrict(to: Arithmetic.radiansInCircle)
     
     // "apparent solar time minus mean solar time"
-    let equationOfTime = (meanSolarLng - rightAscension)/Arithmetic.radiansInCircle * TimeInterval.day
+    let equationOfTime: TimeInterval = (meanSolarLng - rightAscension)/Arithmetic.radiansInCircle * .day
     
     return (declination, equationOfTime)
 }
