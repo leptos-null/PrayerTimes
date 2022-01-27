@@ -15,6 +15,7 @@ public struct DailyPrayers {
     
     public let qiyam: Prayer
     public let fajr: Prayer
+    public let sunrise: Prayer
     public let dhuhr: Prayer
     public let asr: Prayer
     public let maghrib: Prayer
@@ -62,18 +63,17 @@ public struct DailyPrayers {
         let maghrib = dayStart.addingTimeInterval(sunsetTime)
         let isha = dayStart.addingTimeInterval(ishaTime)
         
-        let nightEnd = fajr.addingTimeInterval(.day)
-        
         self.timezone = timezone
         self.location = location
         self.configuration = configuration
         
-        self.qiyam = Prayer(.qiyam, start: qiyam, end: fajr)
-        self.fajr = Prayer(.fajr, start: fajr, end: sunrise)
-        self.dhuhr = Prayer(.dhuhr, start: dhuhr, end: asr)
-        self.asr = Prayer(.asr, start: asr, end: maghrib)
-        self.maghrib = Prayer(.maghrib, start: maghrib, end: isha)
-        self.isha = Prayer(.isha, start: isha, end: nightEnd)
+        self.qiyam = Prayer(.qiyam, start: qiyam)
+        self.sunrise = Prayer(.sunrise, start: sunrise)
+        self.fajr = Prayer(.fajr, start: fajr)
+        self.dhuhr = Prayer(.dhuhr, start: dhuhr)
+        self.asr = Prayer(.asr, start: asr)
+        self.maghrib = Prayer(.maghrib, start: maghrib)
+        self.isha = Prayer(.isha, start: isha)
     }
 }
 
@@ -82,6 +82,7 @@ extension DailyPrayers {
         [
             qiyam,
             fajr,
+            sunrise,
             dhuhr,
             asr,
             maghrib,
@@ -93,10 +94,15 @@ extension DailyPrayers {
         switch name {
         case .qiyam: return qiyam
         case .fajr: return fajr
+        case .sunrise: return sunrise
         case .dhuhr: return dhuhr
         case .asr: return asr
         case .maghrib: return maghrib
         case .isha: return isha
         }
+    }
+    
+    public func activePrayer(for date: Date) -> Prayer? {
+        ordered.last { date.timeIntervalSince($0.start) > 0 }
     }
 }

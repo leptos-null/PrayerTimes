@@ -8,9 +8,10 @@
 import Foundation
 
 public struct Prayer: Hashable {
-    public enum Name: Hashable {
+    public enum Name: Hashable, CaseIterable {
         case qiyam
         case fajr
+        case sunrise
         case dhuhr
         case asr
         case maghrib
@@ -19,15 +20,9 @@ public struct Prayer: Hashable {
     
     public let name: Name
     public let start: Date
-    public let end: Date
     
-    var dateInterval: DateInterval {
-        DateInterval(start: start, end: end)
-    }
-    
-    init(_ name: Name, start: Date, end: Date) {
+    init(_ name: Name, start: Date) {
         self.name = name
         self.start = start
-        self.end = end
     }
 }

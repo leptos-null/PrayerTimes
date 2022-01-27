@@ -22,6 +22,7 @@
 		FAA6989527A1B3B5000585D9 /* PrayerTimesUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6988F27A1B3B5000585D9 /* PrayerTimesUI.framework */; };
 		FAA6989627A1B3B5000585D9 /* PrayerTimesUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6988F27A1B3B5000585D9 /* PrayerTimesUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FAA6989B27A1B3D4000585D9 /* DailyPrayersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6989A27A1B3D4000585D9 /* DailyPrayersView.swift */; };
+		FAA6989F27A2713F000585D9 /* PrayerIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6989E27A2713F000585D9 /* PrayerIterator.swift */; };
 		FAB8F8542797DF7400F21628 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB8F8532797DF7400F21628 /* AppDelegate.swift */; };
 		FAB8F8562797DF7400F21628 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB8F8552797DF7400F21628 /* SceneDelegate.swift */; };
 		FAB8F8582797DF7400F21628 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB8F8572797DF7400F21628 /* ViewController.swift */; };
@@ -83,6 +84,7 @@
 		FAA6988F27A1B3B5000585D9 /* PrayerTimesUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PrayerTimesUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAA6989127A1B3B5000585D9 /* PrayerTimesUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrayerTimesUI.h; sourceTree = "<group>"; };
 		FAA6989A27A1B3D4000585D9 /* DailyPrayersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPrayersView.swift; sourceTree = "<group>"; };
+		FAA6989E27A2713F000585D9 /* PrayerIterator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerIterator.swift; sourceTree = "<group>"; };
 		FAB8F8502797DF7400F21628 /* PrayerTimes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrayerTimes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAB8F8532797DF7400F21628 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FAB8F8552797DF7400F21628 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 			children = (
 				FA573114279CE54100E5C9A6 /* PrayerTimesKit.h */,
 				FA573129279D066300E5C9A6 /* DailyPrayers.swift */,
+				FAA6989E27A2713F000585D9 /* PrayerIterator.swift */,
 				FAA6988227A10D0B000585D9 /* LocationManager.swift */,
 				FA57312F279DEE5100E5C9A6 /* CalculationConfiguration.swift */,
 				FA57312D279D0F3200E5C9A6 /* Arithmetic.swift */,
@@ -389,6 +392,7 @@
 			files = (
 				FA573130279DEE5100E5C9A6 /* CalculationConfiguration.swift in Sources */,
 				FA57312E279D0F3200E5C9A6 /* Arithmetic.swift in Sources */,
+				FAA6989F27A2713F000585D9 /* PrayerIterator.swift in Sources */,
 				FAA6988327A10D0B000585D9 /* LocationManager.swift in Sources */,
 				FA57312C279D069100E5C9A6 /* Prayer.swift in Sources */,
 				FA57312A279D066300E5C9A6 /* DailyPrayers.swift in Sources */,

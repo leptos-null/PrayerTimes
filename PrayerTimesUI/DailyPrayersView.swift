@@ -17,21 +17,26 @@ public struct DailyPrayersView: View {
         self.dailyPrayers = dailyPrayers
         
         if let time = time {
-            current = dailyPrayers.ordered.last { time.timeIntervalSince($0.start) > 0 }
+            current = dailyPrayers.activePrayer(for: time)
         } else {
             current = nil
         }
     }
     
     public var body: some View {
-        List(dailyPrayers.ordered) { prayer in
-            HStack {
-                Text(prayer.name.localized)
-                    .fontWeight((prayer == current) ? .semibold : .regular)
-                Spacer()
-                
-                Text(prayer.start, style: .time)
-                    .fontWeight((prayer == current) ? .semibold : .regular)
+        VStack {
+            Text(dailyPrayers.dhuhr.start, style: .date)
+                .font(.headline)
+            ForEach(dailyPrayers.ordered) { prayer in
+                HStack {
+                    Text(prayer.name.localized)
+                        .fontWeight((prayer == current) ? .semibold : .regular)
+                    Spacer()
+                    
+                    Text(prayer.start, style: .time)
+                        .fontWeight((prayer == current) ? .semibold : .regular)
+                }
+                .padding(.vertical, 1)
             }
         }
         .environment(\.timeZone, dailyPrayers.timezone)
@@ -47,6 +52,7 @@ extension Prayer.Name {
         switch self {
         case .qiyam:   return NSLocalizedString("PRAYER_NAME_QIYAM",   value: "Qiyam",   comment: "Name for Qiyam prayer")
         case .fajr:    return NSLocalizedString("PRAYER_NAME_FAJR",    value: "Fajr",    comment: "Name for Fajr prayer")
+        case .sunrise: return NSLocalizedString("PRAYER_NAME_SUNRISE", value: "Sunrise", comment: "Name for sunrise")
         case .dhuhr:   return NSLocalizedString("PRAYER_NAME_DHUHR",   value: "Dhuhr",   comment: "Name for Dhuhr prayer")
         case .asr:     return NSLocalizedString("PRAYER_NAME_ASR",     value: "Asr",     comment: "Name for Asr prayer")
         case .maghrib: return NSLocalizedString("PRAYER_NAME_MAGHRIB", value: "Maghrib", comment: "Name for Maghrib prayer")

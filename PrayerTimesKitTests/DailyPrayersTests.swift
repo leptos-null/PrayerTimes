@@ -40,7 +40,7 @@ class DailyPrayersTests: XCTestCase {
         // relatively high tolerance on these values, because of the lack of seconds
         //   and these values should not change, regardless of implementation
         XCTAssert(dailyJan.dhuhr.start.timeBetween(dateComponents, 12, 32, 30) < 60)
-        XCTAssert(dailyJan.fajr.end.timeBetween(dateComponents, 07, 01) < 120)
+        XCTAssert(dailyJan.sunrise.start.timeBetween(dateComponents, 07, 01) < 120)
         XCTAssert(dailyJan.maghrib.start.timeBetween(dateComponents, 18, 05) < 120)
         
         // based on previous calculations
@@ -68,7 +68,7 @@ class DailyPrayersTests: XCTestCase {
         // relatively high tolerance on these values, because of the lack of seconds
         //   and these values should not change, regardless of implementation
         XCTAssert(dailyNov.dhuhr.start.timeBetween(dateComponents, 12, 06, 30) < 60)
-        XCTAssert(dailyNov.fajr.end.timeBetween(dateComponents, 06, 35) < 120)
+        XCTAssert(dailyNov.sunrise.start.timeBetween(dateComponents, 06, 35) < 120)
         XCTAssert(dailyNov.maghrib.start.timeBetween(dateComponents, 17, 38) < 120)
         
         // based on previous calculations
@@ -105,7 +105,7 @@ class DailyPrayersTests: XCTestCase {
         // relatively high tolerance on these values, because of the lack of seconds
         //   and these values should not change, regardless of implementation
         XCTAssert(dailyJan.dhuhr.start.timeBetween(dateComponents, 12, 19, 58) < 60)
-        XCTAssert(dailyJan.fajr.end.timeBetween(dateComponents, 07, 17) < 120)
+        XCTAssert(dailyJan.sunrise.start.timeBetween(dateComponents, 07, 17) < 120)
         XCTAssert(dailyJan.maghrib.start.timeBetween(dateComponents, 17, 23) < 120)
         
         // based on previous calculations
@@ -135,7 +135,7 @@ class DailyPrayersTests: XCTestCase {
         // relatively high tolerance on these values, because of the lack of seconds
         //   and these values should not change, regardless of implementation
         XCTAssert(dailyMarPre.dhuhr.start.timeBetween(dateComponents, 13, 17, 23) < 60)
-        XCTAssert(dailyMarPre.fajr.end.timeBetween(dateComponents, 07, 22) < 120)
+        XCTAssert(dailyMarPre.sunrise.start.timeBetween(dateComponents, 07, 22) < 120)
         XCTAssert(dailyMarPre.maghrib.start.timeBetween(dateComponents, 19, 14) < 120)
         
         // based on previous calculations
@@ -164,7 +164,7 @@ class DailyPrayersTests: XCTestCase {
         // relatively high tolerance on these values, because of the lack of seconds
         //   and these values should not change, regardless of implementation
         XCTAssert(dailyMarPost.dhuhr.start.timeBetween(dateComponents, 13, 17, 23) < 60)
-        XCTAssert(dailyMarPost.fajr.end.timeBetween(dateComponents, 07, 22) < 120)
+        XCTAssert(dailyMarPost.sunrise.start.timeBetween(dateComponents, 07, 22) < 120)
         XCTAssert(dailyMarPost.maghrib.start.timeBetween(dateComponents, 19, 14) < 120)
         
         // based on previous calculations
@@ -194,7 +194,7 @@ class DailyPrayersTests: XCTestCase {
         // relatively high tolerance on these values, because of the lack of seconds
         //   and these values should not change, regardless of implementation
         XCTAssert(dailyNovPre.dhuhr.start.timeBetween(dateComponents, 11, 51, 38) < 60)
-        XCTAssert(dailyNovPre.fajr.end.timeBetween(dateComponents, 06, 38) < 120)
+        XCTAssert(dailyNovPre.sunrise.start.timeBetween(dateComponents, 06, 38) < 120)
         XCTAssert(dailyNovPre.maghrib.start.timeBetween(dateComponents, 17, 05) < 120)
         
         // based on previous calculations
@@ -223,7 +223,7 @@ class DailyPrayersTests: XCTestCase {
         // relatively high tolerance on these values, because of the lack of seconds
         //   and these values should not change, regardless of implementation
         XCTAssert(dailyNovPost.dhuhr.start.timeBetween(dateComponents, 11, 51, 38) < 60)
-        XCTAssert(dailyNovPost.fajr.end.timeBetween(dateComponents, 06, 38) < 120)
+        XCTAssert(dailyNovPost.sunrise.start.timeBetween(dateComponents, 06, 38) < 120)
         XCTAssert(dailyNovPost.maghrib.start.timeBetween(dateComponents, 17, 05) < 120)
         
         // based on previous calculations
@@ -260,7 +260,7 @@ class DailyPrayersTests: XCTestCase {
         // relatively high tolerance on these values, because of the lack of seconds
         //   and these values should not change, regardless of implementation
         XCTAssert(dailyJan.dhuhr.start.timeBetween(dateComponents, 12, 04, 49) < 60)
-        XCTAssert(dailyJan.fajr.end.timeBetween(dateComponents, 05, 27) < 120)
+        XCTAssert(dailyJan.sunrise.start.timeBetween(dateComponents, 05, 27) < 120)
         XCTAssert(dailyJan.maghrib.start.timeBetween(dateComponents, 18, 43) < 120)
         
         // based on previous calculations
@@ -288,7 +288,7 @@ class DailyPrayersTests: XCTestCase {
         // relatively high tolerance on these values, because of the lack of seconds
         //   and these values should not change, regardless of implementation
         XCTAssert(dailyApr.dhuhr.start.timeBetween(dateComponents, 11, 55, 19) < 60)
-        XCTAssert(dailyApr.fajr.end.timeBetween(dateComponents, 06, 03) < 120)
+        XCTAssert(dailyApr.sunrise.start.timeBetween(dateComponents, 06, 03) < 120)
         XCTAssert(dailyApr.maghrib.start.timeBetween(dateComponents, 17, 48) < 120)
         
         // based on previous calculations
@@ -325,7 +325,7 @@ class DailyPrayersTests: XCTestCase {
         // relatively high tolerance on these values, because of the lack of seconds
         //   and these values should not change, regardless of implementation
         XCTAssert(dailyJan.dhuhr.start.timeBetween(dateComponents, 12, 07, 45) < 60)
-        XCTAssert(dailyJan.fajr.end.timeBetween(dateComponents, 05, 17) < 120)
+        XCTAssert(dailyJan.sunrise.start.timeBetween(dateComponents, 05, 17) < 120)
         XCTAssert(dailyJan.maghrib.start.timeBetween(dateComponents, 18, 58) < 120)
         
         // based on previous calculations
@@ -353,7 +353,7 @@ class DailyPrayersTests: XCTestCase {
         // relatively high tolerance on these values, because of the lack of seconds
         //   and these values should not change, regardless of implementation
         XCTAssert(dailyMay.dhuhr.start.timeBetween(dateComponents, 11, 52, 18) < 60)
-        XCTAssert(dailyMay.fajr.end.timeBetween(dateComponents, 06, 33) < 120)
+        XCTAssert(dailyMay.sunrise.start.timeBetween(dateComponents, 06, 33) < 120)
         XCTAssert(dailyMay.maghrib.start.timeBetween(dateComponents, 17, 11) < 120)
         
         // based on previous calculations
