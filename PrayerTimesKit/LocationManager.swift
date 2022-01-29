@@ -25,6 +25,18 @@ public final class LocationManager: ObservableObject {
         delegate.locationManager = self
     }
     
+    // MARK: - Requesting Authorization
+    
+    public func requestWhenInUseAuthorization() {
+        locationManager.requestWhenInUseAuthorization()
+    }
+    
+    public func requestAlwaysAuthorization() {
+        locationManager.requestAlwaysAuthorization()
+    }
+    
+    // MARK: - Updating Location
+    
     public func startUpdatingLocation() {
         locationManager.startUpdatingLocation()
     }
@@ -33,6 +45,8 @@ public final class LocationManager: ObservableObject {
         locationManager.stopUpdatingLocation()
     }
     
+    // MARK: - Updating Heading
+    
     public class func headingAvailable() -> Bool {
         CLLocationManager.headingAvailable()
     }
@@ -40,10 +54,11 @@ public final class LocationManager: ObservableObject {
     public func startUpdatingHeading() {
         locationManager.startUpdatingHeading()
     }
-    
+#if os(iOS) || os(watchOS)
     public func stopUpdatingHeading() {
         locationManager.stopUpdatingHeading()
     }
+#endif
 }
 
 extension LocationManager {
