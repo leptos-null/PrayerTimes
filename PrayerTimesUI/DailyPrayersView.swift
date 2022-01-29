@@ -47,20 +47,6 @@ extension Prayer: Identifiable {
     public var id: Prayer { self }
 }
 
-extension Prayer.Name {
-    var localized: String {
-        switch self {
-        case .qiyam:   return NSLocalizedString("PRAYER_NAME_QIYAM",   value: "Qiyam",   comment: "Name for Qiyam prayer")
-        case .fajr:    return NSLocalizedString("PRAYER_NAME_FAJR",    value: "Fajr",    comment: "Name for Fajr prayer")
-        case .sunrise: return NSLocalizedString("PRAYER_NAME_SUNRISE", value: "Sunrise", comment: "Name for sunrise")
-        case .dhuhr:   return NSLocalizedString("PRAYER_NAME_DHUHR",   value: "Dhuhr",   comment: "Name for Dhuhr prayer")
-        case .asr:     return NSLocalizedString("PRAYER_NAME_ASR",     value: "Asr",     comment: "Name for Asr prayer")
-        case .maghrib: return NSLocalizedString("PRAYER_NAME_MAGHRIB", value: "Maghrib", comment: "Name for Maghrib prayer")
-        case .isha:    return NSLocalizedString("PRAYER_NAME_ISHA",    value: "Isha",    comment: "Name for Isha prayer")
-        }
-    }
-}
-
 struct DailyPrayersView_Previews: PreviewProvider {
     static var previews: some View {
         DailyPrayersView(dailyPrayers: DailyPrayers(
