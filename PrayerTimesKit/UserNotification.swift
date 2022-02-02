@@ -55,33 +55,33 @@ public enum UserNotification {
 
 public extension UserNotification {
     struct Preferences {
-        private let categories: [Descriptor.Category: Set<Prayer.Name>]
+        private let categories: [Category: Set<Prayer.Name>]
         
         func descriptors(for prayer: Prayer) -> [Descriptor] {
-            categories.compactMap { (category: Descriptor.Category, names: Set<Prayer.Name>) in
+            categories.compactMap { (category: Category, names: Set<Prayer.Name>) in
                 guard names.contains(prayer.name) else { return nil }
                 return Descriptor(prayer: prayer, category: category)
             }
         }
         
         var isEmpty: Bool {
-            categories.allSatisfy { (category: Descriptor.Category, names: Set<Prayer.Name>) in
+            categories.allSatisfy { (category: Category, names: Set<Prayer.Name>) in
                 names.isEmpty
             }
         }
         
-        public init(categories: [Descriptor.Category: Set<Prayer.Name>]) {
+        public init(categories: [Category: Set<Prayer.Name>]) {
             self.categories = categories
         }
     }
 }
 
 public extension UserNotification {
+    enum Category: String {
+        case start, warn
+    }
+    
     struct Descriptor {
-        public enum Category: String {
-            case start, warn
-        }
-        
         static let warnInterval: TimeInterval = 30 * .minute
         
         let prayer: Prayer
