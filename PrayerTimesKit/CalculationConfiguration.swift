@@ -7,10 +7,10 @@
 
 import Foundation
 
-public struct CalculationConfiguration {
-    public let asrFactor: Double
-    public let fajrAngle: AngleDegree
-    public let ishaAngle: AngleDegree
+public struct CalculationConfiguration: Hashable {
+    public var asrFactor: Double
+    public var fajrAngle: AngleDegree
+    public var ishaAngle: AngleDegree
     
     public init(asrFactor: Double, fajrAngle: AngleDegree, ishaAngle: AngleDegree) {
         self.asrFactor = asrFactor

@@ -8,7 +8,7 @@
 import Foundation
 
 public struct Prayer: Hashable {
-    public enum Name: Hashable, CaseIterable {
+    public enum Name: Hashable, Codable, CaseIterable {
         case qiyam
         case fajr
         case sunrise

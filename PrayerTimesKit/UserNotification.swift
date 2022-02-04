@@ -54,8 +54,8 @@ public enum UserNotification {
 }
 
 public extension UserNotification {
-    struct Preferences {
-        private let categories: [Category: Set<Prayer.Name>]
+    struct Preferences: Hashable {
+        public var categories: [Category: Set<Prayer.Name>]
         
         func descriptors(for prayer: Prayer) -> [Descriptor] {
             categories.compactMap { (category: Category, names: Set<Prayer.Name>) in
@@ -70,6 +70,11 @@ public extension UserNotification {
             }
         }
         
+        func enabledFor(category: Category, name: Prayer.Name) -> Bool {
+            guard let names = categories[category] else { return false }
+            return names.contains(name)
+        }
+        
         public init(categories: [Category: Set<Prayer.Name>]) {
             self.categories = categories
         }
@@ -77,7 +82,7 @@ public extension UserNotification {
 }
 
 public extension UserNotification {
-    enum Category: String {
+    enum Category: Hashable, Codable, CaseIterable {
         case start, warn
     }
     
