@@ -14,12 +14,13 @@ public final class LocationManager: ObservableObject {
     
     private let locationManager = CLLocationManager()
     private let delegate = Delegate()
+    private let observer = KeyValueObserver()
     
     private let logger = Logger(subsystem: "null.leptos.PrayerTimesKit", category: "LocationManager")
     
     private let userDefaults = UserDefaults(suiteName: "group.null.leptos.PrayerTimesGroup")
-    private let locationUserDefaultsKey = "LocationManagerLocationKey"
-    private let placemarkUserDefaultsKey = "LocationManagerPlacemarkKey"
+    private let locationUserDefaultsKey = "LocationManagerLocation"
+    private let placemarkUserDefaultsKey = "LocationManagerPlacemark"
     
     @Published public private(set) var location: CLLocation? {
         didSet {
@@ -61,27 +62,65 @@ public final class LocationManager: ObservableObject {
     private var activeGeocoder: CLGeocoder?
     
     init() {
-        // read from cache before setting up CLLocationManager in case updated locations come in very quickly
-        if let userDefaults = userDefaults {
-            do {
-                location = try userDefaults.unarchivedObject(forKey: locationUserDefaultsKey)
-            } catch {
-                logger.error("unarchivedObject(forKey: \(self.locationUserDefaultsKey)): \(String(describing: error))")
-            }
-            do {
-                placemark = try userDefaults.unarchivedObject(forKey: placemarkUserDefaultsKey)
-            } catch {
-                logger.error("unarchivedObject(forKey: \(self.placemarkUserDefaultsKey)): \(String(describing: error))")
-            }
-            // TODO: listen for changes on userDefaults
-        }
-        
         locationManager.distanceFilter = 500
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         authorizationStatus = locationManager.authorizationStatus
         
         delegate.locationManager = self
         locationManager.delegate = delegate
+        
+        if let userDefaults = userDefaults {
+            // the checks before writing to the instance variable have two intentions:
+            //   1. prevent a cached value replacing an updated/ more accurate value
+            //   2. prevent a loop of:
+            //
+            //       ╭─→ write UserDefaults ─╮
+            //       │                       │
+            //       ╰──  observe change  ←──╯
+            //
+            
+            // run placemark first since we don't want location to go
+            //  and do a reverse geocode after finding that placemark is nil
+            
+            observe(userDefaults: userDefaults, for: placemarkUserDefaultsKey) { [weak self] (placemark: CLPlacemark?) in
+                guard let self = self, placemark != self.placemark else { return }
+                
+                if let currentPlacemark = self.placemark,
+                   let updatePlacemark = placemark,
+                   let currentLocation = currentPlacemark.location,
+                   let updateLocation = updatePlacemark.location {
+                    // seemingly, Placemarks take on the timestamp of when they were decoded.
+                    // instead of checking for a more recent timestamp, avoid a read-write loop
+                    // by checking if new placemark is at least a meter away from the current
+                    guard updateLocation.distance(from: currentLocation) > 1 else { return }
+                }
+                self.placemark = placemark
+            }
+            observe(userDefaults: userDefaults, for: locationUserDefaultsKey) { [weak self] (location: CLLocation?) in
+                guard let self = self, let location = location else { return }
+                
+                if let currentLocation = self.location {
+                    // new location must be at least newer than the current
+                    guard location.timestamp.timeIntervalSince(currentLocation.timestamp) > 0 else { return }
+                }
+                self.location = location
+            }
+        }
+    }
+    
+    private func observe<T>(userDefaults: UserDefaults, for key: String, update: @escaping (T?) -> Void) where T: NSObject, T: NSSecureCoding {
+        observer.observe(object: userDefaults, forKeyPath: key, options: .initial) { [weak self] change in
+            guard let self = self else { return }
+            let value: T?
+            do {
+                value = try userDefaults.unarchivedObject(forKey: key)
+            } catch {
+                self.logger.error("unarchivedObject(forKey: \(key)): \(String(describing: error))")
+                return
+            }
+            guard let value = value else { return }
+            update(value)
+        }
     }
     
     deinit {
