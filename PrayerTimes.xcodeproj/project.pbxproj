@@ -26,6 +26,7 @@
 		FA8A4D4E27AA460300D43455 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A4D4D27AA460300D43455 /* Preferences.swift */; };
 		FA8A4D5027AAF37200D43455 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A4D4F27AAF37200D43455 /* PreferencesView.swift */; };
 		FA8A4D5227ABA48200D43455 /* KeyValueObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A4D5127ABA48200D43455 /* KeyValueObserver.swift */; };
+		FA8A4D5427AEFB0500D43455 /* LocationManagerProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A4D5327AEFB0500D43455 /* LocationManagerProperties.swift */; };
 		FAA6988327A10D0B000585D9 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6988227A10D0B000585D9 /* LocationManager.swift */; };
 		FAA6988527A110C9000585D9 /* PrayerTimesKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA573112279CE54100E5C9A6 /* PrayerTimesKit.framework */; };
 		FAA6988627A110C9000585D9 /* PrayerTimesKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA573112279CE54100E5C9A6 /* PrayerTimesKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -110,6 +111,7 @@
 		FA8A4D4D27AA460300D43455 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		FA8A4D4F27AAF37200D43455 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		FA8A4D5127ABA48200D43455 /* KeyValueObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueObserver.swift; sourceTree = "<group>"; };
+		FA8A4D5327AEFB0500D43455 /* LocationManagerProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerProperties.swift; sourceTree = "<group>"; };
 		FAA6988227A10D0B000585D9 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		FAA6988F27A1B3B5000585D9 /* PrayerTimesUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PrayerTimesUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAA6989127A1B3B5000585D9 /* PrayerTimesUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrayerTimesUI.h; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 				FAA6989127A1B3B5000585D9 /* PrayerTimesUI.h */,
 				FAA6989A27A1B3D4000585D9 /* DailyPrayersView.swift */,
 				FA8A4D4F27AAF37200D43455 /* PreferencesView.swift */,
+				FA8A4D5327AEFB0500D43455 /* LocationManagerProperties.swift */,
 			);
 			path = PrayerTimesUI;
 			sourceTree = "<group>";
@@ -516,6 +519,7 @@
 			files = (
 				FAA6989B27A1B3D4000585D9 /* DailyPrayersView.swift in Sources */,
 				FA8A4D5027AAF37200D43455 /* PreferencesView.swift in Sources */,
+				FA8A4D5427AEFB0500D43455 /* LocationManagerProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
