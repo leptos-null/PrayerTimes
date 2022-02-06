@@ -39,7 +39,6 @@ public final class LocationManager: ObservableObject {
             }
         }
     }
-    @Published public private(set) var heading: CLHeading?
     @Published public private(set) var authorizationStatus: CLAuthorizationStatus
     
     @Published public private(set) var placemark: CLPlacemark? {
@@ -193,21 +192,6 @@ public final class LocationManager: ObservableObject {
     public func stopUpdatingLocation() {
         locationManager.stopUpdatingLocation()
     }
-    
-    // MARK: - Updating Heading
-    
-    public class func headingAvailable() -> Bool {
-        CLLocationManager.headingAvailable()
-    }
-    
-    public func startUpdatingHeading() {
-        locationManager.startUpdatingHeading()
-    }
-#if os(iOS) || os(watchOS)
-    public func stopUpdatingHeading() {
-        locationManager.stopUpdatingHeading()
-    }
-#endif
 }
 
 extension LocationManager {
@@ -232,15 +216,6 @@ extension LocationManager {
             }
             logger.debug("locationManager.location = \(String(describing: manager.location))")
             locationManager.location = manager.location
-        }
-        
-        public func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
-            guard let locationManager = locationManager else {
-                logger.notice("\(#function) called while locationManager is nil")
-                return
-            }
-            logger.debug("locationManager.heading = \(String(describing: newHeading))")
-            locationManager.heading = newHeading
         }
         
         public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
