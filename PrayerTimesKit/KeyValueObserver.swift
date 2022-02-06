@@ -43,8 +43,8 @@ final class KeyValueObserver: NSObject {
         let scaledMax: UInt = .max/alignment
         let context = UnsafeMutableRawPointer(bitPattern: .random(in: scaledMin...scaledMax) * alignment)!
         
-        object.addObserver(self, forKeyPath: keyPath, options: options, context: context)
         registrations.insert(Registration(object: object, keyPath: keyPath, callback: callback, context: context))
+        object.addObserver(self, forKeyPath: keyPath, options: options, context: context)
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
