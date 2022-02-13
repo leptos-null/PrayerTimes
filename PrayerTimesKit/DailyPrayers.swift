@@ -9,7 +9,7 @@ import Foundation
 import CoreLocation
 
 public struct DailyPrayers {
-    public let timezone: TimeZone
+    public let timeZone: TimeZone
     public let location: CLLocation
     public let configuration: CalculationConfiguration
     
@@ -21,10 +21,10 @@ public struct DailyPrayers {
     public let maghrib: Prayer
     public let isha: Prayer
     
-    public init(day: Date, timezone: TimeZone, location: CLLocation, configuration: CalculationConfiguration) {
-        let timezoneSeconds = timezone.secondsFromGMT(for: day)
+    public init(day: Date, timeZone: TimeZone, location: CLLocation, configuration: CalculationConfiguration) {
+        let timeZoneSeconds = timeZone.secondsFromGMT(for: day)
         var calculationCalendar = Calendar(identifier: .gregorian)
-        guard let frozenTimezone = TimeZone(secondsFromGMT: timezoneSeconds) else { fatalError() }
+        guard let frozenTimezone = TimeZone(secondsFromGMT: timeZoneSeconds) else { fatalError() }
         calculationCalendar.timeZone = frozenTimezone
         
         let dayStart = calculationCalendar.startOfDay(for: day)
@@ -37,7 +37,7 @@ public struct DailyPrayers {
         
         // http://praytimes.org/calculation
         let solarNoonTime: TimeInterval = (TimeInterval.day/2 - coordinate.longitude/Arithmetic.degreesInCircle * TimeInterval.day - equationOfTime)
-            .constrict(to: TimeInterval.day) + TimeInterval(timezoneSeconds)
+            .constrict(to: TimeInterval.day) + TimeInterval(timeZoneSeconds)
         
         let solarPosition = SolarPosition(latitude: latitude, declination: declination)
         
@@ -63,7 +63,7 @@ public struct DailyPrayers {
         let maghrib = dayStart.addingTimeInterval(sunsetTime)
         let isha = dayStart.addingTimeInterval(ishaTime)
         
-        self.timezone = timezone
+        self.timeZone = timeZone
         self.location = location
         self.configuration = configuration
         

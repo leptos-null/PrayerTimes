@@ -10,6 +10,8 @@ import Foundation
 public typealias AngleDegree = Double
 public typealias AngleRadians = Double
 
+typealias JulianDay = Double
+
 enum Arithmetic {
     static let secondsPerMinute: TimeInterval = 60
     static let minutesPerHour: Double = 60
@@ -105,7 +107,7 @@ func julianDay(calendar: Calendar, date: Date) -> Double {
 
 // https://aa.usno.navy.mil/faq/sun_approx
 // more: http://stjarnhimlen.se/comp/ppcomp.html
-func solarApproximations(julianDay: Double) -> (declination: AngleRadians, equationOfTime: TimeInterval) {
+func solarApproximations(julianDay: JulianDay) -> (declination: AngleRadians, equationOfTime: TimeInterval) {
     // Date(timeIntervalSince1970: 946728000)
     let julianReference = julianDay - 2451545.0
     
@@ -151,7 +153,7 @@ extension FloatingPoint {
     }
     
     func signedSqrt() -> Self {
-        .init(signOf: self, magnitudeOf: magnitude.squareRoot())
+        Self(signOf: self, magnitudeOf: magnitude.squareRoot())
     }
 }
 

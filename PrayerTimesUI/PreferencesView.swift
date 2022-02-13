@@ -100,7 +100,7 @@ struct UserNotificationSelectionView: View {
         switch category {
         case .start:
             return "A notification will be sent at the start of the selected times."
-        case .warn:
+        case .reminder:
             return "A notification will be sent 30 minutes before the start of the selected times."
         }
     }
@@ -145,7 +145,7 @@ extension UserNotification.Category {
     var localizedTitle: String {
         switch self {
         case .start: return "Start"
-        case .warn: return "Reminder"
+        case .reminder: return "Reminder"
         }
     }
 }

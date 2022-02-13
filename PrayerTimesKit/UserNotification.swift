@@ -10,7 +10,7 @@ import UserNotifications
 import CoreLocation
 
 public enum UserNotification {
-    public static func registerFor(location: CLLocation, timezone: TimeZone, config: CalculationConfiguration, preferences: Preferences) async throws {
+    public static func registerFor(location: CLLocation, timeZone: TimeZone, config: CalculationConfiguration, preferences: Preferences) async throws {
         let userNotificationCenter: UNUserNotificationCenter = .current()
         userNotificationCenter.removeAllPendingNotificationRequests()
         
@@ -21,9 +21,9 @@ public enum UserNotification {
         let date: Date = .now
         
         var gregorianCalendar = Calendar(identifier: .gregorian)
-        gregorianCalendar.timeZone = timezone
+        gregorianCalendar.timeZone = timeZone
         
-        let notificationRequests: [UNNotificationRequest] = PrayerIterator(start: date, timezone: timezone, location: location, configuration: config)
+        let notificationRequests: [UNNotificationRequest] = PrayerIterator(start: date, timeZone: timeZone, location: location, configuration: config)
             .lazy
             .flatMap { preferences.descriptors(for: $0) }
             .drop { date.timeIntervalSince($0.time) > 0 } // drop any notifications that are in the past
@@ -82,8 +82,8 @@ public extension UserNotification {
 }
 
 public extension UserNotification {
-    enum Category: Hashable, Codable, CaseIterable {
-        case start, warn
+    enum Category: Hashable, CaseIterable {
+        case start, reminder
     }
     
     struct Descriptor {
@@ -95,14 +95,14 @@ public extension UserNotification {
         var time: Date {
             switch category {
             case .start: return prayer.start
-            case .warn: return prayer.start.addingTimeInterval(-Self.warnInterval)
+            case .reminder: return prayer.start.addingTimeInterval(-Self.warnInterval)
             }
         }
         
         var title: String {
             switch category {
             case .start: return "Time for \(prayer.name.localized) has begun"
-            case .warn: return "\(prayer.name.localized) begins in 30 minutes"
+            case .reminder: return "\(prayer.name.localized) begins in 30 minutes"
             }
         }
     }

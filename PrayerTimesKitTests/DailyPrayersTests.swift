@@ -23,18 +23,18 @@ class DailyPrayersTests: XCTestCase {
     
     func testNorthEast() {
         let location = CLLocation(latitude: 21.422495, longitude: 39.826158)
-        let timezone = TimeZone(identifier: "Asia/Riyadh")!
+        let timeZone = TimeZone(identifier: "Asia/Riyadh")!
         let configuration = CalculationConfiguration(asrFactor: 1, fajrAngle: 18.5, ishaAngle: 19)
         
         var gregorianCalendar = Calendar(identifier: .gregorian)
-        gregorianCalendar.timeZone = timezone
+        gregorianCalendar.timeZone = timeZone
         
-        var dateComponents = DateComponents(calendar: gregorianCalendar, timeZone: timezone)
+        var dateComponents = DateComponents(calendar: gregorianCalendar, timeZone: timeZone)
         dateComponents.year = 2022
         dateComponents.month = 1
         dateComponents.day = 23
         
-        let dailyJan = DailyPrayers(day: dateComponents.date!, timezone: timezone, location: location, configuration: configuration)
+        let dailyJan = DailyPrayers(day: dateComponents.date!, timeZone: timeZone, location: location, configuration: configuration)
         
         // based on https://gml.noaa.gov/grad/solcalc/
         // relatively high tolerance on these values, because of the lack of seconds
@@ -62,7 +62,7 @@ class DailyPrayersTests: XCTestCase {
         dateComponents.month = 11
         dateComponents.day = 21
         
-        let dailyNov = DailyPrayers(day: dateComponents.date!, timezone: timezone, location: location, configuration: configuration)
+        let dailyNov = DailyPrayers(day: dateComponents.date!, timeZone: timeZone, location: location, configuration: configuration)
         
         // based on https://gml.noaa.gov/grad/solcalc/
         // relatively high tolerance on these values, because of the lack of seconds
@@ -88,18 +88,18 @@ class DailyPrayersTests: XCTestCase {
     
     func testNorthWest() {
         let location = CLLocation(latitude: 37.334900, longitude: -122.009020)
-        let timezone = TimeZone(identifier: "America/Los_Angeles")!
+        let timeZone = TimeZone(identifier: "America/Los_Angeles")!
         let configuration = CalculationConfiguration(asrFactor: 1, fajrAngle: 15, ishaAngle: 15)
         
         var gregorianCalendar = Calendar(identifier: .gregorian)
-        gregorianCalendar.timeZone = timezone
+        gregorianCalendar.timeZone = timeZone
         
-        var dateComponents = DateComponents(calendar: gregorianCalendar, timeZone: timezone)
+        var dateComponents = DateComponents(calendar: gregorianCalendar, timeZone: timeZone)
         dateComponents.year = 2022
         dateComponents.month = 1
         dateComponents.day = 23
         
-        let dailyJan = DailyPrayers(day: dateComponents.date!, timezone: timezone, location: location, configuration: configuration)
+        let dailyJan = DailyPrayers(day: dateComponents.date!, timeZone: timeZone, location: location, configuration: configuration)
         
         // based on https://gml.noaa.gov/grad/solcalc/
         // relatively high tolerance on these values, because of the lack of seconds
@@ -129,7 +129,7 @@ class DailyPrayersTests: XCTestCase {
         dateComponents.hour = 0
         dateComponents.minute = 1
         
-        let dailyMarPre = DailyPrayers(day: dateComponents.date!, timezone: timezone, location: location, configuration: configuration)
+        let dailyMarPre = DailyPrayers(day: dateComponents.date!, timeZone: timeZone, location: location, configuration: configuration)
         
         // based on https://gml.noaa.gov/grad/solcalc/
         // relatively high tolerance on these values, because of the lack of seconds
@@ -158,7 +158,7 @@ class DailyPrayersTests: XCTestCase {
         dateComponents.day = 13
         dateComponents.hour = 8
         
-        let dailyMarPost = DailyPrayers(day: dateComponents.date!, timezone: timezone, location: location, configuration: configuration)
+        let dailyMarPost = DailyPrayers(day: dateComponents.date!, timeZone: timeZone, location: location, configuration: configuration)
         
         // based on https://gml.noaa.gov/grad/solcalc/
         // relatively high tolerance on these values, because of the lack of seconds
@@ -188,7 +188,7 @@ class DailyPrayersTests: XCTestCase {
         dateComponents.hour = 0
         dateComponents.minute = 1
         
-        let dailyNovPre = DailyPrayers(day: dateComponents.date!, timezone: timezone, location: location, configuration: configuration)
+        let dailyNovPre = DailyPrayers(day: dateComponents.date!, timeZone: timeZone, location: location, configuration: configuration)
         
         // based on https://gml.noaa.gov/grad/solcalc/
         // relatively high tolerance on these values, because of the lack of seconds
@@ -217,7 +217,7 @@ class DailyPrayersTests: XCTestCase {
         dateComponents.day = 6
         dateComponents.hour = 8
         
-        let dailyNovPost = DailyPrayers(day: dateComponents.date!, timezone: timezone, location: location, configuration: configuration)
+        let dailyNovPost = DailyPrayers(day: dateComponents.date!, timeZone: timeZone, location: location, configuration: configuration)
         
         // based on https://gml.noaa.gov/grad/solcalc/
         // relatively high tolerance on these values, because of the lack of seconds
@@ -243,18 +243,18 @@ class DailyPrayersTests: XCTestCase {
     
     func testSouthWest() {
         let location = CLLocation(latitude: -22.922646, longitude: -43.238628)
-        let timezone = TimeZone(identifier: "America/Sao_Paulo")!
+        let timeZone = TimeZone(identifier: "America/Sao_Paulo")!
         let configuration = CalculationConfiguration(asrFactor: 1, fajrAngle: 18, ishaAngle: 17)
         
         var gregorianCalendar = Calendar(identifier: .gregorian)
-        gregorianCalendar.timeZone = timezone
+        gregorianCalendar.timeZone = timeZone
         
-        var dateComponents = DateComponents(calendar: gregorianCalendar, timeZone: timezone)
+        var dateComponents = DateComponents(calendar: gregorianCalendar, timeZone: timeZone)
         dateComponents.year = 2022
         dateComponents.month = 1
         dateComponents.day = 23
         
-        let dailyJan = DailyPrayers(day: dateComponents.date!, timezone: timezone, location: location, configuration: configuration)
+        let dailyJan = DailyPrayers(day: dateComponents.date!, timeZone: timeZone, location: location, configuration: configuration)
         
         // based on https://gml.noaa.gov/grad/solcalc/
         // relatively high tolerance on these values, because of the lack of seconds
@@ -282,7 +282,7 @@ class DailyPrayersTests: XCTestCase {
         dateComponents.month = 4
         dateComponents.day = 6
         
-        let dailyApr = DailyPrayers(day: dateComponents.date!, timezone: timezone, location: location, configuration: configuration)
+        let dailyApr = DailyPrayers(day: dateComponents.date!, timeZone: timeZone, location: location, configuration: configuration)
         
         // based on https://gml.noaa.gov/grad/solcalc/
         // relatively high tolerance on these values, because of the lack of seconds
@@ -308,18 +308,18 @@ class DailyPrayersTests: XCTestCase {
     
     func testSouthEast() {
         let location = CLLocation(latitude: -29.856687, longitude: 31.017086)
-        let timezone = TimeZone(identifier: "Africa/Johannesburg")!
+        let timeZone = TimeZone(identifier: "Africa/Johannesburg")!
         let configuration = CalculationConfiguration(asrFactor: 1, fajrAngle: 18, ishaAngle: 17)
         
         var gregorianCalendar = Calendar(identifier: .gregorian)
-        gregorianCalendar.timeZone = timezone
+        gregorianCalendar.timeZone = timeZone
         
-        var dateComponents = DateComponents(calendar: gregorianCalendar, timeZone: timezone)
+        var dateComponents = DateComponents(calendar: gregorianCalendar, timeZone: timeZone)
         dateComponents.year = 2022
         dateComponents.month = 1
         dateComponents.day = 23
         
-        let dailyJan = DailyPrayers(day: dateComponents.date!, timezone: timezone, location: location, configuration: configuration)
+        let dailyJan = DailyPrayers(day: dateComponents.date!, timeZone: timeZone, location: location, configuration: configuration)
         
         // based on https://gml.noaa.gov/grad/solcalc/
         // relatively high tolerance on these values, because of the lack of seconds
@@ -347,7 +347,7 @@ class DailyPrayersTests: XCTestCase {
         dateComponents.month = 5
         dateComponents.day = 15
         
-        let dailyMay = DailyPrayers(day: dateComponents.date!, timezone: timezone, location: location, configuration: configuration)
+        let dailyMay = DailyPrayers(day: dateComponents.date!, timeZone: timeZone, location: location, configuration: configuration)
         
         // based on https://gml.noaa.gov/grad/solcalc/
         // relatively high tolerance on these values, because of the lack of seconds

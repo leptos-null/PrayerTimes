@@ -39,7 +39,7 @@ public struct DailyPrayersView: View {
                 .padding(.vertical, 1)
             }
         }
-        .environment(\.timeZone, dailyPrayers.timezone)
+        .environment(\.timeZone, dailyPrayers.timeZone)
     }
 }
 
@@ -51,7 +51,7 @@ struct DailyPrayersView_Previews: PreviewProvider {
     static var previews: some View {
         DailyPrayersView(dailyPrayers: DailyPrayers(
             day: Date(timeIntervalSinceReferenceDate: 664581600),
-            timezone: TimeZone(identifier: "Africa/Johannesburg")!,
+            timeZone: TimeZone(identifier: "Africa/Johannesburg")!,
             location: CLLocation(latitude: -29.856687, longitude: 31.017086),
             configuration: CalculationConfiguration(asrFactor: 1, fajrAngle: 18, ishaAngle: 17)
         ))

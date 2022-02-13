@@ -10,27 +10,27 @@ import CoreLocation
 
 struct PrayerIterator: Sequence, IteratorProtocol {
     let start: Date
-    let timezone: TimeZone
+    let timeZone: TimeZone
     let location: CLLocation
     let configuration: CalculationConfiguration
     
     private var currentName: Prayer.Name
     private var currentDay: DailyPrayers
     
-    init(start: Date, timezone: TimeZone, location: CLLocation, configuration: CalculationConfiguration) {
+    init(start: Date, timeZone: TimeZone, location: CLLocation, configuration: CalculationConfiguration) {
         self.start = start
-        self.timezone = timezone
+        self.timeZone = timeZone
         self.location = location
         self.configuration = configuration
         
-        let daily = DailyPrayers(day: start, timezone: timezone, location: location, configuration: configuration)
+        let daily = DailyPrayers(day: start, timeZone: timeZone, location: location, configuration: configuration)
         if let active = daily.activePrayer(for: start) {
             currentName = active.name
             currentDay = daily
         } else {
             let yesterday = daily.dhuhr.start.addingTimeInterval(-.day)
             currentName = .isha
-            currentDay = DailyPrayers(day: yesterday, timezone: timezone, location: location, configuration: configuration)
+            currentDay = DailyPrayers(day: yesterday, timeZone: timeZone, location: location, configuration: configuration)
         }
     }
     
@@ -38,7 +38,7 @@ struct PrayerIterator: Sequence, IteratorProtocol {
         let prayer = currentDay.prayer(named: currentName)
         if currentName == .isha {
             let nextDay = currentDay.dhuhr.start.addingTimeInterval(.day)
-            currentDay = DailyPrayers(day: nextDay, timezone: timezone, location: location, configuration: configuration)
+            currentDay = DailyPrayers(day: nextDay, timeZone: timeZone, location: location, configuration: configuration)
         }
         currentName = currentName.next
         return prayer
