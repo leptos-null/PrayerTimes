@@ -29,7 +29,7 @@ public struct DailyPrayers {
         
         let dayStart = calculationCalendar.startOfDay(for: day)
         
-        let julianDay = julianDay(calendar: calculationCalendar, date: day)
+        let julianDay = day.julianDay()
         let (declination, equationOfTime) = solarApproximations(julianDay: julianDay)
         
         let coordinate = location.coordinate
@@ -43,17 +43,18 @@ public struct DailyPrayers {
         
         let altitude = (location.verticalAccuracy > 0) ? location.altitude : 0
         let atmosphericRefraction: AngleDegree = 0.833 + 0.0347 * altitude.signedSqrt()
-        let horizonOffset = solarPosition.timeIntervalTo(angle: atmosphericRefraction.radians())
+        let horizonOffset = solarPosition.timeIntervalTo(depressionAngle: atmosphericRefraction.radians())
         
         let sunriseTime = solarNoonTime - horizonOffset
         let sunsetTime = solarNoonTime + horizonOffset
         
-        let fajrTime = solarNoonTime - solarPosition.timeIntervalTo(angle: configuration.fajrAngle.radians())
-        let ishaTime = solarNoonTime + solarPosition.timeIntervalTo(angle: configuration.ishaAngle.radians())
+        let fajrTime = solarNoonTime - solarPosition.timeIntervalTo(depressionAngle: configuration.fajrAngle.radians())
+        let ishaTime = solarNoonTime + solarPosition.timeIntervalTo(depressionAngle: configuration.ishaAngle.radians())
         
         let asrTime = solarNoonTime + solarPosition.timeIntervalTo(shadowFactor: configuration.asrFactor)
         
-        let qiyamTime = (fajrTime + .day - ishaTime) * 2/3.0 + ishaTime - .day
+        let yesterdayIshaTime = ishaTime - .day // reasonable estimation of Isha time yesterday
+        let qiyamTime = (fajrTime - yesterdayIshaTime) * 2/3.0 + yesterdayIshaTime
         
         let qiyam = dayStart.addingTimeInterval(qiyamTime)
         let fajr = dayStart.addingTimeInterval(fajrTime)

@@ -48,9 +48,9 @@ class DailyPrayersTests: XCTestCase {
         // i.e. the purpose of these tests are to let us know if a change
         //   inadvertently results in different output
         //   (as opposed to these tests strictly representing the desired output)
-        XCTAssert(dailyJan.fajr.start.timeBetween(dateComponents, 05, 40, 55) < 2)
-        XCTAssert(dailyJan.asr.start.timeBetween(dateComponents, 15, 41, 57) < 2)
-        XCTAssert(dailyJan.isha.start.timeBetween(dateComponents, 19, 26, 04) < 2)
+        XCTAssert(dailyJan.fajr.start.timeBetween(dateComponents, 05, 40, 57) < 2)
+        XCTAssert(dailyJan.asr.start.timeBetween(dateComponents, 15, 41, 23) < 2)
+        XCTAssert(dailyJan.isha.start.timeBetween(dateComponents, 19, 25, 30) < 2)
         
         // failure cases to make sure logic is working
         XCTAssertFalse(dailyJan.fajr.start.timeBetween(dateComponents, 12, 00, 00) < 200)
@@ -76,9 +76,9 @@ class DailyPrayersTests: XCTestCase {
         // i.e. the purpose of these tests are to let us know if a change
         //   inadvertently results in different output
         //   (as opposed to these tests strictly representing the desired output)
-        XCTAssert(dailyNov.fajr.start.timeBetween(dateComponents, 05, 15, 25) < 2)
-        XCTAssert(dailyNov.asr.start.timeBetween(dateComponents, 15, 15, 30) < 2)
-        XCTAssert(dailyNov.isha.start.timeBetween(dateComponents, 18, 59, 38) < 2)
+        XCTAssert(dailyNov.fajr.start.timeBetween(dateComponents, 05, 14, 53) < 2)
+        XCTAssert(dailyNov.asr.start.timeBetween(dateComponents, 15, 15, 34) < 2)
+        XCTAssert(dailyNov.isha.start.timeBetween(dateComponents, 18, 59, 41) < 2)
         
         // failure cases to make sure logic is working
         XCTAssertFalse(dailyNov.fajr.start.timeBetween(dateComponents, 12, 00, 00) < 200)
@@ -333,9 +333,9 @@ class DailyPrayersTests: XCTestCase {
         // i.e. the purpose of these tests are to let us know if a change
         //   inadvertently results in different output
         //   (as opposed to these tests strictly representing the desired output)
-        XCTAssert(dailyJan.fajr.start.timeBetween(dateComponents, 03, 45, 29) < 2)
-        XCTAssert(dailyJan.asr.start.timeBetween(dateComponents, 15, 44, 00) < 2)
-        XCTAssert(dailyJan.isha.start.timeBetween(dateComponents, 20, 24, 05) < 2)
+        XCTAssert(dailyJan.fajr.start.timeBetween(dateComponents, 03, 44, 20) < 2)
+        XCTAssert(dailyJan.asr.start.timeBetween(dateComponents, 15, 43, 41) < 2)
+        XCTAssert(dailyJan.isha.start.timeBetween(dateComponents, 20, 24, 41) < 2)
         
         // failure cases to make sure logic is working
         XCTAssertFalse(dailyJan.fajr.start.timeBetween(dateComponents, 12, 00, 00) < 200)
@@ -361,9 +361,9 @@ class DailyPrayersTests: XCTestCase {
         // i.e. the purpose of these tests are to let us know if a change
         //   inadvertently results in different output
         //   (as opposed to these tests strictly representing the desired output)
-        XCTAssert(dailyMay.fajr.start.timeBetween(dateComponents, 05, 10, 36) < 2)
-        XCTAssert(dailyMay.asr.start.timeBetween(dateComponents, 14, 50, 45) < 2)
-        XCTAssert(dailyMay.isha.start.timeBetween(dateComponents, 18, 29, 15) < 2)
+        XCTAssert(dailyMay.fajr.start.timeBetween(dateComponents, 05, 10, 06) < 2)
+        XCTAssert(dailyMay.asr.start.timeBetween(dateComponents, 14, 51, 14) < 2)
+        XCTAssert(dailyMay.isha.start.timeBetween(dateComponents, 18, 29, 45) < 2)
         
         // failure cases to make sure logic is working
         XCTAssertFalse(dailyMay.fajr.start.timeBetween(dateComponents, 12, 00, 00) < 200)

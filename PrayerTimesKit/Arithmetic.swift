@@ -62,8 +62,8 @@ struct SolarPosition {
         self.cos_declination = cos(declination)
     }
     
-    func timeIntervalTo(angle: AngleRadians) -> TimeInterval {
-        return timeIntervalTo(elevationAngle: -angle)
+    func timeIntervalTo(depressionAngle: AngleRadians) -> TimeInterval {
+        return timeIntervalTo(elevationAngle: -depressionAngle)
     }
     
     func timeIntervalTo(elevationAngle: AngleRadians) -> TimeInterval {
@@ -79,30 +79,13 @@ struct SolarPosition {
     }
 }
 
-// based on https://quasar.as.utexas.edu/BillInfo/JulianDatesG.html
-func julianDay(calendar: Calendar, date: Date) -> Double {
-    assert(calendar.identifier == .gregorian)
-    
-    var year = calendar.component(.year, from: date)
-    var month = calendar.component(.month, from: date)
-    let day = calendar.component(.day, from: date)
-    // transform month from [1, 12] to [3, 14]
-    if month == 1 || month == 2 {
-        year -= 1
-        month += 12
+extension Date {
+    func julianDate() -> Double {
+        timeIntervalSinceReferenceDate / .day + 2451910.5
     }
-    let centuries: Int = year/100
-    let leapYears: Int = centuries/4
-    let leapYearDiscrepancy: Int = (centuries - leapYears)
-    
-    let daysPerYear = 365.25
-    // https://www.hpmuseum.org/cgi-sys/cgiwrap/hpmuseum/archv011.cgi?read=31650
-    let daysPerMonth = Double(365 - 31 - 28)/10.0
-    
-    let yearsDays: Int = Int(daysPerYear * Double(year + 4716))
-    let monthsDays: Int = Int(daysPerMonth * Double(month + 1))
-    
-    return Double(yearsDays - leapYearDiscrepancy + monthsDays + day) - 1522.5
+    func julianDay() -> JulianDay {
+        (timeIntervalSinceReferenceDate / .day).rounded(.down) + 2451910.5
+    }
 }
 
 // https://aa.usno.navy.mil/faq/sun_approx
