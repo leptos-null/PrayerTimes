@@ -22,14 +22,12 @@ public struct DailyPrayers {
     public let isha: Prayer
     
     public init(day: Date, timeZone: TimeZone, location: CLLocation, configuration: CalculationConfiguration) {
-        let timeZoneSeconds = timeZone.secondsFromGMT(for: day)
         var calculationCalendar = Calendar(identifier: .gregorian)
-        guard let frozenTimezone = TimeZone(secondsFromGMT: timeZoneSeconds) else { fatalError() }
-        calculationCalendar.timeZone = frozenTimezone
+        calculationCalendar.timeZone = timeZone
         
         let dayStart = calculationCalendar.startOfDay(for: day)
         
-        let julianDay = day.julianDay()
+        let julianDay = dayStart.julianDay()
         let (declination, equationOfTime) = solarApproximations(julianDay: julianDay)
         
         let coordinate = location.coordinate
@@ -37,7 +35,7 @@ public struct DailyPrayers {
         
         // http://praytimes.org/calculation
         let solarNoonTime: TimeInterval = (TimeInterval.day/2 - coordinate.longitude/Arithmetic.degreesInCircle * TimeInterval.day - equationOfTime)
-            .constrict(to: TimeInterval.day) + TimeInterval(timeZoneSeconds)
+            .constrict(to: TimeInterval.day) + TimeInterval(timeZone.secondsFromGMT(for: dayStart))
         
         let solarPosition = SolarPosition(latitude: latitude, declination: declination)
         
