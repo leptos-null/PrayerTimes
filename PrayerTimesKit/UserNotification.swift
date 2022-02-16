@@ -10,7 +10,7 @@ import UserNotifications
 import CoreLocation
 
 public enum UserNotification {
-    public static func registerFor(location: CLLocation, timeZone: TimeZone, config: CalculationConfiguration, preferences: Preferences) async throws {
+    public static func registerFor(calculationParameters: CalculationParameters, preferences: Preferences) async throws {
         let userNotificationCenter: UNUserNotificationCenter = .current()
         userNotificationCenter.removeAllPendingNotificationRequests()
         
@@ -21,9 +21,9 @@ public enum UserNotification {
         let date: Date = .now
         
         var gregorianCalendar = Calendar(identifier: .gregorian)
-        gregorianCalendar.timeZone = timeZone
+        gregorianCalendar.timeZone = calculationParameters.timeZone
         
-        let notificationRequests: [UNNotificationRequest] = PrayerIterator(start: date, timeZone: timeZone, location: location, configuration: config)
+        let notificationRequests: [UNNotificationRequest] = PrayerIterator(start: date, calculationParameters: calculationParameters)
             .lazy
             .flatMap { preferences.descriptors(for: $0) }
             .drop { date.timeIntervalSince($0.time) > 0 } // drop any notifications that are in the past

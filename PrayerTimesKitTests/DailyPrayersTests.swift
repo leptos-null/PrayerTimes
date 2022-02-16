@@ -25,8 +25,7 @@ class DailyPrayersTests: XCTestCase {
         let asr: HourMinuteSecond
         let isha: HourMinuteSecond
         
-        func validateDay(dateComponents: DateComponents, location: CLLocation, configuration: CalculationConfiguration) {
-            guard let timeZone = dateComponents.timeZone else { fatalError() }
+        func validateDay(dateComponents: DateComponents, calculationParameters: CalculationParameters) {
             // values for any time in the day should be the same
             (0..<24).forEach { hour in
                 var componentsCopy = dateComponents
@@ -34,7 +33,7 @@ class DailyPrayersTests: XCTestCase {
                 componentsCopy.minute = hour
                 componentsCopy.second = hour
                 
-                let daily = DailyPrayers(day: componentsCopy.date!, timeZone: timeZone, location: location, configuration: configuration)
+                let daily = DailyPrayers(day: componentsCopy.date!, calculationParameters: calculationParameters)
                 
                 // based on https://gml.noaa.gov/grad/solcalc/
                 // relatively high tolerance on these values, because of the lack of seconds
@@ -80,9 +79,12 @@ class DailyPrayersTests: XCTestCase {
     }
     
     func testNorthEast() {
-        let location = CLLocation(latitude: 21.422495, longitude: 39.826158)
         let timeZone = TimeZone(identifier: "Asia/Riyadh")!
-        let configuration = CalculationConfiguration(asrFactor: 1, fajrAngle: 18.5, ishaAngle: 19)
+        let calculationParameters = CalculationParameters(
+            timeZone: timeZone,
+            location: CLLocation(latitude: 21.422495, longitude: 39.826158),
+            configuration: CalculationParameters.Configuration(asrFactor: 1, fajrAngle: 18.5, ishaAngle: 19)
+        )
         
         var gregorianCalendar = Calendar(identifier: .gregorian)
         gregorianCalendar.timeZone = timeZone
@@ -102,7 +104,7 @@ class DailyPrayersTests: XCTestCase {
             isha: (19, 25, 30)
         )
         
-        janExpected.validateDay(dateComponents: dateComponents, location: location, configuration: configuration)
+        janExpected.validateDay(dateComponents: dateComponents, calculationParameters: calculationParameters)
         
         // randomly selected date
         dateComponents.year = 2022
@@ -118,13 +120,16 @@ class DailyPrayersTests: XCTestCase {
             isha: (18, 59, 41)
         )
         
-        novExpected.validateDay(dateComponents: dateComponents, location: location, configuration: configuration)
+        novExpected.validateDay(dateComponents: dateComponents, calculationParameters: calculationParameters)
     }
     
     func testNorthWest() {
-        let location = CLLocation(latitude: 37.334900, longitude: -122.009020)
         let timeZone = TimeZone(identifier: "America/Los_Angeles")!
-        let configuration = CalculationConfiguration(asrFactor: 1, fajrAngle: 15, ishaAngle: 15)
+        let calculationParameters = CalculationParameters(
+            timeZone: timeZone,
+            location: CLLocation(latitude: 37.334900, longitude: -122.009020),
+            configuration: CalculationParameters.Configuration(asrFactor: 1, fajrAngle: 15, ishaAngle: 15)
+        )
         
         var gregorianCalendar = Calendar(identifier: .gregorian)
         gregorianCalendar.timeZone = timeZone
@@ -143,7 +148,7 @@ class DailyPrayersTests: XCTestCase {
             isha: (18, 36, 59)
         )
         
-        janExpected.validateDay(dateComponents: dateComponents, location: location, configuration: configuration)
+        janExpected.validateDay(dateComponents: dateComponents, calculationParameters: calculationParameters)
         
         // day of time change
         dateComponents.year = 2022
@@ -159,7 +164,7 @@ class DailyPrayersTests: XCTestCase {
             isha: (20, 24, 03)
         )
         
-        marExpected.validateDay(dateComponents: dateComponents, location: location, configuration: configuration)
+        marExpected.validateDay(dateComponents: dateComponents, calculationParameters: calculationParameters)
         
         // day of time change
         dateComponents.year = 2022
@@ -175,13 +180,16 @@ class DailyPrayersTests: XCTestCase {
             isha: (18, 19, 28)
         )
         
-        novExpected.validateDay(dateComponents: dateComponents, location: location, configuration: configuration)
+        novExpected.validateDay(dateComponents: dateComponents, calculationParameters: calculationParameters)
     }
     
     func testSouthWest() {
-        let location = CLLocation(latitude: -22.922646, longitude: -43.238628)
         let timeZone = TimeZone(identifier: "America/Sao_Paulo")!
-        let configuration = CalculationConfiguration(asrFactor: 1, fajrAngle: 18, ishaAngle: 17)
+        let calculationParameters = CalculationParameters(
+            timeZone: timeZone,
+            location: CLLocation(latitude: -22.922646, longitude: -43.238628),
+            configuration: CalculationParameters.Configuration(asrFactor: 1, fajrAngle: 18, ishaAngle: 17)
+        )
         
         var gregorianCalendar = Calendar(identifier: .gregorian)
         gregorianCalendar.timeZone = timeZone
@@ -200,7 +208,7 @@ class DailyPrayersTests: XCTestCase {
             isha: (20, 01, 05)
         )
         
-        janExpected.validateDay(dateComponents: dateComponents, location: location, configuration: configuration)
+        janExpected.validateDay(dateComponents: dateComponents, calculationParameters: calculationParameters)
         
         // randomly selected date
         dateComponents.year = 2022
@@ -216,13 +224,16 @@ class DailyPrayersTests: XCTestCase {
             isha: (18, 58, 42)
         )
         
-        aprExpected.validateDay(dateComponents: dateComponents, location: location, configuration: configuration)
+        aprExpected.validateDay(dateComponents: dateComponents, calculationParameters: calculationParameters)
     }
     
     func testSouthEast() {
-        let location = CLLocation(latitude: -29.856687, longitude: 31.017086)
         let timeZone = TimeZone(identifier: "Africa/Johannesburg")!
-        let configuration = CalculationConfiguration(asrFactor: 1, fajrAngle: 18, ishaAngle: 17)
+        let calculationParameters = CalculationParameters(
+            timeZone: timeZone,
+            location: CLLocation(latitude: -29.856687, longitude: 31.017086),
+            configuration: CalculationParameters.Configuration(asrFactor: 1, fajrAngle: 18, ishaAngle: 17)
+        )
         
         var gregorianCalendar = Calendar(identifier: .gregorian)
         gregorianCalendar.timeZone = timeZone
@@ -241,7 +252,7 @@ class DailyPrayersTests: XCTestCase {
             isha: (20, 24, 41)
         )
         
-        janExpected.validateDay(dateComponents: dateComponents, location: location, configuration: configuration)
+        janExpected.validateDay(dateComponents: dateComponents, calculationParameters: calculationParameters)
         
         // randomly selected date
         dateComponents.year = 2022
@@ -257,7 +268,7 @@ class DailyPrayersTests: XCTestCase {
             isha: (18, 29, 45)
         )
         
-        mayExpected.validateDay(dateComponents: dateComponents, location: location, configuration: configuration)
+        mayExpected.validateDay(dateComponents: dateComponents, calculationParameters: calculationParameters)
     }
     
 }

@@ -9,9 +9,7 @@ import Foundation
 import CoreLocation
 
 public struct DailyPrayers {
-    public let timeZone: TimeZone
-    public let location: CLLocation
-    public let configuration: CalculationConfiguration
+    public let calculationParameters: CalculationParameters
     
     public let qiyam: Prayer
     public let fajr: Prayer
@@ -21,7 +19,11 @@ public struct DailyPrayers {
     public let maghrib: Prayer
     public let isha: Prayer
     
-    public init(day: Date, timeZone: TimeZone, location: CLLocation, configuration: CalculationConfiguration) {
+    public init(day: Date, calculationParameters: CalculationParameters) {
+        let timeZone = calculationParameters.timeZone
+        let location = calculationParameters.location
+        let configuration = calculationParameters.configuration
+        
         var calculationCalendar = Calendar(identifier: .gregorian)
         calculationCalendar.timeZone = timeZone
         
@@ -62,9 +64,7 @@ public struct DailyPrayers {
         let maghrib = dayStart.addingTimeInterval(sunsetTime)
         let isha = dayStart.addingTimeInterval(ishaTime)
         
-        self.timeZone = timeZone
-        self.location = location
-        self.configuration = configuration
+        self.calculationParameters = calculationParameters
         
         self.qiyam = Prayer(.qiyam, start: qiyam)
         self.sunrise = Prayer(.sunrise, start: sunrise)

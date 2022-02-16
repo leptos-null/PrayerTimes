@@ -9,28 +9,22 @@ import Foundation
 import CoreLocation
 
 struct PrayerIterator: Sequence, IteratorProtocol {
-    let start: Date
-    let timeZone: TimeZone
-    let location: CLLocation
-    let configuration: CalculationConfiguration
+    let calculationParameters: CalculationParameters
     
     private var currentName: Prayer.Name
     private var currentDay: DailyPrayers
     
-    init(start: Date, timeZone: TimeZone, location: CLLocation, configuration: CalculationConfiguration) {
-        self.start = start
-        self.timeZone = timeZone
-        self.location = location
-        self.configuration = configuration
+    init(start: Date, calculationParameters: CalculationParameters) {
+        self.calculationParameters = calculationParameters
         
-        let daily = DailyPrayers(day: start, timeZone: timeZone, location: location, configuration: configuration)
+        let daily = DailyPrayers(day: start, calculationParameters: calculationParameters)
         if let active = daily.activePrayer(for: start) {
             currentName = active.name
             currentDay = daily
         } else {
             let yesterday = daily.dhuhr.start.addingTimeInterval(-.day)
             currentName = .isha
-            currentDay = DailyPrayers(day: yesterday, timeZone: timeZone, location: location, configuration: configuration)
+            currentDay = DailyPrayers(day: yesterday, calculationParameters: calculationParameters)
         }
     }
     
@@ -38,7 +32,7 @@ struct PrayerIterator: Sequence, IteratorProtocol {
         let prayer = currentDay.prayer(named: currentName)
         if currentName == .isha {
             let nextDay = currentDay.dhuhr.start.addingTimeInterval(.day)
-            currentDay = DailyPrayers(day: nextDay, timeZone: timeZone, location: location, configuration: configuration)
+            currentDay = DailyPrayers(day: nextDay, calculationParameters: calculationParameters)
         }
         currentName = currentName.next
         return prayer

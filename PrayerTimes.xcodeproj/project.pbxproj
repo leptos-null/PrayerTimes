@@ -21,7 +21,7 @@
 		FA57312A279D066300E5C9A6 /* DailyPrayers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA573129279D066300E5C9A6 /* DailyPrayers.swift */; };
 		FA57312C279D069100E5C9A6 /* Prayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57312B279D069100E5C9A6 /* Prayer.swift */; };
 		FA57312E279D0F3200E5C9A6 /* Arithmetic.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57312D279D0F3200E5C9A6 /* Arithmetic.swift */; };
-		FA573130279DEE5100E5C9A6 /* CalculationConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57312F279DEE5100E5C9A6 /* CalculationConfiguration.swift */; };
+		FA573130279DEE5100E5C9A6 /* CalculationParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57312F279DEE5100E5C9A6 /* CalculationParameters.swift */; };
 		FA573132279DF10200E5C9A6 /* DailyPrayersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA573131279DF10200E5C9A6 /* DailyPrayersTests.swift */; };
 		FA7950B127BCB95600170000 /* LineUpCompass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7950B027BCB95600170000 /* LineUpCompass.swift */; };
 		FA7950B327BD56B900170000 /* SimpleCompass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7950B227BD56B900170000 /* SimpleCompass.swift */; };
@@ -109,7 +109,7 @@
 		FA573129279D066300E5C9A6 /* DailyPrayers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPrayers.swift; sourceTree = "<group>"; };
 		FA57312B279D069100E5C9A6 /* Prayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prayer.swift; sourceTree = "<group>"; };
 		FA57312D279D0F3200E5C9A6 /* Arithmetic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Arithmetic.swift; sourceTree = "<group>"; };
-		FA57312F279DEE5100E5C9A6 /* CalculationConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationConfiguration.swift; sourceTree = "<group>"; };
+		FA57312F279DEE5100E5C9A6 /* CalculationParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationParameters.swift; sourceTree = "<group>"; };
 		FA573131279DF10200E5C9A6 /* DailyPrayersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPrayersTests.swift; sourceTree = "<group>"; };
 		FA7950B027BCB95600170000 /* LineUpCompass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineUpCompass.swift; sourceTree = "<group>"; };
 		FA7950B227BD56B900170000 /* SimpleCompass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCompass.swift; sourceTree = "<group>"; };
@@ -199,7 +199,7 @@
 				FAA6989E27A2713F000585D9 /* PrayerIterator.swift */,
 				FAA6988227A10D0B000585D9 /* LocationManager.swift */,
 				FA8A4D5527B0307000D43455 /* HeadingManager.swift */,
-				FA57312F279DEE5100E5C9A6 /* CalculationConfiguration.swift */,
+				FA57312F279DEE5100E5C9A6 /* CalculationParameters.swift */,
 				FA57312D279D0F3200E5C9A6 /* Arithmetic.swift */,
 				FA57312B279D069100E5C9A6 /* Prayer.swift */,
 				FA2B41BD27A5B6F40032C29A /* UserNotification.swift */,
@@ -503,7 +503,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA8A4D5227ABA48200D43455 /* KeyValueObserver.swift in Sources */,
-				FA573130279DEE5100E5C9A6 /* CalculationConfiguration.swift in Sources */,
+				FA573130279DEE5100E5C9A6 /* CalculationParameters.swift in Sources */,
 				FA57312E279D0F3200E5C9A6 /* Arithmetic.swift in Sources */,
 				FAA6989F27A2713F000585D9 /* PrayerIterator.swift in Sources */,
 				FAA6988327A10D0B000585D9 /* LocationManager.swift in Sources */,

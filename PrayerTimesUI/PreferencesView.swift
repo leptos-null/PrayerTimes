@@ -52,7 +52,7 @@ struct UserNotificationPreferencesView: View {
 }
 
 struct CalculationConfigurationView: View {
-    @Binding var configuration: CalculationConfiguration
+    @Binding var configuration: CalculationParameters.Configuration
     
     var body: some View {
         FloatingRangeSelection("Asr Factor", value: $configuration.asrFactor, in: 1...2, step: 1)

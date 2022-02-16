@@ -16,7 +16,7 @@ public final class Preferences: ObservableObject {
     
     private let logger = Logger(subsystem: "null.leptos.PrayerTimesKit", category: "Preferences")
     
-    @Published public var calculationParameters: CalculationConfiguration {
+    @Published public var calculationParameters: CalculationParameters.Configuration {
         didSet {
             guard Self.calculationConfiguration(from: userDefaults) != calculationParameters else { return }
             logger.debug("Writing calculationParameters")
@@ -39,8 +39,8 @@ public final class Preferences: ObservableObject {
         }
     }
     
-    private static func calculationConfiguration(from userDefaults: UserDefaults) -> CalculationConfiguration {
-        CalculationConfiguration(
+    private static func calculationConfiguration(from userDefaults: UserDefaults) -> CalculationParameters.Configuration {
+        CalculationParameters.Configuration(
             asrFactor: userDefaults.value(forKey: .asrFactor) ?? 1,
             fajrAngle: userDefaults.value(forKey: .fajrAngle) ?? 15,
             ishaAngle: userDefaults.value(forKey: .ishaAngle) ?? 15
