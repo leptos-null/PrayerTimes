@@ -228,6 +228,22 @@ extension LocationManager {
     }
 }
 
+extension CLLocationCoordinate2D {
+    // https://en.wikipedia.org/wiki/Great-circle_navigation#Course
+    func course(to destination: CLLocationCoordinate2D) -> CLLocationDirection {
+        let srcLat = self.latitude.radians()
+        let srcLng = self.longitude.radians()
+        
+        let dstLat = destination.latitude.radians()
+        let dstLng = destination.longitude.radians()
+        
+        let deltaLng = dstLng - srcLng
+        let y = cos(dstLat) * sin(deltaLng)
+        let x = cos(srcLat) * sin(dstLat) - sin(srcLat) * cos(dstLat) * cos(deltaLng)
+        return atan2(y, x).degrees().constrict(to: Arithmetic.degreesInCircle)
+    }
+}
+
 extension UserDefaults {
     func unarchivedObject<Object>(forKey key: String) throws -> Object? where Object: NSObject, Object: NSSecureCoding {
         guard let data = data(forKey: key) else { return nil }

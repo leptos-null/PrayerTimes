@@ -25,6 +25,7 @@
 		FA573132279DF10200E5C9A6 /* DailyPrayersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA573131279DF10200E5C9A6 /* DailyPrayersTests.swift */; };
 		FA6542A327BF71BD002C4777 /* OrientationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6542A227BF71BD002C4777 /* OrientationManager.swift */; };
 		FA6542A527BF7249002C4777 /* CLDeviceOrientation+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6542A427BF7249002C4777 /* CLDeviceOrientation+UIKit.swift */; };
+		FA6542A727BFFCBC002C4777 /* LocationsCourseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6542A627BFFCBC002C4777 /* LocationsCourseTest.swift */; };
 		FA7950B127BCB95600170000 /* LineUpCompass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7950B027BCB95600170000 /* LineUpCompass.swift */; };
 		FA7950B327BD56B900170000 /* SimpleCompass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7950B227BD56B900170000 /* SimpleCompass.swift */; };
 		FA7950B527BD618100170000 /* SolarPositionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7950B427BD618100170000 /* SolarPositionsView.swift */; };
@@ -116,6 +117,7 @@
 		FA573131279DF10200E5C9A6 /* DailyPrayersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPrayersTests.swift; sourceTree = "<group>"; };
 		FA6542A227BF71BD002C4777 /* OrientationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationManager.swift; sourceTree = "<group>"; };
 		FA6542A427BF7249002C4777 /* CLDeviceOrientation+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLDeviceOrientation+UIKit.swift"; sourceTree = "<group>"; };
+		FA6542A627BFFCBC002C4777 /* LocationsCourseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsCourseTest.swift; sourceTree = "<group>"; };
 		FA7950B027BCB95600170000 /* LineUpCompass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineUpCompass.swift; sourceTree = "<group>"; };
 		FA7950B227BD56B900170000 /* SimpleCompass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCompass.swift; sourceTree = "<group>"; };
 		FA7950B427BD618100170000 /* SolarPositionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarPositionsView.swift; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 			isa = PBXGroup;
 			children = (
 				FA573131279DF10200E5C9A6 /* DailyPrayersTests.swift */,
+				FA6542A627BFFCBC002C4777 /* LocationsCourseTest.swift */,
 			);
 			path = PrayerTimesKitTests;
 			sourceTree = "<group>";
@@ -529,6 +532,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA573132279DF10200E5C9A6 /* DailyPrayersTests.swift in Sources */,
+				FA6542A727BFFCBC002C4777 /* LocationsCourseTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
