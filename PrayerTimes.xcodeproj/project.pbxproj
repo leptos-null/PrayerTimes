@@ -23,6 +23,8 @@
 		FA57312E279D0F3200E5C9A6 /* Arithmetic.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57312D279D0F3200E5C9A6 /* Arithmetic.swift */; };
 		FA573130279DEE5100E5C9A6 /* CalculationParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57312F279DEE5100E5C9A6 /* CalculationParameters.swift */; };
 		FA573132279DF10200E5C9A6 /* DailyPrayersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA573131279DF10200E5C9A6 /* DailyPrayersTests.swift */; };
+		FA6542A327BF71BD002C4777 /* OrientationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6542A227BF71BD002C4777 /* OrientationManager.swift */; };
+		FA6542A527BF7249002C4777 /* CLDeviceOrientation+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6542A427BF7249002C4777 /* CLDeviceOrientation+UIKit.swift */; };
 		FA7950B127BCB95600170000 /* LineUpCompass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7950B027BCB95600170000 /* LineUpCompass.swift */; };
 		FA7950B327BD56B900170000 /* SimpleCompass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7950B227BD56B900170000 /* SimpleCompass.swift */; };
 		FA7950B527BD618100170000 /* SolarPositionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7950B427BD618100170000 /* SolarPositionsView.swift */; };
@@ -112,6 +114,8 @@
 		FA57312D279D0F3200E5C9A6 /* Arithmetic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Arithmetic.swift; sourceTree = "<group>"; };
 		FA57312F279DEE5100E5C9A6 /* CalculationParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationParameters.swift; sourceTree = "<group>"; };
 		FA573131279DF10200E5C9A6 /* DailyPrayersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPrayersTests.swift; sourceTree = "<group>"; };
+		FA6542A227BF71BD002C4777 /* OrientationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationManager.swift; sourceTree = "<group>"; };
+		FA6542A427BF7249002C4777 /* CLDeviceOrientation+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLDeviceOrientation+UIKit.swift"; sourceTree = "<group>"; };
 		FA7950B027BCB95600170000 /* LineUpCompass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineUpCompass.swift; sourceTree = "<group>"; };
 		FA7950B227BD56B900170000 /* SimpleCompass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCompass.swift; sourceTree = "<group>"; };
 		FA7950B427BD618100170000 /* SolarPositionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarPositionsView.swift; sourceTree = "<group>"; };
@@ -272,6 +276,8 @@
 				FAB8F8552797DF7400F21628 /* SceneDelegate.swift */,
 				FAB8F8572797DF7400F21628 /* ViewController.swift */,
 				FA573127279D01DA00E5C9A6 /* ContentView.swift */,
+				FA6542A227BF71BD002C4777 /* OrientationManager.swift */,
+				FA6542A427BF7249002C4777 /* CLDeviceOrientation+UIKit.swift */,
 				FAB8F8592797DF7400F21628 /* Main.storyboard */,
 				FAB8F85C2797DF7500F21628 /* Assets.xcassets */,
 				FAB8F85E2797DF7500F21628 /* LaunchScreen.storyboard */,
@@ -545,7 +551,9 @@
 			files = (
 				FAB8F8582797DF7400F21628 /* ViewController.swift in Sources */,
 				FAB8F8542797DF7400F21628 /* AppDelegate.swift in Sources */,
+				FA6542A527BF7249002C4777 /* CLDeviceOrientation+UIKit.swift in Sources */,
 				FA573128279D01DA00E5C9A6 /* ContentView.swift in Sources */,
+				FA6542A327BF71BD002C4777 /* OrientationManager.swift in Sources */,
 				FAB8F8562797DF7400F21628 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
