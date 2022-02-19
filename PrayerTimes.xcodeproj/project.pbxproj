@@ -26,6 +26,7 @@
 		FA6542A327BF71BD002C4777 /* OrientationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6542A227BF71BD002C4777 /* OrientationManager.swift */; };
 		FA6542A527BF7249002C4777 /* CLDeviceOrientation+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6542A427BF7249002C4777 /* CLDeviceOrientation+UIKit.swift */; };
 		FA6542A727BFFCBC002C4777 /* LocationsCourseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6542A627BFFCBC002C4777 /* LocationsCourseTest.swift */; };
+		FA6542AB27C1552F002C4777 /* QuiblaMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6542AA27C1552F002C4777 /* QuiblaMapView.swift */; };
 		FA7950B127BCB95600170000 /* LineUpCompass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7950B027BCB95600170000 /* LineUpCompass.swift */; };
 		FA7950B327BD56B900170000 /* SimpleCompass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7950B227BD56B900170000 /* SimpleCompass.swift */; };
 		FA7950B527BD618100170000 /* SolarPositionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7950B427BD618100170000 /* SolarPositionsView.swift */; };
@@ -118,6 +119,7 @@
 		FA6542A227BF71BD002C4777 /* OrientationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationManager.swift; sourceTree = "<group>"; };
 		FA6542A427BF7249002C4777 /* CLDeviceOrientation+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLDeviceOrientation+UIKit.swift"; sourceTree = "<group>"; };
 		FA6542A627BFFCBC002C4777 /* LocationsCourseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsCourseTest.swift; sourceTree = "<group>"; };
+		FA6542AA27C1552F002C4777 /* QuiblaMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuiblaMapView.swift; sourceTree = "<group>"; };
 		FA7950B027BCB95600170000 /* LineUpCompass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineUpCompass.swift; sourceTree = "<group>"; };
 		FA7950B227BD56B900170000 /* SimpleCompass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCompass.swift; sourceTree = "<group>"; };
 		FA7950B427BD618100170000 /* SolarPositionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarPositionsView.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 				FA7950B227BD56B900170000 /* SimpleCompass.swift */,
 				FA7950B027BCB95600170000 /* LineUpCompass.swift */,
 				FA7950B427BD618100170000 /* SolarPositionsView.swift */,
+				FA6542AA27C1552F002C4777 /* QuiblaMapView.swift */,
 			);
 			path = PrayerTimesUI;
 			sourceTree = "<group>";
@@ -546,6 +549,7 @@
 				FA8A4D5427AEFB0500D43455 /* LocationManagerProperties.swift in Sources */,
 				FA7950B327BD56B900170000 /* SimpleCompass.swift in Sources */,
 				FA7950B527BD618100170000 /* SolarPositionsView.swift in Sources */,
+				FA6542AB27C1552F002C4777 /* QuiblaMapView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
