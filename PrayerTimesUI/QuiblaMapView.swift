@@ -9,7 +9,7 @@ import SwiftUI
 import MapKit
 import PrayerTimesKit
 
-#if os(iOS) || os(tvOS)
+#if os(iOS) || os(macOS) || os(tvOS)
 
 public struct QuiblaMapView: View {
     public let sourceCoordinate: CLLocationCoordinate2D
@@ -37,7 +37,7 @@ public struct QuiblaMapView: View {
     }
 }
 
-private struct CourseMapView: UIViewRepresentable {
+private struct CourseMapView {
     let source: MKPointAnnotation
     let destination: MKPointAnnotation
     
@@ -45,11 +45,7 @@ private struct CourseMapView: UIViewRepresentable {
         MKGeodesicPolyline(coordinates: [ source.coordinate, destination.coordinate ])
     }
     
-    func makeCoordinator() -> Coordinator {
-        Coordinator()
-    }
-    
-    func makeUIView(context: Context) -> MKMapView {
+    func makeView(context: Context) -> MKMapView {
         let view = MKMapView()
         view.delegate = context.coordinator
         view.mapType = .satelliteFlyover
@@ -57,7 +53,7 @@ private struct CourseMapView: UIViewRepresentable {
         return view
     }
     
-    func updateUIView(_ view: MKMapView, context: Context) {
+    func updateView(_ view: MKMapView, context: Context) {
         if let previousSource = context.coordinator.source {
             view.removeAnnotation(previousSource)
         }
@@ -81,6 +77,10 @@ private struct CourseMapView: UIViewRepresentable {
         context.coordinator.geodesicLine = geodesicLine
     }
     
+    func makeCoordinator() -> Coordinator {
+        Coordinator()
+    }
+    
     class Coordinator: NSObject, MKMapViewDelegate {
         var source: MKPointAnnotation?
         var destination: MKPointAnnotation?
@@ -99,6 +99,28 @@ private struct CourseMapView: UIViewRepresentable {
 #endif
     }
 }
+
+#if os(iOS) || os(tvOS)
+extension CourseMapView: UIViewRepresentable {
+    func makeUIView(context: Context) -> MKMapView {
+        makeView(context: context)
+    }
+    
+    func updateUIView(_ view: MKMapView, context: Context) {
+        updateView(view, context: context)
+    }
+}
+#elseif os(macOS)
+extension CourseMapView: NSViewRepresentable {
+    func makeNSView(context: Context) -> MKMapView {
+        makeView(context: context)
+    }
+    
+    func updateNSView(_ view: MKMapView, context: Context) {
+        updateView(view, context: context)
+    }
+}
+#endif
 
 extension MKGeodesicPolyline {
     convenience init(coordinates coords: [CLLocationCoordinate2D]) {

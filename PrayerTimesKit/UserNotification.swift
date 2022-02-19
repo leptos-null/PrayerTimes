@@ -10,6 +10,7 @@ import UserNotifications
 import CoreLocation
 
 public enum UserNotification {
+#if os(iOS) || os(macOS) || os(watchOS)
     public static func registerFor(calculationParameters: CalculationParameters, preferences: Preferences) async throws {
         let userNotificationCenter: UNUserNotificationCenter = .current()
         userNotificationCenter.removeAllPendingNotificationRequests()
@@ -51,6 +52,7 @@ public enum UserNotification {
             userNotificationCenter.add(notificationRequest)
         }
     }
+#endif
 }
 
 public extension UserNotification {

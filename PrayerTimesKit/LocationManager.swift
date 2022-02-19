@@ -178,20 +178,33 @@ public final class LocationManager: ObservableObject {
     public func requestWhenInUseAuthorization() {
         locationManager.requestWhenInUseAuthorization()
     }
-    
+#if os(iOS) || os(macOS) || os(watchOS)
     public func requestAlwaysAuthorization() {
         locationManager.requestAlwaysAuthorization()
     }
+#endif
     
     // MARK: - Updating Location
     
+    public func requestLocation() {
+        locationManager.requestLocation()
+    }
+#if os(iOS) || os(macOS) || os(watchOS)
     public func startUpdatingLocation() {
         locationManager.startUpdatingLocation()
     }
-    
+#endif
     public func stopUpdatingLocation() {
         locationManager.stopUpdatingLocation()
     }
+#if os(iOS) || os(macOS)
+    public func startMonitoringSignificantLocationChanges() {
+        locationManager.startMonitoringSignificantLocationChanges()
+    }
+    public func stopMonitoringSignificantLocationChanges() {
+        locationManager.stopMonitoringSignificantLocationChanges()
+    }
+#endif
 }
 
 extension LocationManager {

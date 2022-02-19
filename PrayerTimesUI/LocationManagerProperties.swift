@@ -12,6 +12,7 @@ import MapKit
 public struct LocationManagerProperties: View {
     @ObservedObject var locationManager: LocationManager
     
+#if os(iOS) || os(macOS) || os(tvOS)
     private var annotations: [MKAnnotation] {
         var annotations: [MKAnnotation] = []
         if let location = locationManager.location {
@@ -38,6 +39,7 @@ public struct LocationManagerProperties: View {
         }
         return overlays
     }
+#endif
     
     public init(locationManager: LocationManager) {
         self.locationManager = locationManager
@@ -61,8 +63,10 @@ public struct LocationManagerProperties: View {
                 }
                 .padding()
             }
+#if os(iOS) || os(macOS) || os(tvOS)
             Spacer()
             MapView(annotations: annotations, overlays: overlays)
+#endif
         }
     }
 }
@@ -152,15 +156,12 @@ private extension HorizontalAlignment {
     static let innerLeading = HorizontalAlignment(InnerLeading.self)
 }
 
-private struct MapView: UIViewRepresentable {
+#if os(iOS) || os(macOS) || os(tvOS)
+private struct MapView {
     let annotations: [MKAnnotation]
     let overlays: [MKOverlay]
     
-    func makeCoordinator() -> Coordinator {
-        Coordinator()
-    }
-    
-    func makeUIView(context: Context) -> MKMapView {
+    func makeView(context: Context) -> MKMapView {
         let view = MKMapView()
         view.showsUserLocation = true
         view.delegate = context.coordinator
@@ -168,12 +169,16 @@ private struct MapView: UIViewRepresentable {
         return view
     }
     
-    func updateUIView(_ view: MKMapView, context: Context) {
+    func updateView(_ view: MKMapView, context: Context) {
         view.removeAnnotations(view.annotations)
         view.removeOverlays(view.overlays)
         
         view.addAnnotations(annotations)
         view.addOverlays(overlays)
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator()
     }
     
     class Coordinator: NSObject, MKMapViewDelegate {
@@ -189,3 +194,26 @@ private struct MapView: UIViewRepresentable {
 #endif
     }
 }
+#endif
+
+#if os(iOS) || os(tvOS)
+extension MapView: UIViewRepresentable {
+    func makeUIView(context: Context) -> MKMapView {
+        makeView(context: context)
+    }
+    
+    func updateUIView(_ view: MKMapView, context: Context) {
+        updateView(view, context: context)
+    }
+}
+#elseif os(macOS)
+extension MapView: NSViewRepresentable {
+    func makeNSView(context: Context) -> MKMapView {
+        makeView(context: context)
+    }
+    
+    func updateNSView(_ view: MKMapView, context: Context) {
+        updateView(view, context: context)
+    }
+}
+#endif
