@@ -22,6 +22,8 @@ public final class LocationManager: ObservableObject {
     private let locationUserDefaultsKey = "LocationManagerLocation"
     private let placemarkUserDefaultsKey = "LocationManagerPlacemark"
     
+    @Published public private(set) var authorizationStatus: CLAuthorizationStatus
+    
     @Published public private(set) var location: CLLocation? {
         didSet {
             guard let location = location else {
@@ -29,30 +31,19 @@ public final class LocationManager: ObservableObject {
                 return
             }
             reverseGeocodeIfNeeded(location)
-            
-            guard let userDefaults = userDefaults else { return }
-            logger.debug("archiving: \(location)")
-            do {
-                try userDefaults.setArchived(object: location, forKey: locationUserDefaultsKey)
-            } catch {
-                logger.error("setArchived(object: \(location), forKey: \(self.locationUserDefaultsKey)): \(String(describing: error))")
-            }
+            // TODO: avoid writing location to UserDefaults if the value in UserDefaults is the same
+            storeObject(location, for: locationUserDefaultsKey)
         }
     }
-    @Published public private(set) var authorizationStatus: CLAuthorizationStatus
     
     @Published public private(set) var placemark: CLPlacemark? {
         didSet {
-            guard let userDefaults = userDefaults else { return }
             if let placemark = placemark {
-                logger.debug("archiving: \(placemark)")
-                do {
-                    try userDefaults.setArchived(object: placemark, forKey: placemarkUserDefaultsKey)
-                } catch {
-                    logger.error("setArchived(object: \(placemark), forKey: \(self.placemarkUserDefaultsKey)): \(String(describing: error))")
-                }
+                // TODO: avoid writing placemark to UserDefaults if the value in UserDefaults is the same
+                storeObject(placemark, for: placemarkUserDefaultsKey)
             } else {
                 logger.log("placemark set to nil")
+                guard let userDefaults = userDefaults else { return }
                 userDefaults.removeObject(forKey: placemarkUserDefaultsKey)
             }
         }
@@ -104,6 +95,16 @@ public final class LocationManager: ObservableObject {
                 }
                 self.location = location
             }
+        }
+    }
+    
+    private func storeObject<Object>(_ object: Object, for key: String) where Object: NSObject, Object: NSSecureCoding {
+        guard let userDefaults = userDefaults else { return }
+        logger.debug("archiving: \(object)")
+        do {
+            try userDefaults.setArchived(object: object, forKey: key)
+        } catch {
+            logger.error("setArchived(object: \(object), forKey: \(key)): \(String(describing: error))")
         }
     }
     
@@ -243,7 +244,7 @@ extension LocationManager {
 
 extension CLLocationCoordinate2D {
     // https://en.wikipedia.org/wiki/Great-circle_navigation#Course
-    func course(to destination: CLLocationCoordinate2D) -> CLLocationDirection {
+    public func course(to destination: CLLocationCoordinate2D) -> CLLocationDirection {
         let srcLat = self.latitude.radians()
         let srcLng = self.longitude.radians()
         
