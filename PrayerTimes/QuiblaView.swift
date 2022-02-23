@@ -22,20 +22,14 @@ struct QuiblaView: View {
     @ObservedObject var locationManager: LocationManager = .shared
     @StateObject var orientationManager = OrientationManager(device: .current)
     
-    var locationTitle: String {
-        if let placemarkTitle = locationManager.placemark?.locationTitle {
-            return placemarkTitle
-        }
-        guard let coordinate = locationManager.location?.coordinate else { return "Location Unknown" }
-        let format: FloatingPointFormatStyle<CLLocationDegrees> = .number.precision(.fractionLength(4))
-        return "\(coordinate.latitude.formatted(format)), \(coordinate.longitude.formatted(format)))"
-    }
+    let locationTitle: String
     
     var body: some View {
         Group {
             switch mode {
             case .compass:
                 VStack {
+                    Spacer()
                     Text(locationTitle)
                     Spacer()
                     CompassView(headingManager: headingManager, locationManager: locationManager, orientationManager: orientationManager)
@@ -75,6 +69,6 @@ struct QuiblaView: View {
 
 struct QuiblaView_Previews: PreviewProvider {
     static var previews: some View {
-        QuiblaView()
+        QuiblaView(locationTitle: "Location Title")
     }
 }

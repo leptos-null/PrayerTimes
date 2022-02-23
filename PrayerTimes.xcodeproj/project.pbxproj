@@ -33,6 +33,7 @@
 		FA7EB35D27C48D6600642F63 /* QuiblaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7EB35C27C48D6600642F63 /* QuiblaView.swift */; };
 		FA7EB35F27C48F3800642F63 /* CompassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7EB35E27C48F3800642F63 /* CompassView.swift */; };
 		FA7EB36127C66B5200642F63 /* QuiblaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7EB36027C66B5200642F63 /* QuiblaManager.swift */; };
+		FA7EB36327C6747C00642F63 /* DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7EB36227C6747C00642F63 /* DayView.swift */; };
 		FA8A4D4E27AA460300D43455 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A4D4D27AA460300D43455 /* Preferences.swift */; };
 		FA8A4D5027AAF37200D43455 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A4D4F27AAF37200D43455 /* PreferencesView.swift */; };
 		FA8A4D5227ABA48200D43455 /* KeyValueObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A4D5127ABA48200D43455 /* KeyValueObserver.swift */; };
@@ -129,6 +130,7 @@
 		FA7EB35C27C48D6600642F63 /* QuiblaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuiblaView.swift; sourceTree = "<group>"; };
 		FA7EB35E27C48F3800642F63 /* CompassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompassView.swift; sourceTree = "<group>"; };
 		FA7EB36027C66B5200642F63 /* QuiblaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuiblaManager.swift; sourceTree = "<group>"; };
+		FA7EB36227C6747C00642F63 /* DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayView.swift; sourceTree = "<group>"; };
 		FA8A4D4D27AA460300D43455 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		FA8A4D4F27AAF37200D43455 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		FA8A4D5127ABA48200D43455 /* KeyValueObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueObserver.swift; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 				FAB8F8552797DF7400F21628 /* SceneDelegate.swift */,
 				FAB8F8572797DF7400F21628 /* ViewController.swift */,
 				FA573127279D01DA00E5C9A6 /* ContentView.swift */,
+				FA7EB36227C6747C00642F63 /* DayView.swift */,
 				FA7EB35C27C48D6600642F63 /* QuiblaView.swift */,
 				FA7EB35E27C48F3800642F63 /* CompassView.swift */,
 				FA6542A227BF71BD002C4777 /* OrientationManager.swift */,
@@ -574,6 +577,7 @@
 				FA573128279D01DA00E5C9A6 /* ContentView.swift in Sources */,
 				FA7EB35F27C48F3800642F63 /* CompassView.swift in Sources */,
 				FA6542A327BF71BD002C4777 /* OrientationManager.swift in Sources */,
+				FA7EB36327C6747C00642F63 /* DayView.swift in Sources */,
 				FAB8F8562797DF7400F21628 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

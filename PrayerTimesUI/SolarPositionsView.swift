@@ -10,8 +10,8 @@ import CoreLocation
 import PrayerTimesKit
 
 public struct SolarPositionsView: View {
-    let currentTime: Date?
     let dailyPrayers: DailyPrayers
+    let currentTime: Date?
     
     let solarRadius: CGFloat = 9
     
@@ -19,9 +19,9 @@ public struct SolarPositionsView: View {
     let horizonStrokeWidth: CGFloat = 1
     let solarStrokeWidth: CGFloat = 1
     
-    public init(currentTime: Date? = .now, dailyPrayers: DailyPrayers) {
-        self.currentTime = currentTime
+    public init(dailyPrayers: DailyPrayers, currentTime: Date? = .now) {
         self.dailyPrayers = dailyPrayers
+        self.currentTime = currentTime
     }
     
     private func percentIntoDay(_ time: Date) -> Double {
@@ -94,14 +94,14 @@ private extension Path {
 
 struct SolarPositionsView_Previews: PreviewProvider {
     static var previews: some View {
-        SolarPositionsView(currentTime: Date(timeIntervalSinceReferenceDate: 664610000), dailyPrayers: DailyPrayers(
+        SolarPositionsView(dailyPrayers: DailyPrayers(
             day: Date(timeIntervalSinceReferenceDate: 664581600),
             calculationParameters: CalculationParameters(
                 timeZone: TimeZone(identifier: "Africa/Johannesburg")!,
                 location: CLLocation(latitude: -29.856687, longitude: 31.017086),
                 configuration: CalculationParameters.Configuration(asrFactor: 1, fajrAngle: 18, ishaAngle: 17)
             )
-        ))
+        ), currentTime: Date(timeIntervalSinceReferenceDate: 664610000))
             .aspectRatio(2, contentMode: .fit)
     }
 }
