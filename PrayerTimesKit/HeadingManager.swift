@@ -19,10 +19,6 @@ public final class HeadingManager: ObservableObject {
     
     @Published public private(set) var heading: CLHeading?
     
-    public var headingFilter: CLLocationDegrees {
-        get { locationManager.headingFilter }
-        set { locationManager.headingFilter = newValue }
-    }
     public var headingOrientation: CLDeviceOrientation {
         get { locationManager.headingOrientation }
         set { locationManager.headingOrientation = newValue }
@@ -30,6 +26,7 @@ public final class HeadingManager: ObservableObject {
     
     public init() {
         locationManager.delegate = delegate
+        locationManager.headingFilter = kCLHeadingFilterNone
         delegate.headingManager = self
     }
     
@@ -60,7 +57,6 @@ extension HeadingManager {
                 Self.logger.notice("\(#function) called while headingManager is nil")
                 return
             }
-            Self.logger.debug("headingManager.heading = \(String(describing: newHeading))")
             headingManager.heading = newHeading
         }
         
