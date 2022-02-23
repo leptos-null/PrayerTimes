@@ -262,6 +262,14 @@ extension CLLocationCoordinate2D {
     public static let kaaba = CLLocationCoordinate2D(latitude: 21.422495, longitude: 39.826158)
 }
 
+extension CLPlacemark {
+    public var locationTitle: String? {
+        guard let city = locality,
+              let state = administrativeArea else { return nil }
+        return "\(city), \(state)"
+    }
+}
+
 extension UserDefaults {
     func unarchivedObject<Object>(forKey key: String) throws -> Object? where Object: NSObject, Object: NSSecureCoding {
         guard let data = data(forKey: key) else { return nil }

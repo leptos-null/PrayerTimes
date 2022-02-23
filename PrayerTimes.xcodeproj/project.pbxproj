@@ -30,6 +30,8 @@
 		FA7950B127BCB95600170000 /* LineUpCompass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7950B027BCB95600170000 /* LineUpCompass.swift */; };
 		FA7950B327BD56B900170000 /* SimpleCompass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7950B227BD56B900170000 /* SimpleCompass.swift */; };
 		FA7950B527BD618100170000 /* SolarPositionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7950B427BD618100170000 /* SolarPositionsView.swift */; };
+		FA7EB35D27C48D6600642F63 /* QuiblaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7EB35C27C48D6600642F63 /* QuiblaView.swift */; };
+		FA7EB35F27C48F3800642F63 /* CompassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7EB35E27C48F3800642F63 /* CompassView.swift */; };
 		FA8A4D4E27AA460300D43455 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A4D4D27AA460300D43455 /* Preferences.swift */; };
 		FA8A4D5027AAF37200D43455 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A4D4F27AAF37200D43455 /* PreferencesView.swift */; };
 		FA8A4D5227ABA48200D43455 /* KeyValueObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A4D5127ABA48200D43455 /* KeyValueObserver.swift */; };
@@ -123,6 +125,8 @@
 		FA7950B027BCB95600170000 /* LineUpCompass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineUpCompass.swift; sourceTree = "<group>"; };
 		FA7950B227BD56B900170000 /* SimpleCompass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCompass.swift; sourceTree = "<group>"; };
 		FA7950B427BD618100170000 /* SolarPositionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarPositionsView.swift; sourceTree = "<group>"; };
+		FA7EB35C27C48D6600642F63 /* QuiblaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuiblaView.swift; sourceTree = "<group>"; };
+		FA7EB35E27C48F3800642F63 /* CompassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompassView.swift; sourceTree = "<group>"; };
 		FA8A4D4D27AA460300D43455 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		FA8A4D4F27AAF37200D43455 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		FA8A4D5127ABA48200D43455 /* KeyValueObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueObserver.swift; sourceTree = "<group>"; };
@@ -282,6 +286,8 @@
 				FAB8F8552797DF7400F21628 /* SceneDelegate.swift */,
 				FAB8F8572797DF7400F21628 /* ViewController.swift */,
 				FA573127279D01DA00E5C9A6 /* ContentView.swift */,
+				FA7EB35C27C48D6600642F63 /* QuiblaView.swift */,
+				FA7EB35E27C48F3800642F63 /* CompassView.swift */,
 				FA6542A227BF71BD002C4777 /* OrientationManager.swift */,
 				FA6542A427BF7249002C4777 /* CLDeviceOrientation+UIKit.swift */,
 				FAB8F8592797DF7400F21628 /* Main.storyboard */,
@@ -558,9 +564,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAB8F8582797DF7400F21628 /* ViewController.swift in Sources */,
+				FA7EB35D27C48D6600642F63 /* QuiblaView.swift in Sources */,
 				FAB8F8542797DF7400F21628 /* AppDelegate.swift in Sources */,
 				FA6542A527BF7249002C4777 /* CLDeviceOrientation+UIKit.swift in Sources */,
 				FA573128279D01DA00E5C9A6 /* ContentView.swift in Sources */,
+				FA7EB35F27C48F3800642F63 /* CompassView.swift in Sources */,
 				FA6542A327BF71BD002C4777 /* OrientationManager.swift in Sources */,
 				FAB8F8562797DF7400F21628 /* SceneDelegate.swift in Sources */,
 			);
