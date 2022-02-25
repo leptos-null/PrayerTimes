@@ -17,8 +17,7 @@ struct CompassView: View {
     
     private let orientationCancellable: AnyCancellable
     
-    init(headingManager: HeadingManager, locationManager: LocationManager = .shared, orientationManager: OrientationManager) {
-        let quiblaManager = QuiblaManager(locationManager: locationManager, headingManager: headingManager)
+    init(quiblaManager: QuiblaManager, orientationManager: OrientationManager) {
         self.quiblaManager = quiblaManager
         self.orientationManager = orientationManager
         

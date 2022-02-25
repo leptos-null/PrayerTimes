@@ -17,10 +17,10 @@ struct QuiblaView: View {
     }
     
     @State var mode: Mode = HeadingManager.headingAvailable() ? .compass : .map
+    @ObservedObject var locationManager: LocationManager
     
-    @StateObject var headingManager = HeadingManager()
-    @ObservedObject var locationManager: LocationManager = .shared
-    @StateObject var orientationManager = OrientationManager(device: .current)
+    let quiblaManager: QuiblaManager
+    let orientationManager: OrientationManager
     
     let locationTitle: String
     
@@ -32,7 +32,7 @@ struct QuiblaView: View {
                     Spacer()
                     Text(locationTitle)
                     Spacer()
-                    CompassView(headingManager: headingManager, locationManager: locationManager, orientationManager: orientationManager)
+                    CompassView(quiblaManager: quiblaManager, orientationManager: orientationManager)
                 }
                 .scenePadding()
             case .map:
@@ -64,11 +64,5 @@ struct QuiblaView: View {
                 .scenePadding()
             }
         }
-    }
-}
-
-struct QuiblaView_Previews: PreviewProvider {
-    static var previews: some View {
-        QuiblaView(locationTitle: "Location Title")
     }
 }
