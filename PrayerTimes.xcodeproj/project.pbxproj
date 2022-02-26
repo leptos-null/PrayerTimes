@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		FA0C286127C9ACB000C191C9 /* SystemRegistrar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0C286027C9ACB000C191C9 /* SystemRegistrar.swift */; };
+		FA0C286327CA925400C191C9 /* LocationHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0C286227CA925400C191C9 /* LocationHeader.swift */; };
 		FA2B41BE27A5B6F40032C29A /* UserNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2B41BD27A5B6F40032C29A /* UserNotification.swift */; };
 		FA2B41E027A6727E0032C29A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2B41DF27A6727E0032C29A /* AppDelegate.swift */; };
 		FA2B41E227A6727E0032C29A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2B41E127A6727E0032C29A /* SceneDelegate.swift */; };
@@ -104,6 +105,7 @@
 
 /* Begin PBXFileReference section */
 		FA0C286027C9ACB000C191C9 /* SystemRegistrar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemRegistrar.swift; sourceTree = "<group>"; };
+		FA0C286227CA925400C191C9 /* LocationHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHeader.swift; sourceTree = "<group>"; };
 		FA2B41BD27A5B6F40032C29A /* UserNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotification.swift; sourceTree = "<group>"; };
 		FA2B41DD27A6727E0032C29A /* PrayerTimesIcon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrayerTimesIcon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA2B41DF27A6727E0032C29A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 				FAB8F8552797DF7400F21628 /* SceneDelegate.swift */,
 				FAB8F8572797DF7400F21628 /* ViewController.swift */,
 				FA573127279D01DA00E5C9A6 /* ContentView.swift */,
+				FA0C286227CA925400C191C9 /* LocationHeader.swift */,
 				FA7EB36227C6747C00642F63 /* DayView.swift */,
 				FA7EB35C27C48D6600642F63 /* QuiblaView.swift */,
 				FA7EB35E27C48F3800642F63 /* CompassView.swift */,
@@ -577,6 +580,7 @@
 				FAB8F8582797DF7400F21628 /* ViewController.swift in Sources */,
 				FA7EB35D27C48D6600642F63 /* QuiblaView.swift in Sources */,
 				FAB8F8542797DF7400F21628 /* AppDelegate.swift in Sources */,
+				FA0C286327CA925400C191C9 /* LocationHeader.swift in Sources */,
 				FA6542A527BF7249002C4777 /* CLDeviceOrientation+UIKit.swift in Sources */,
 				FA573128279D01DA00E5C9A6 /* ContentView.swift in Sources */,
 				FA7EB35F27C48F3800642F63 /* CompassView.swift in Sources */,

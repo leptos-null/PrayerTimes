@@ -18,13 +18,13 @@ struct DayView: View {
     
     var body: some View {
         VStack {
-            Spacer()
-            Text(locationTitle)
+            LocationHeader(title: locationTitle)
             DailyPrayersView(dailyPrayers: dailyPrayers, time: nowTime)
                 .scenePadding()
             Spacer()
             SolarPositionsView(dailyPrayers: dailyPrayers, currentTime: nowTime)
                 .aspectRatio(2, contentMode: .fit)
+                .frame(minHeight: 112)
         }
     }
 }

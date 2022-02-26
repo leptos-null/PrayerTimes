@@ -29,8 +29,7 @@ struct QuiblaView: View {
             switch mode {
             case .compass:
                 VStack {
-                    Spacer()
-                    Text(locationTitle)
+                    LocationHeader(title: locationTitle)
                     Spacer()
                     CompassView(quiblaManager: quiblaManager, orientationManager: orientationManager)
                 }
