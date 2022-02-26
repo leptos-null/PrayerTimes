@@ -11,7 +11,7 @@ import CoreLocation
 
 public enum UserNotification {
 #if os(iOS) || os(macOS) || os(watchOS)
-    public static func registerFor(calculationParameters: CalculationParameters, preferences: Preferences) async throws {
+    public static func registerFor(calculationParameters: CalculationParameters, preferences: Preferences, bodyText: String) async throws {
         let userNotificationCenter: UNUserNotificationCenter = .current()
         userNotificationCenter.removeAllPendingNotificationRequests()
         
@@ -34,7 +34,7 @@ public enum UserNotification {
                 
                 let notificationContent = UNMutableNotificationContent()
                 notificationContent.title = notificationDescriptor.title
-                // TODO: add location text in body
+                notificationContent.body = bodyText
                 
                 let dateMatch = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
                 

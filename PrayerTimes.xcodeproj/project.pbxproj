@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA0C286127C9ACB000C191C9 /* SystemRegistrar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0C286027C9ACB000C191C9 /* SystemRegistrar.swift */; };
 		FA2B41BE27A5B6F40032C29A /* UserNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2B41BD27A5B6F40032C29A /* UserNotification.swift */; };
 		FA2B41E027A6727E0032C29A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2B41DF27A6727E0032C29A /* AppDelegate.swift */; };
 		FA2B41E227A6727E0032C29A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2B41E127A6727E0032C29A /* SceneDelegate.swift */; };
@@ -102,6 +103,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FA0C286027C9ACB000C191C9 /* SystemRegistrar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemRegistrar.swift; sourceTree = "<group>"; };
 		FA2B41BD27A5B6F40032C29A /* UserNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotification.swift; sourceTree = "<group>"; };
 		FA2B41DD27A6727E0032C29A /* PrayerTimesIcon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrayerTimesIcon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA2B41DF27A6727E0032C29A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 				FA2B41BD27A5B6F40032C29A /* UserNotification.swift */,
 				FA8A4D4D27AA460300D43455 /* Preferences.swift */,
 				FA8A4D5127ABA48200D43455 /* KeyValueObserver.swift */,
+				FA0C286027C9ACB000C191C9 /* SystemRegistrar.swift */,
 			);
 			path = PrayerTimesKit;
 			sourceTree = "<group>";
@@ -530,6 +533,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA8A4D5227ABA48200D43455 /* KeyValueObserver.swift in Sources */,
+				FA0C286127C9ACB000C191C9 /* SystemRegistrar.swift in Sources */,
 				FA573130279DEE5100E5C9A6 /* CalculationParameters.swift in Sources */,
 				FA57312E279D0F3200E5C9A6 /* Arithmetic.swift in Sources */,
 				FAA6989F27A2713F000585D9 /* PrayerIterator.swift in Sources */,
