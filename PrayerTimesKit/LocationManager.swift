@@ -228,8 +228,10 @@ extension LocationManager {
                 logger.notice("\(#function) called while locationManager is nil")
                 return
             }
-            logger.debug("locationManager.location = \(String(describing: manager.location))")
-            locationManager.location = manager.location
+            // we don't really want to set a nil location
+            guard let location = manager.location ?? locations.max(by: { $0.timestamp < $1.timestamp }) else { return }
+            logger.debug("locationManager.location = \(location))")
+            locationManager.location = location
         }
         
         public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
