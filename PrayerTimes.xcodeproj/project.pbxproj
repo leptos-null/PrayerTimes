@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		FA0C286127C9ACB000C191C9 /* SystemRegistrar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0C286027C9ACB000C191C9 /* SystemRegistrar.swift */; };
 		FA0C286327CA925400C191C9 /* LocationHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0C286227CA925400C191C9 /* LocationHeader.swift */; };
+		FA0C286527CC146D00C191C9 /* TimesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0C286427CC146D00C191C9 /* TimesView.swift */; };
+		FA0C286927CD454400C191C9 /* EveryDayTimelineSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0C286827CD454400C191C9 /* EveryDayTimelineSchedule.swift */; };
+		FA0C286B27CD45E000C191C9 /* ZipTimelineSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0C286A27CD45E000C191C9 /* ZipTimelineSchedule.swift */; };
+		FA0C286D27CD465800C191C9 /* NowDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0C286C27CD465800C191C9 /* NowDayView.swift */; };
 		FA2B41BE27A5B6F40032C29A /* UserNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2B41BD27A5B6F40032C29A /* UserNotification.swift */; };
 		FA2B41E027A6727E0032C29A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2B41DF27A6727E0032C29A /* AppDelegate.swift */; };
 		FA2B41E227A6727E0032C29A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2B41E127A6727E0032C29A /* SceneDelegate.swift */; };
@@ -106,6 +110,10 @@
 /* Begin PBXFileReference section */
 		FA0C286027C9ACB000C191C9 /* SystemRegistrar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemRegistrar.swift; sourceTree = "<group>"; };
 		FA0C286227CA925400C191C9 /* LocationHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHeader.swift; sourceTree = "<group>"; };
+		FA0C286427CC146D00C191C9 /* TimesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimesView.swift; sourceTree = "<group>"; };
+		FA0C286827CD454400C191C9 /* EveryDayTimelineSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveryDayTimelineSchedule.swift; sourceTree = "<group>"; };
+		FA0C286A27CD45E000C191C9 /* ZipTimelineSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipTimelineSchedule.swift; sourceTree = "<group>"; };
+		FA0C286C27CD465800C191C9 /* NowDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowDayView.swift; sourceTree = "<group>"; };
 		FA2B41BD27A5B6F40032C29A /* UserNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotification.swift; sourceTree = "<group>"; };
 		FA2B41DD27A6727E0032C29A /* PrayerTimesIcon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrayerTimesIcon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA2B41DF27A6727E0032C29A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -260,6 +268,8 @@
 				FA7950B027BCB95600170000 /* LineUpCompass.swift */,
 				FA7950B427BD618100170000 /* SolarPositionsView.swift */,
 				FA6542AA27C1552F002C4777 /* QuiblaMapView.swift */,
+				FA0C286827CD454400C191C9 /* EveryDayTimelineSchedule.swift */,
+				FA0C286A27CD45E000C191C9 /* ZipTimelineSchedule.swift */,
 			);
 			path = PrayerTimesUI;
 			sourceTree = "<group>";
@@ -297,7 +307,9 @@
 				FAB8F8572797DF7400F21628 /* ViewController.swift */,
 				FA573127279D01DA00E5C9A6 /* ContentView.swift */,
 				FA0C286227CA925400C191C9 /* LocationHeader.swift */,
+				FA0C286427CC146D00C191C9 /* TimesView.swift */,
 				FA7EB36227C6747C00642F63 /* DayView.swift */,
+				FA0C286C27CD465800C191C9 /* NowDayView.swift */,
 				FA7EB35C27C48D6600642F63 /* QuiblaView.swift */,
 				FA7EB35E27C48F3800642F63 /* CompassView.swift */,
 				FA6542A227BF71BD002C4777 /* OrientationManager.swift */,
@@ -566,9 +578,11 @@
 				FA7950B127BCB95600170000 /* LineUpCompass.swift in Sources */,
 				FAA6989B27A1B3D4000585D9 /* DailyPrayersView.swift in Sources */,
 				FA8A4D5027AAF37200D43455 /* PreferencesView.swift in Sources */,
+				FA0C286B27CD45E000C191C9 /* ZipTimelineSchedule.swift in Sources */,
 				FA8A4D5427AEFB0500D43455 /* LocationManagerProperties.swift in Sources */,
 				FA7950B327BD56B900170000 /* SimpleCompass.swift in Sources */,
 				FA7950B527BD618100170000 /* SolarPositionsView.swift in Sources */,
+				FA0C286927CD454400C191C9 /* EveryDayTimelineSchedule.swift in Sources */,
 				FA6542AB27C1552F002C4777 /* QuiblaMapView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -585,7 +599,9 @@
 				FA573128279D01DA00E5C9A6 /* ContentView.swift in Sources */,
 				FA7EB35F27C48F3800642F63 /* CompassView.swift in Sources */,
 				FA6542A327BF71BD002C4777 /* OrientationManager.swift in Sources */,
+				FA0C286D27CD465800C191C9 /* NowDayView.swift in Sources */,
 				FA7EB36327C6747C00642F63 /* DayView.swift in Sources */,
+				FA0C286527CC146D00C191C9 /* TimesView.swift in Sources */,
 				FAB8F8562797DF7400F21628 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
