@@ -26,19 +26,23 @@ struct TimesView: View {
     }
     
     var body: some View {
-        TabView {
-            // these need to seperate otherwise the TabView is only given 1 view to layout
-            // if the TabView is inside the TimelineView, the entire timeline is computed
-            TimelineView(.everyDay(using: calendar)) { dayTimelineContext in
-                NowDayView(dailyPrayers: DailyPrayers(day: dayTimelineContext.date, calculationParameters: calculationParameters), locationTitle: locationTitle)
-            }
-            TimelineView(.everyDay(using: calendar)) { dayTimelineContext in
-                if let nextDay = calendar.date(byAdding: .day, value: 1, to: dayTimelineContext.date) {
-                    DayView(dailyPrayers: DailyPrayers(day: nextDay, calculationParameters: calculationParameters), nowTime: nil, locationTitle: locationTitle)
+        VStack(spacing: 0) {
+            LocationHeader(title: locationTitle)
+                .padding(.bottom, 16)
+            TabView {
+                // these need to seperate otherwise the TabView is only given 1 view to layout
+                // if the TabView is inside the TimelineView, the entire timeline is computed
+                TimelineView(.everyDay(using: calendar)) { dayTimelineContext in
+                    NowDayView(dailyPrayers: DailyPrayers(day: dayTimelineContext.date, calculationParameters: calculationParameters))
+                }
+                TimelineView(.everyDay(using: calendar)) { dayTimelineContext in
+                    if let nextDay = calendar.date(byAdding: .day, value: 1, to: dayTimelineContext.date) {
+                        DayView(dailyPrayers: DailyPrayers(day: nextDay, calculationParameters: calculationParameters), nowTime: nil)
+                    }
                 }
             }
+            .tabViewStyle(.page(indexDisplayMode: .never))
         }
-        .tabViewStyle(.page(indexDisplayMode: .never))
     }
 }
 

@@ -26,7 +26,7 @@ public struct DailyPrayersView: View {
     public var body: some View {
         VStack {
             Text(dailyPrayers.dhuhr.start, style: .date)
-                .font(.headline)
+                .font(.title3)
             ForEach(dailyPrayers.ordered) { prayer in
                 HStack {
                     Text(prayer.name.localized)

@@ -14,11 +14,8 @@ struct DayView: View {
     let dailyPrayers: DailyPrayers
     let nowTime: Date?
     
-    let locationTitle: String
-    
     var body: some View {
         VStack {
-            LocationHeader(title: locationTitle)
             DailyPrayersView(dailyPrayers: dailyPrayers, time: nowTime)
                 .scenePadding()
             Spacer()
@@ -35,12 +32,12 @@ struct DayView_Previews: PreviewProvider {
             timeZone: TimeZone(identifier: "America/Sao_Paulo")!,
             location: CLLocation(latitude: -22.922646, longitude: -43.238628),
             configuration: CalculationParameters.Configuration(asrFactor: 1, fajrAngle: 18, ishaAngle: 17)
-        )), nowTime: Date(timeIntervalSinceReferenceDate: 667340000), locationTitle: "Rio de Janeiro")
+        )), nowTime: Date(timeIntervalSinceReferenceDate: 667340000))
         
         DayView(dailyPrayers: DailyPrayers(day: Date(timeIntervalSinceReferenceDate: 667320000), calculationParameters: CalculationParameters(
             timeZone: TimeZone(identifier: "America/Sao_Paulo")!,
             location: CLLocation(latitude: -22.922646, longitude: -43.238628),
             configuration: CalculationParameters.Configuration(asrFactor: 1, fajrAngle: 18, ishaAngle: 17)
-        )), nowTime: nil, locationTitle: "Rio de Janeiro")
+        )), nowTime: nil)
     }
 }

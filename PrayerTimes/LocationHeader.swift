@@ -12,7 +12,7 @@ struct LocationHeader: View {
     
     var body: some View {
         Spacer()
-            .frame(height: 84)
+            .frame(height: 48)
         Text(title)
             .font(.title2)
     }
