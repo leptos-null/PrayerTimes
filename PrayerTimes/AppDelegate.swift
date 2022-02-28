@@ -6,12 +6,15 @@
 //
 
 import UIKit
+import PrayerTimesKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    let systemRegistrar = SystemRegistrar()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        systemRegistrar.startRegistering()
         return true
     }
     
