@@ -230,7 +230,7 @@ extension LocationManager {
             }
             // we don't really want to set a nil location
             guard let location = manager.location ?? locations.max(by: { $0.timestamp < $1.timestamp }) else { return }
-            logger.debug("locationManager.location = \(location))")
+            logger.debug("locationManager.location = \(location)")
             locationManager.location = location
         }
         
