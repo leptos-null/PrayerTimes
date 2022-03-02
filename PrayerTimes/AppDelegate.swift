@@ -14,6 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let systemRegistrar = SystemRegistrar()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        UserNotification.Manager.current.configure()
         systemRegistrar.startRegistering()
         return true
     }

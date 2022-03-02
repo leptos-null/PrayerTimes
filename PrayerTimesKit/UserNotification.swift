@@ -8,6 +8,7 @@
 import Foundation
 import UserNotifications
 import CoreLocation
+import os
 
 public enum UserNotification {
 #if os(iOS) || os(macOS) || os(watchOS)
@@ -109,3 +110,48 @@ public extension UserNotification {
         }
     }
 }
+
+#if os(iOS) || os(macOS)
+
+public extension UserNotification {
+    final class Manager: ObservableObject {
+        public static let current = Manager()
+        
+        private let center: UNUserNotificationCenter
+        private let delegate = Delegate()
+        
+        @Published public private(set) var hasOpenSettingsRequest: Bool = false
+        
+        init(center: UNUserNotificationCenter = .current())  {
+            self.center = center
+            delegate.manager = self
+        }
+        /// - Note: `configure` must be called before the app finishes launching
+        public func configure() {
+            center.delegate = delegate
+        }
+        
+        public func fulfillOpenSettingsRequest() {
+            hasOpenSettingsRequest = false
+        }
+    }
+}
+
+extension UserNotification.Manager {
+    final class Delegate: NSObject, UNUserNotificationCenterDelegate {
+        private let logger = Logger(subsystem: "null.leptos.PrayerTimesKit", category: "UserNotification.Manager.Delegate")
+        
+        weak var manager: UserNotification.Manager?
+        
+        func userNotificationCenter(_ center: UNUserNotificationCenter, openSettingsFor notification: UNNotification?) {
+            guard let manager = manager else {
+                logger.notice("\(#function) called while manager is nil")
+                return
+            }
+            logger.debug("openSettingsFor(\(String(describing: notification)))")
+            manager.hasOpenSettingsRequest = true
+        }
+    }
+}
+
+#endif
