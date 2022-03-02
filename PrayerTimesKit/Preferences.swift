@@ -16,14 +16,14 @@ public final class Preferences: ObservableObject {
     
     private let logger = Logger(subsystem: "null.leptos.PrayerTimesKit", category: "Preferences")
     
-    @Published public var calculationParameters: CalculationParameters.Configuration {
+    @Published public var calculationConfiguration: CalculationParameters.Configuration {
         didSet {
-            guard Self.calculationConfiguration(from: userDefaults) != calculationParameters else { return }
+            guard Self.calculationConfiguration(from: userDefaults) != calculationConfiguration else { return }
             logger.debug("Writing calculationParameters")
             
-            userDefaults.set(calculationParameters.asrFactor, forKey: .asrFactor)
-            userDefaults.set(calculationParameters.fajrAngle, forKey: .fajrAngle)
-            userDefaults.set(calculationParameters.ishaAngle, forKey: .ishaAngle)
+            userDefaults.set(calculationConfiguration.asrFactor, forKey: .asrFactor)
+            userDefaults.set(calculationConfiguration.fajrAngle, forKey: .fajrAngle)
+            userDefaults.set(calculationConfiguration.ishaAngle, forKey: .ishaAngle)
         }
     }
     
@@ -61,7 +61,7 @@ public final class Preferences: ObservableObject {
         guard let userDefaults = UserDefaults(suiteName: "group.null.leptos.PrayerTimesGroup") else { fatalError("Failed to get group user defaults") }
         self.userDefaults = userDefaults
         
-        calculationParameters = Self.calculationConfiguration(from: userDefaults)
+        calculationConfiguration = Self.calculationConfiguration(from: userDefaults)
         userNotifications = Self.userNotificationPreferences(from: userDefaults)
         
         let configurationKeys: [UserDefaultsKey] = [ .asrFactor, .fajrAngle, .ishaAngle ]
@@ -70,8 +70,8 @@ public final class Preferences: ObservableObject {
                 guard let self = self else { return }
                 
                 let update = Self.calculationConfiguration(from: userDefaults)
-                guard self.calculationParameters != update else { return }
-                self.calculationParameters = update
+                guard self.calculationConfiguration != update else { return }
+                self.calculationConfiguration = update
             }
         }
         

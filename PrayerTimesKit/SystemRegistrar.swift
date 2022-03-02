@@ -40,7 +40,7 @@ public final class SystemRegistrar {
             .store(in: &cancellables)
         
         locationManager.$placemark
-            .combineLatest(preferences.$calculationParameters, preferences.$userNotifications) { ($0, $1, $2) }
+            .combineLatest(preferences.$calculationConfiguration, preferences.$userNotifications) { ($0, $1, $2) }
             .sink { (placemark, configuration, userNotificationPreferences) in
                 guard let location = placemark?.location ?? locationManager.location else {
                     Self.logger.error("No usable location while registering for user notifications")

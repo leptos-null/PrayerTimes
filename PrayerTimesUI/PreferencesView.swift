@@ -22,7 +22,7 @@ public struct PreferencesView: View {
                     UserNotificationPreferencesView(preferences: $preferences.userNotifications)
                 }
                 Section("Configuration") {
-                    CalculationConfigurationView(configuration: $preferences.calculationParameters)
+                    CalculationConfigurationView(configuration: $preferences.calculationConfiguration)
                 }
             }
             .navigationTitle("Preferences")
