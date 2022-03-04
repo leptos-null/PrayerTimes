@@ -51,9 +51,7 @@ public final class SystemRegistrar {
                 if let placemarkTitle = locationManager.placemark?.locationTitle {
                     locationText = "in \(placemarkTitle)"
                 } else {
-                    let coordinate = location.coordinate
-                    let format: FloatingPointFormatStyle<CLLocationDegrees> = .number.precision(.fractionLength(4))
-                    locationText = "near (\(coordinate.latitude.formatted(format)), \(coordinate.longitude.formatted(format)))"
+                    locationText = "near \(location.coordinateText)"
                 }
                 
                 let calculationParameters = CalculationParameters(

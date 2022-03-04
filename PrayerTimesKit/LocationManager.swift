@@ -272,6 +272,14 @@ extension CLPlacemark {
     }
 }
 
+extension CLLocation {
+    public var coordinateText: String {
+        let format: FloatingPointFormatStyle<CLLocationDegrees> = .number.precision(.fractionLength(4))
+        return "(\(coordinate.latitude.formatted(format)), \(coordinate.longitude.formatted(format)))"
+    }
+}
+
+
 extension UserDefaults {
     func unarchivedObject<Object>(forKey key: String) throws -> Object? where Object: NSObject, Object: NSSecureCoding {
         guard let data = data(forKey: key) else { return nil }
