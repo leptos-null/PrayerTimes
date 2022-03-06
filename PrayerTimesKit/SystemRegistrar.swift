@@ -39,24 +39,20 @@ public final class SystemRegistrar {
             }
             .store(in: &cancellables)
         
-        locationManager.$placemark
+        locationManager.$stapledLocation
+            .compactMap { $0 }
             .combineLatest(preferences.$calculationConfiguration, preferences.$userNotifications) { ($0, $1, $2) }
-            .sink { (placemark, configuration, userNotificationPreferences) in
-                guard let location = placemark?.location ?? locationManager.location else {
-                    Self.logger.error("No usable location while registering for user notifications")
-                    return
-                }
-                
+            .sink { (stapledLocation, configuration, userNotificationPreferences) in
                 let locationText: String
-                if let placemarkTitle = locationManager.placemark?.locationTitle {
+                if let placemarkTitle = stapledLocation.placemark?.locationTitle {
                     locationText = "in \(placemarkTitle)"
                 } else {
-                    locationText = "near \(location.coordinateText)"
+                    locationText = "near \(stapledLocation.location.coordinateText)"
                 }
                 
                 let calculationParameters = CalculationParameters(
-                    timeZone: placemark?.timeZone ?? .current,
-                    location: location,
+                    timeZone: stapledLocation.placemark?.timeZone ?? .current,
+                    location: stapledLocation.location,
                     configuration: configuration
                 )
                 Task {

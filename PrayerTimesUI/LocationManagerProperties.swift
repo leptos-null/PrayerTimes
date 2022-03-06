@@ -21,7 +21,7 @@ public struct LocationManagerProperties: View {
             point.title = "location"
             annotations.append(point)
         }
-        if let placemark = locationManager.placemark?.location {
+        if let placemark = locationManager.stapledLocation?.placemark?.location {
             let point = MKPointAnnotation()
             point.coordinate = placemark.coordinate
             point.title = "placemark"
@@ -32,7 +32,7 @@ public struct LocationManagerProperties: View {
     
     private var overlays: [MKOverlay] {
         var overlays: [MKOverlay] = []
-        if let region = locationManager.placemark?.region as? CLCircularRegion {
+        if let region = locationManager.stapledLocation?.placemark?.region as? CLCircularRegion {
             let circle = MKCircle(center: region.center, radius: region.radius)
             circle.title = "region"
             overlays.append(circle)
@@ -55,7 +55,7 @@ public struct LocationManagerProperties: View {
                 }
                 .padding()
             }
-            if let location = locationManager.placemark?.location {
+            if let location = locationManager.stapledLocation?.placemark?.location {
                 VStack {
                     Text("placemark")
                         .font(.headline)

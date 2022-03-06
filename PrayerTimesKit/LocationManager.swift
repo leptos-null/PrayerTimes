@@ -20,7 +20,7 @@ public final class LocationManager: ObservableObject {
     
     private let userDefaults = UserDefaults(suiteName: "group.null.leptos.PrayerTimesGroup")
     private let locationUserDefaultsKey = "LocationManagerLocation"
-    private let placemarkUserDefaultsKey = "LocationManagerPlacemark"
+    private let stapledLocationUserDefaultsKey = "LocationManagerStapledLocation"
     
     @Published public private(set) var authorizationStatus: CLAuthorizationStatus
     
@@ -30,22 +30,44 @@ public final class LocationManager: ObservableObject {
                 logger.log("location set to nil")
                 return
             }
-            reverseGeocodeIfNeeded(location)
+            Task(priority: .utility) { [weak self] in
+                guard let self = self else { return }
+                if let stapledLocation = try await self.stapledLocation(for: location),
+                   stapledLocation != self.stapledLocation {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.stapledLocation = stapledLocation
+                    }
+                }
+            }
             // TODO: avoid writing location to UserDefaults if the value in UserDefaults is the same
-            storeObject(location, for: locationUserDefaultsKey)
+            guard let userDefaults = userDefaults else { return }
+            logger.debug("archiving: \(location)")
+            do {
+                try userDefaults.setArchived(object: location, forKey: locationUserDefaultsKey)
+            } catch {
+                logger.error("setArchived(object: \(location), forKey: \(self.locationUserDefaultsKey)): \(String(describing: error))")
+            }
         }
     }
     
-    @Published public private(set) var placemark: CLPlacemark? {
+    @Published public private(set) var stapledLocation: StapledLocation? {
         didSet {
-            if let placemark = placemark {
-                // TODO: avoid writing placemark to UserDefaults if the value in UserDefaults is the same
-                storeObject(placemark, for: placemarkUserDefaultsKey)
-            } else {
-                logger.log("placemark set to nil")
-                guard let userDefaults = userDefaults else { return }
-                userDefaults.removeObject(forKey: placemarkUserDefaultsKey)
+            guard let stapledLocation = stapledLocation else {
+                logger.log("stapledLocation set to nil")
+                return
             }
+            guard let userDefaults = userDefaults else { return }
+            
+            let dictionaryRepresentation: [String: Data]
+            do {
+                dictionaryRepresentation = try stapledLocation.dictionaryRepresentation
+            } catch {
+                logger.error("stapledLocation.dictionaryRepresentation: \(String(describing: error))")
+                return
+            }
+            // TODO: avoid writing location to UserDefaults if the value in UserDefaults is the same
+            logger.debug("userDefaults.set(\(dictionaryRepresentation), forKey: \(self.stapledLocationUserDefaultsKey))")
+            userDefaults.set(dictionaryRepresentation, forKey: stapledLocationUserDefaultsKey)
         }
     }
     
@@ -72,23 +94,37 @@ public final class LocationManager: ObservableObject {
             // run placemark first since we don't want location to go
             //  and do a reverse geocode after finding that placemark is nil
             
-            observe(userDefaults: userDefaults, for: placemarkUserDefaultsKey) { [weak self] (placemark: CLPlacemark?) in
-                guard let self = self, placemark != self.placemark else { return }
-                
-                if let currentPlacemark = self.placemark,
-                   let updatePlacemark = placemark,
-                   let currentLocation = currentPlacemark.location,
-                   let updateLocation = updatePlacemark.location {
-                    // seemingly, Placemarks take on the timestamp of when they were decoded.
-                    // instead of checking for a more recent timestamp, avoid a read-write loop
-                    // by checking if new placemark is at least a meter away from the current
-                    guard updateLocation.distance(from: currentLocation) > 1 else { return }
+            observer.observe(object: userDefaults, forKeyPath: stapledLocationUserDefaultsKey, options: .initial) { [weak self] change in
+                guard let self = self else { return }
+                let object = userDefaults.object(forKey: self.stapledLocationUserDefaultsKey)
+                guard let value = object as? [String: Data] else {
+                    self.logger.error("Requested [String: Data] for \(self.stapledLocationUserDefaultsKey), found \(String(describing: object))")
+                    return
                 }
-                self.placemark = placemark
+                let stapledLocation: StapledLocation
+                do {
+                    stapledLocation = try StapledLocation(dictionaryRepresentation: value)
+                } catch {
+                    self.logger.error("StapledLocation(dictionaryRepresentation: \(value)): \(String(describing: error))")
+                    return
+                }
+                if let current = self.stapledLocation {
+                    // new location must be at least newer than the current
+                    guard stapledLocation.location.timestamp.timeIntervalSince(current.location.timestamp) > 0 else { return }
+                }
+                self.stapledLocation = stapledLocation
             }
-            observe(userDefaults: userDefaults, for: locationUserDefaultsKey) { [weak self] (location: CLLocation?) in
-                guard let self = self, let location = location else { return }
-                
+            
+            observer.observe(object: userDefaults, forKeyPath: locationUserDefaultsKey, options: .initial) { [weak self] change in
+                guard let self = self else { return }
+                let location: CLLocation?
+                do {
+                    location = try userDefaults.unarchivedObject(forKey: self.locationUserDefaultsKey)
+                } catch {
+                    self.logger.error("unarchivedObject(forKey: \(self.locationUserDefaultsKey)): \(String(describing: error))")
+                    return
+                }
+                guard let location = location else { return }
                 if let currentLocation = self.location {
                     // new location must be at least newer than the current
                     guard location.timestamp.timeIntervalSince(currentLocation.timestamp) > 0 else { return }
@@ -98,76 +134,43 @@ public final class LocationManager: ObservableObject {
         }
     }
     
-    private func storeObject<Object>(_ object: Object, for key: String) where Object: NSObject, Object: NSSecureCoding {
-        guard let userDefaults = userDefaults else { return }
-        logger.debug("archiving: \(object)")
-        do {
-            try userDefaults.setArchived(object: object, forKey: key)
-        } catch {
-            logger.error("setArchived(object: \(object), forKey: \(key)): \(String(describing: error))")
-        }
-    }
-    
-    private func observe<T>(userDefaults: UserDefaults, for key: String, update: @escaping (T?) -> Void) where T: NSObject, T: NSSecureCoding {
-        observer.observe(object: userDefaults, forKeyPath: key, options: .initial) { [weak self] change in
-            guard let self = self else { return }
-            let value: T?
-            do {
-                value = try userDefaults.unarchivedObject(forKey: key)
-            } catch {
-                self.logger.error("unarchivedObject(forKey: \(key)): \(String(describing: error))")
-                return
-            }
-            guard let value = value else { return }
-            update(value)
-        }
-    }
-    
     deinit {
         activeGeocoder?.cancelGeocode()
     }
     
-    private func reverseGeocodeIfNeeded(_ location: CLLocation) {
+    private func stapledLocation(for location: CLLocation) async throws -> StapledLocation? {
+        let placemark = stapledLocation?.placemark
         let placemarkLocationDistance = placemark?.location?.distance(from: location)
         // if this location is within a kilometer of the current placemark, skip it
         if let placemarkLocationDistance = placemarkLocationDistance,
-           placemarkLocationDistance <= 1000 { return }
-        
+           placemarkLocationDistance <= 1000 {
+            return StapledLocation(placemark: placemark, location: location)
+        }
         // if there's already an activeGeocoder, don't start another one
-        if let activeGeocoder = activeGeocoder, activeGeocoder.isGeocoding { return }
+        if let activeGeocoder = activeGeocoder, activeGeocoder.isGeocoding { return nil }
         
         let geocoder = CLGeocoder()
         activeGeocoder = geocoder
         
-        Task(priority: .background) { [weak self] in
-            guard let self = self else { return }
-            self.logger.debug("reverse geocoding: \(location)")
-            do {
-                let placemarks = try await geocoder.reverseGeocodeLocation(location)
-                guard let placemark = placemarks.first else {
-                    self.logger.log("reverseGeocodeLocation did not return any placemarks")
-                    return
-                }
-                DispatchQueue.main.async { [weak self] in
-                    self?.placemark = placemark
-                }
-            } catch {
-                // once the placemark is over 5 kilometers away from the location,
-                //   consider the placemark no longer representative of the location
-                if let placemarkLocationDistance = placemarkLocationDistance,
-                   placemarkLocationDistance > 5000 {
-                    DispatchQueue.main.async { [weak self] in
-                        self?.placemark = nil
-                    }
-                }
-                if let error = error as? CLError {
-                    self.logger.error("reverseGeocodeLocation: [\(error.code, privacy: .public)] \(error as NSError)")
-                } else {
-                    self.logger.error("reverseGeocodeLocation: \(String(describing: error))")
-                }
+        logger.debug("reverse geocoding: \(location)")
+        do {
+            let placemarks = try await geocoder.reverseGeocodeLocation(location)
+            return StapledLocation(placemark: placemarks.first, location: location)
+        } catch {
+            if let error = error as? CLError {
+                self.logger.error("reverseGeocodeLocation: [\(error.code, privacy: .public)] \(error as NSError)")
+            } else {
+                self.logger.error("reverseGeocodeLocation: \(String(describing: error))")
             }
-            self.activeGeocoder = nil
         }
+        // once the placemark is over 5 kilometers away from the location,
+        //   consider the placemark no longer representative of the location
+        if let placemarkLocationDistance = placemarkLocationDistance,
+           placemarkLocationDistance > 5000 {
+            return StapledLocation(placemark: nil, location: location)
+        }
+        activeGeocoder = nil
+        return StapledLocation(placemark: placemark, location: location)
     }
     
     public func override(location: CLLocation) {

@@ -31,28 +31,28 @@ struct ContentView: View {
         self.userNotificationManager = userNotificationManager
     }
     
-    private func calculationParameters(for location: CLLocation) -> CalculationParameters {
+    private func calculationParameters(for stapledLocation: StapledLocation) -> CalculationParameters {
         CalculationParameters(
-            timeZone: locationManager.placemark?.timeZone ?? .current,
-            location: locationManager.placemark?.location ?? location,
+            timeZone: stapledLocation.placemark?.timeZone ?? .current,
+            location: stapledLocation.location,
             configuration: preferences.calculationConfiguration
         )
     }
     
-    private func locationTitle(for location: CLLocation) -> String {
-        locationManager.placemark?.locationTitle ?? location.coordinateText
+    private func locationTitle(for stapledLocation: StapledLocation) -> String {
+        stapledLocation.placemark?.locationTitle ?? stapledLocation.location.coordinateText
     }
     
     var body: some View {
         TabView(selection: $tab) {
-            if let location = locationManager.location {
-                QuiblaView(locationManager: locationManager, quiblaManager: quiblaManager, orientationManager: orientationManager, locationTitle: locationTitle(for: location))
+            if let stapledLocation = locationManager.stapledLocation {
+                QuiblaView(locationManager: locationManager, quiblaManager: quiblaManager, orientationManager: orientationManager, locationTitle: locationTitle(for: stapledLocation))
                     .tabItem {
                         Label("Quibla", systemImage: "location.north.line")
                     }
                     .tag(Tab.quibla)
                 
-                TimesView(calculationParameters: calculationParameters(for: location), locationTitle: locationTitle(for: location))
+                TimesView(calculationParameters: calculationParameters(for: stapledLocation), locationTitle: locationTitle(for: stapledLocation))
                     .tabItem {
                         Label("Times", systemImage: "clock")
                     }
