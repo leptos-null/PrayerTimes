@@ -153,17 +153,16 @@ class ViewController: UIViewController {
     
     @IBOutlet private var imageView: UIImageView!
     
-    private func writeIconAssets(for iconSet: URL) throws {
+    private func writeIconAssets(for iconSet: URL, appIcon: AppIcon = AppIcon()) throws {
         let manifest = iconSet.appendingPathComponent("Contents.json")
         let parse = try Data(contentsOf: manifest)
         let jsonDecoder = JSONDecoder()
         var iconSetContents = try jsonDecoder.decode(AppIconSetContents.self, from: parse)
         
-        let appIcon = AppIcon()
-        
         iconSetContents.images = try iconSetContents.images.map { image in
-            guard image.scale.last == Character("x") else { fatalError("scale must be '{NUMERIC}x'") }
-            guard let scale = Double(image.scale.dropLast()) else { fatalError("scale.dropLast() must be numeric") }
+            var imageScale = image.scale
+            guard imageScale.popLast() == Character("x") else { fatalError("scale must end with 'x' character") }
+            guard let scale = Double(imageScale) else { fatalError("scale.dropLast() must be numeric") }
             
             let dimensions = image.size.split(separator: "x")
             guard dimensions.count == 2,
@@ -200,8 +199,11 @@ class ViewController: UIViewController {
         let file = URL(fileURLWithPath: #file)
         let project = URL(fileURLWithPath: "..", isDirectory: true, relativeTo: file)
         
-        let iconSet = URL(fileURLWithPath: "PrayerTimes/Assets.xcassets/AppIcon.appiconset", isDirectory: true, relativeTo: project)
-        try! writeIconAssets(for: iconSet)
+        let mobileIconSet = URL(fileURLWithPath: "PrayerTimes/Assets.xcassets/AppIcon.appiconset", isDirectory: true, relativeTo: project)
+        try! writeIconAssets(for: mobileIconSet)
+        
+        let nanoIconSet = URL(fileURLWithPath: "PrayerTimesWatch/Assets.xcassets/AppIcon.appiconset", isDirectory: true, relativeTo: project)
+        try! writeIconAssets(for: nanoIconSet, appIcon: AppIcon(insetScaleFactor: 0))
         
         let banner = URL(fileURLWithPath: "docs/banner.png", isDirectory: true, relativeTo: project)
         try! writeGitHubPreview(to: banner, scale: 1)
