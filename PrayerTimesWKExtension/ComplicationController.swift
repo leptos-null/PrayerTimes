@@ -11,49 +11,45 @@ import ClockKit
 class ComplicationController: NSObject, CLKComplicationDataSource {
     
     // MARK: - Complication Configuration
-
-    func getComplicationDescriptors(handler: @escaping ([CLKComplicationDescriptor]) -> Void) {
+    
+    func complicationDescriptors() async -> [CLKComplicationDescriptor] {
         let descriptors = [
             CLKComplicationDescriptor(identifier: "complication", displayName: "PrayerTimes", supportedFamilies: CLKComplicationFamily.allCases)
             // Multiple complication support can be added here with more descriptors
         ]
-        
-        // Call the handler with the currently supported complication descriptors
-        handler(descriptors)
+        return descriptors
     }
     
     func handleSharedComplicationDescriptors(_ complicationDescriptors: [CLKComplicationDescriptor]) {
         // Do any necessary work to support these newly shared complication descriptors
     }
-
+    
     // MARK: - Timeline Configuration
     
-    func getTimelineEndDate(for complication: CLKComplication, withHandler handler: @escaping (Date?) -> Void) {
-        // Call the handler with the last entry date you can currently provide or nil if you can't support future timelines
-        handler(nil)
+    func timelineEndDate(for complication: CLKComplication) async -> Date? {
+        // Return the last entry date you can currently provide or nil if you can't support future timelines
+        return nil
     }
     
-    func getPrivacyBehavior(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationPrivacyBehavior) -> Void) {
-        // Call the handler with your desired behavior when the device is locked
-        handler(.showOnLockScreen)
+    func privacyBehavior(for complication: CLKComplication) async -> CLKComplicationPrivacyBehavior {
+        // Return your desired behavior when the device is locked
+        return .showOnLockScreen
     }
-
+    
     // MARK: - Timeline Population
     
-    func getCurrentTimelineEntry(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void) {
-        // Call the handler with the current timeline entry
-        handler(nil)
+    func currentTimelineEntry(for complication: CLKComplication) async -> CLKComplicationTimelineEntry? {
+        return nil
     }
     
-    func getTimelineEntries(for complication: CLKComplication, after date: Date, limit: Int, withHandler handler: @escaping ([CLKComplicationTimelineEntry]?) -> Void) {
-        // Call the handler with the timeline entries after the given date
-        handler(nil)
+    func timelineEntries(for complication: CLKComplication, after date: Date, limit: Int) async -> [CLKComplicationTimelineEntry]? {
+        return nil
     }
-
+    
     // MARK: - Sample Templates
     
-    func getLocalizableSampleTemplate(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTemplate?) -> Void) {
+    func localizableSampleTemplate(for complication: CLKComplication) async -> CLKComplicationTemplate? {
         // This method will be called once per supported complication, and the results will be cached
-        handler(nil)
+        return nil
     }
 }

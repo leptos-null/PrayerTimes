@@ -292,8 +292,8 @@
 		FA4F366827E506DB00A63988 /* PrayerTimesWKExtension */ = {
 			isa = PBXGroup;
 			children = (
-				FA4F366927E506DB00A63988 /* ContentView.swift */,
 				FA4F366B27E506DB00A63988 /* PrayerTimesApp.swift */,
+				FA4F366927E506DB00A63988 /* ContentView.swift */,
 				FA4F366D27E506DB00A63988 /* ComplicationController.swift */,
 				FA4F366F27E506DB00A63988 /* Assets.xcassets */,
 				FA4F367427E506DB00A63988 /* Info.plist */,
