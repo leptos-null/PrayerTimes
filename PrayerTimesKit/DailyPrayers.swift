@@ -102,6 +102,6 @@ extension DailyPrayers {
     }
     
     public func activePrayer(for date: Date) -> Prayer? {
-        ordered.last { date.timeIntervalSince($0.start) > 0 }
+        ordered.last { date.timeIntervalSince($0.start) >= 0 }
     }
 }
