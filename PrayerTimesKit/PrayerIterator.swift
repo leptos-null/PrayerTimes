@@ -8,13 +8,13 @@
 import Foundation
 import CoreLocation
 
-struct PrayerIterator: Sequence, IteratorProtocol {
-    let calculationParameters: CalculationParameters
+public struct PrayerIterator: Sequence, IteratorProtocol {
+    public let calculationParameters: CalculationParameters
     
     private var currentName: Prayer.Name
     private var currentDay: DailyPrayers
     
-    init(start: Date, calculationParameters: CalculationParameters) {
+    public init(start: Date, calculationParameters: CalculationParameters) {
         self.calculationParameters = calculationParameters
         
         let daily = DailyPrayers(day: start, calculationParameters: calculationParameters)
@@ -28,7 +28,7 @@ struct PrayerIterator: Sequence, IteratorProtocol {
         }
     }
     
-    mutating func next() -> Prayer? {
+    public mutating func next() -> Prayer? {
         let prayer = currentDay.prayer(named: currentName)
         if currentName == .isha {
             let nextDay = currentDay.dhuhr.start.addingTimeInterval(.day)
@@ -39,7 +39,7 @@ struct PrayerIterator: Sequence, IteratorProtocol {
     }
 }
 
-extension Prayer.Name {
+public extension Prayer.Name {
     var next: Prayer.Name {
         switch self {
         case .qiyam: return .fajr
