@@ -8,6 +8,8 @@
 import SwiftUI
 import PrayerTimesKit
 
+#if os(iOS) /* TODO: Move out of PrayerTimeUI into iOS target */
+
 public struct PreferencesView: View {
     @ObservedObject var preferences: Preferences
     
@@ -118,6 +120,8 @@ struct UserNotificationSelectionView: View {
         .listStyle(.insetGrouped)
     }
 }
+
+#endif
 
 struct PrayerNameSelection: View {
     @Binding var selection: Set<Prayer.Name>
