@@ -6,12 +6,21 @@
 //
 
 import SwiftUI
+import PrayerTimesKit
 
 @main
 struct PrayerTimesApp: App {
+    let systemRegistrar = SystemRegistrar()
+    
+    init() {
+        systemRegistrar.startRegistering()
+    }
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationView {
+                ContentView()
+            }
         }
     }
 }

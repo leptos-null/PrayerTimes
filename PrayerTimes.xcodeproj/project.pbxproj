@@ -1004,6 +1004,8 @@
 				INFOPLIST_FILE = PrayerTimesWKExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PrayerTimes;
 				INFOPLIST_KEY_CLKComplicationPrincipalClass = PrayerTimesWKExtension.ComplicationController;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Your location is used to show local prayer times. Always access allows notifications to stay up-to-date for your current location.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is used to show local prayer times.";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1033,6 +1035,8 @@
 				INFOPLIST_FILE = PrayerTimesWKExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PrayerTimes;
 				INFOPLIST_KEY_CLKComplicationPrincipalClass = PrayerTimesWKExtension.ComplicationController;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Your location is used to show local prayer times. Always access allows notifications to stay up-to-date for your current location.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is used to show local prayer times.";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
