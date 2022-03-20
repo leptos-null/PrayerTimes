@@ -100,8 +100,4 @@ extension DailyPrayers {
         case .isha: return isha
         }
     }
-    
-    public func activePrayer(for date: Date) -> Prayer? {
-        ordered.last { date.timeIntervalSince($0.start) >= 0 }
-    }
 }

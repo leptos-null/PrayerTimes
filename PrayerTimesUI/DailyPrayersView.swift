@@ -11,13 +11,15 @@ import PrayerTimesKit
 
 public struct DailyPrayersView: View {
     public let dailyPrayers: DailyPrayers
+    public let visiblePrayers: Set<Prayer.Name>
     let current: Prayer?
     
-    public init(dailyPrayers: DailyPrayers, time: Date? = nil) {
+    public init(dailyPrayers: DailyPrayers, time: Date? = nil, visiblePrayers: Set<Prayer.Name>) {
         self.dailyPrayers = dailyPrayers
+        self.visiblePrayers = visiblePrayers
         
         if let time = time {
-            current = dailyPrayers.activePrayer(for: time)
+            current = dailyPrayers.ordered.filter(visiblePrayers).activePrayer(for: time)
         } else {
             current = nil
         }
@@ -27,7 +29,7 @@ public struct DailyPrayersView: View {
         VStack {
             Text(dailyPrayers.dhuhr.start, style: .date)
                 .font(.title3)
-            ForEach(dailyPrayers.ordered) { prayer in
+            ForEach(dailyPrayers.ordered.filter(visiblePrayers)) { prayer in
                 HStack {
                     Text(prayer.name.localized)
                         .fontWeight((prayer == current) ? .semibold : .regular)
@@ -56,6 +58,6 @@ struct DailyPrayersView_Previews: PreviewProvider {
                 location: CLLocation(latitude: -29.856687, longitude: 31.017086),
                 configuration: CalculationParameters.Configuration(asrFactor: 1, fajrAngle: 18, ishaAngle: 17)
             )
-        ))
+        ), visiblePrayers: Set(Prayer.Name.allCases))
     }
 }

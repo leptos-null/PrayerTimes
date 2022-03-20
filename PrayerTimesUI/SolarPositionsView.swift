@@ -11,6 +11,7 @@ import PrayerTimesKit
 
 public struct SolarPositionsView: View {
     let dailyPrayers: DailyPrayers
+    let visiblePrayers: Set<Prayer.Name>
     let currentTime: Date?
     
     let solarRadius: CGFloat = 9
@@ -19,8 +20,9 @@ public struct SolarPositionsView: View {
     let horizonStrokeWidth: CGFloat = 1
     let solarStrokeWidth: CGFloat = 1
     
-    public init(dailyPrayers: DailyPrayers, currentTime: Date? = .now) {
+    public init(dailyPrayers: DailyPrayers, visiblePrayers: Set<Prayer.Name>, currentTime: Date? = .now) {
         self.dailyPrayers = dailyPrayers
+        self.visiblePrayers = visiblePrayers
         self.currentTime = currentTime
     }
     
@@ -70,7 +72,7 @@ public struct SolarPositionsView: View {
             }
             
             var solarPath = Path()
-            dailyPrayers.ordered.forEach { prayer in
+            dailyPrayers.ordered.filter(visiblePrayers).forEach { prayer in
                 solarPath.addCircle(
                     center: pointOnCosinePath(percent: percentIntoDay(prayer.start), size: size),
                     radius: solarRadius
@@ -101,7 +103,7 @@ struct SolarPositionsView_Previews: PreviewProvider {
                 location: CLLocation(latitude: -29.856687, longitude: 31.017086),
                 configuration: CalculationParameters.Configuration(asrFactor: 1, fajrAngle: 18, ishaAngle: 17)
             )
-        ), currentTime: Date(timeIntervalSinceReferenceDate: 664610000))
+        ), visiblePrayers: Set(Prayer.Name.allCases), currentTime: Date(timeIntervalSinceReferenceDate: 664610000))
             .aspectRatio(2, contentMode: .fit)
     }
 }

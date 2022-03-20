@@ -46,7 +46,7 @@ struct ContentView: View {
                 .tag(Tab.quibla)
             
             if let stapledLocation = locationManager.stapledLocation {
-                TimesView(calculationParameters: calculationParameters(for: stapledLocation), locationTitle: locationTitle(for: stapledLocation))
+                TimesView(calculationParameters: calculationParameters(for: stapledLocation), visiblePrayers: preferences.visiblePrayers, locationTitle: locationTitle(for: stapledLocation))
                     .tag(Tab.times)
             } else {
                 Text("Location unavailable")

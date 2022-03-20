@@ -12,12 +12,14 @@ import PrayerTimesUI
 
 struct TimesView: View {
     let calculationParameters: CalculationParameters
+    let visiblePrayers: Set<Prayer.Name>
     let locationTitle: String
     
     private let calendar: Calendar
     
-    init(calculationParameters: CalculationParameters, locationTitle: String) {
+    init(calculationParameters: CalculationParameters, visiblePrayers: Set<Prayer.Name>, locationTitle: String) {
         self.calculationParameters = calculationParameters
+        self.visiblePrayers = visiblePrayers
         self.locationTitle = locationTitle
         
         var calendar = Calendar(identifier: .gregorian)
@@ -33,11 +35,11 @@ struct TimesView: View {
                 // these need to seperate otherwise the TabView is only given 1 view to layout
                 // if the TabView is inside the TimelineView, the entire timeline is computed
                 TimelineView(.everyDay(using: calendar)) { dayTimelineContext in
-                    NowDayView(dailyPrayers: DailyPrayers(day: dayTimelineContext.date, calculationParameters: calculationParameters))
+                    NowDayView(dailyPrayers: DailyPrayers(day: dayTimelineContext.date, calculationParameters: calculationParameters), visiblePrayers: visiblePrayers)
                 }
                 TimelineView(.everyDay(using: calendar)) { dayTimelineContext in
                     if let nextDay = calendar.date(byAdding: .day, value: 1, to: dayTimelineContext.date) {
-                        DayView(dailyPrayers: DailyPrayers(day: nextDay, calculationParameters: calculationParameters), nowTime: nil)
+                        DayView(dailyPrayers: DailyPrayers(day: nextDay, calculationParameters: calculationParameters), visiblePrayers: visiblePrayers, nowTime: nil)
                     }
                 }
             }
@@ -52,6 +54,6 @@ struct TimesView_Previews: PreviewProvider {
             timeZone: TimeZone(identifier: "Asia/Riyadh")!,
             location: CLLocation(latitude: 21.422495, longitude: 39.826158),
             configuration: CalculationParameters.Configuration(asrFactor: 1, fajrAngle: 18.5, ishaAngle: 19)
-        ), locationTitle: "Mecca, Makkah")
+        ), visiblePrayers: Set(Prayer.Name.allCases), locationTitle: "Mecca, Makkah")
     }
 }

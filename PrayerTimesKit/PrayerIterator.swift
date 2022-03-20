@@ -11,44 +11,39 @@ import CoreLocation
 public struct PrayerIterator: Sequence, IteratorProtocol {
     public let calculationParameters: CalculationParameters
     
-    private var currentName: Prayer.Name
+    private let sortedNames: [Prayer.Name]
+    
+    private var currentNameIndex: Int
     private var currentDay: DailyPrayers
     
-    public init(start: Date, calculationParameters: CalculationParameters) {
+    public init(start: Date, calculationParameters: CalculationParameters, filter: Set<Prayer.Name> = Set(Prayer.Name.allCases)) {
+        let sortedNames = filter.sorted()
+        
         self.calculationParameters = calculationParameters
+        self.sortedNames = sortedNames
         
         let daily = DailyPrayers(day: start, calculationParameters: calculationParameters)
-        if let active = daily.activePrayer(for: start) {
-            currentName = active.name
+        if let active = daily.ordered.filter(filter).activePrayer(for: start) {
+            currentNameIndex = sortedNames.firstIndex(of: active.name) ?? -1
             currentDay = daily
         } else {
             let yesterday = daily.dhuhr.start.addingTimeInterval(-.day)
-            currentName = .isha
+            currentNameIndex = sortedNames.indices.last ?? -1
             currentDay = DailyPrayers(day: yesterday, calculationParameters: calculationParameters)
         }
     }
     
     public mutating func next() -> Prayer? {
-        let prayer = currentDay.prayer(named: currentName)
-        if currentName == .isha {
+        guard !sortedNames.isEmpty else { return nil }
+        
+        let prayer = currentDay.prayer(named: sortedNames[currentNameIndex])
+        if currentNameIndex != sortedNames.indices.last {
+            currentNameIndex = sortedNames.index(after: currentNameIndex)
+        } else {
             let nextDay = currentDay.dhuhr.start.addingTimeInterval(.day)
             currentDay = DailyPrayers(day: nextDay, calculationParameters: calculationParameters)
+            currentNameIndex = sortedNames.indices.first ?? -1
         }
-        currentName = currentName.next
         return prayer
-    }
-}
-
-public extension Prayer.Name {
-    var next: Prayer.Name {
-        switch self {
-        case .qiyam: return .fajr
-        case .fajr: return .sunrise
-        case .sunrise: return .dhuhr
-        case .dhuhr: return .asr
-        case .asr: return .maghrib
-        case .maghrib: return .isha
-        case .isha: return .qiyam
-        }
     }
 }

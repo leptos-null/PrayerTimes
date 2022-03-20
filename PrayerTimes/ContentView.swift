@@ -52,7 +52,7 @@ struct ContentView: View {
                     }
                     .tag(Tab.quibla)
                 
-                TimesView(calculationParameters: calculationParameters(for: stapledLocation), locationTitle: locationTitle(for: stapledLocation))
+                TimesView(calculationParameters: calculationParameters(for: stapledLocation), visiblePrayers: preferences.visiblePrayers, locationTitle: locationTitle(for: stapledLocation))
                     .tabItem {
                         Label("Times", systemImage: "clock")
                     }

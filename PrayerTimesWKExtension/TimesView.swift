@@ -10,17 +10,18 @@ import PrayerTimesKit
 
 struct TimesView: View {
     let calculationParameters: CalculationParameters
+    let visiblePrayers: Set<Prayer.Name>
     let locationTitle: String
     
     var body: some View {
         ScrollView {
-            TimelineView(.prayers(with: calculationParameters)) { timelineContext in
+            TimelineView(.prayers(with: calculationParameters, visiblePrayers: visiblePrayers)) { timelineContext in
                 VStack(alignment: .leading, spacing: 4) {
                     // this label is effectively static and doesn't need to be in the TimelineView
                     //   but including it inside the TimelineView simplifies layout
                     Text(locationTitle)
                         .font(.headline)
-                    RollingPrayersView(startDate: timelineContext.date, calculationParameters: calculationParameters)
+                    RollingPrayersView(startDate: timelineContext.date, calculationParameters: calculationParameters, visiblePrayers: visiblePrayers)
                         .environment(\.timeZone, calculationParameters.timeZone)
                 }
             }
@@ -33,9 +34,17 @@ struct RollingPrayersView: View {
     let tomorrowPrayers: [Prayer]
     
     private let currentPrayer: Prayer?
-    private let nextPrayer: Prayer
+    private let nextPrayer: Prayer?
     
-    init(startDate: Date, calculationParameters: CalculationParameters, maxPrayers: Int = 6) {
+    init(startDate: Date, calculationParameters: CalculationParameters, visiblePrayers: Set<Prayer.Name>, maxPrayers: Int = 6) {
+        guard !visiblePrayers.isEmpty else {
+            todayPrayers = []
+            tomorrowPrayers = []
+            currentPrayer = nil
+            nextPrayer = nil
+            return
+        }
+        
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = calculationParameters.timeZone
         
@@ -44,33 +53,40 @@ struct RollingPrayersView: View {
         let today = DailyPrayers(day: startDate, calculationParameters: calculationParameters)
         let tomorrow = DailyPrayers(day: tomorrowDate, calculationParameters: calculationParameters)
         
-        if let currentPrayer = today.activePrayer(for: startDate) {
-            let suffix = today.ordered.drop { $0 != currentPrayer }
+        let sortedFilter = visiblePrayers.sorted()
+        
+        let todayFiltered = today.ordered.filter(visiblePrayers)
+        if let activePrayer = todayFiltered.activePrayer(for: startDate) {
+            let suffix = todayFiltered.drop { $0 != activePrayer }
             todayPrayers = Array(suffix)
             
-            if currentPrayer.name != .isha {
-                nextPrayer = today.prayer(named: currentPrayer.name.next)
+            let currentNameIndex = sortedFilter.firstIndex(of: activePrayer.name)!
+            if currentNameIndex != sortedFilter.indices.last {
+                let nextNameIndex = sortedFilter.index(after: currentNameIndex)
+                nextPrayer = today.prayer(named: sortedFilter[nextNameIndex])
             } else {
-                nextPrayer = tomorrow.qiyam
+                nextPrayer = tomorrow.prayer(named: sortedFilter.first!)
             }
-            self.currentPrayer = currentPrayer
+            currentPrayer = activePrayer
         } else {
-            todayPrayers = today.ordered
-            nextPrayer = today.qiyam
+            todayPrayers = today.ordered.filter(visiblePrayers)
+            nextPrayer = today.prayer(named: sortedFilter.first!)
             currentPrayer = nil
         }
         
         let tomorrowCount = maxPrayers - todayPrayers.count
         if tomorrowCount > 0 {
-            tomorrowPrayers = Array(tomorrow.ordered.prefix(tomorrowCount))
+            tomorrowPrayers = Array(tomorrow.ordered.filter(visiblePrayers).prefix(tomorrowCount))
         } else {
             tomorrowPrayers = []
         }
     }
     
     var body: some View {
-        Text("\(nextPrayer.name.localized) starts in:")
-        Text(nextPrayer.start, style: .timer)
+        if let nextPrayer = nextPrayer {
+            Text("\(nextPrayer.name.localized) starts in:")
+            Text(nextPrayer.start, style: .timer)
+        }
         
         if todayPrayers.count > 0 {
             PrayerListView(prayers: todayPrayers, current: currentPrayer)
@@ -111,6 +127,6 @@ struct TimesView_Previews: PreviewProvider {
             timeZone: TimeZone(identifier: "Asia/Riyadh")!,
             location: CLLocation(latitude: 21.422495, longitude: 39.826158),
             configuration: CalculationParameters.Configuration(asrFactor: 1, fajrAngle: 18.5, ishaAngle: 19)
-        ), locationTitle: "Mecca, Makkah")
+        ), visiblePrayers: Set(Prayer.Name.allCases), locationTitle: "Mecca, Makkah")
     }
 }

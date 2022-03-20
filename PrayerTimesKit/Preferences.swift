@@ -37,6 +37,15 @@ public final class Preferences: ObservableObject {
         }
     }
     
+    @Published public var visiblePrayers: Set<Prayer.Name> {
+        didSet {
+            guard Self.visiblePrayers(from: userDefaults) != visiblePrayers else { return }
+            logger.debug("Writing visiblePrayers")
+            
+            userDefaults.setEncoded(value: visiblePrayers, forKey: .visiblePrayers)
+        }
+    }
+    
     private static func calculationMethod(from userDefaults: UserDefaults) -> CalculationMethod {
         userDefaults.decodedValue(forKey: .calculationMethod) ?? .isna
     }
@@ -51,12 +60,17 @@ public final class Preferences: ObservableObject {
         return UserNotification.Preferences(categories: categories)
     }
     
+    private static func visiblePrayers(from userDefaults: UserDefaults) -> Set<Prayer.Name> {
+        userDefaults.decodedValue(forKey: .visiblePrayers) ?? [ .fajr, .sunrise, .dhuhr, .asr, .maghrib, .isha ]
+    }
+    
     init() {
         guard let userDefaults = UserDefaults(suiteName: "group.null.leptos.PrayerTimesGroup") else { fatalError("Failed to get group user defaults") }
         self.userDefaults = userDefaults
         
         calculationMethod = Self.calculationMethod(from: userDefaults)
         userNotifications = Self.userNotificationPreferences(from: userDefaults)
+        visiblePrayers = Self.visiblePrayers(from: userDefaults)
         
         observer.observe(object: userDefaults, forKeyPath: UserDefaultsKey.calculationMethod.stringValue) { [weak self] _ in
             guard let self = self else { return }
@@ -75,6 +89,14 @@ public final class Preferences: ObservableObject {
                 self.userNotifications = update
             }
         }
+        
+        observer.observe(object: userDefaults, forKeyPath: UserDefaultsKey.visiblePrayers.stringValue) { [weak self] _ in
+            guard let self = self else { return }
+            
+            let update = Self.visiblePrayers(from: userDefaults)
+            guard self.visiblePrayers != update else { return }
+            self.visiblePrayers = update
+        }
     }
 }
 
@@ -89,11 +111,13 @@ public extension Preferences {
         }
         
         case calculationMethod
+        case visiblePrayers
         case notification(UserNotification.Category, Prayer.Name)
         
         public var stringValue: String {
             switch self {
             case .calculationMethod: return "PreferencesCalculationMethod"
+            case .visiblePrayers: return "PreferencesVisiblePrayers"
             case .notification(let category, let name):
                 return "PreferencesNotification_\(category)_\(name)"
             }
@@ -105,6 +129,7 @@ extension Preferences.UserDefaultsKey: CustomStringConvertible {
     public var description: String {
         switch self {
         case .calculationMethod: return "calculationMethod"
+        case .visiblePrayers: return "visiblePrayers"
         case .notification(let category, let name):
             return "notification(\(category), \(name))"
         }

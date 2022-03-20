@@ -8,7 +8,7 @@
 import Foundation
 
 public struct Prayer: Hashable {
-    public enum Name: Hashable, CaseIterable {
+    public enum Name: Hashable, CaseIterable, Codable, Comparable {
         case qiyam
         case fajr
         case sunrise
@@ -38,5 +38,23 @@ public extension Prayer.Name {
         case .maghrib: return NSLocalizedString("PRAYER_NAME_MAGHRIB", value: "Maghrib", comment: "Name for Maghrib prayer")
         case .isha:    return NSLocalizedString("PRAYER_NAME_ISHA",    value: "Isha",    comment: "Name for Isha prayer")
         }
+    }
+}
+
+public extension Sequence where Element == Prayer {
+    func filter(_ set: Set<Prayer.Name>) -> [Element] {
+        filter { set.contains($0.name) }
+    }
+}
+
+public extension Array where Element == Prayer {
+    func activePrayer(for date: Date) -> Prayer? {
+        last { date.timeIntervalSince($0.start) >= 0 }
+    }
+}
+
+public extension LazySequenceProtocol where Element == Prayer {
+    func filter(_ set: Set<Prayer.Name>) -> LazyFilterSequence<Elements> {
+        filter { set.contains($0.name) }
     }
 }
