@@ -41,8 +41,8 @@ public final class SystemRegistrar {
         
         locationManager.$stapledLocation
             .compactMap { $0 }
-            .combineLatest(preferences.$calculationConfiguration, preferences.$userNotifications) { ($0, $1, $2) }
-            .sink { (stapledLocation, configuration, userNotificationPreferences) in
+            .combineLatest(preferences.$calculationMethod, preferences.$userNotifications) { ($0, $1, $2) }
+            .sink { (stapledLocation, calculationMethod, userNotificationPreferences) in
                 let locationText: String
                 if let placemarkTitle = stapledLocation.placemark?.locationTitle {
                     locationText = "in \(placemarkTitle)"
@@ -53,7 +53,7 @@ public final class SystemRegistrar {
                 let calculationParameters = CalculationParameters(
                     timeZone: stapledLocation.placemark?.timeZone ?? .current,
                     location: stapledLocation.location,
-                    configuration: configuration
+                    configuration: calculationMethod.calculationConfiguration
                 )
                 Task {
                     try await UserNotification.registerFor(calculationParameters: calculationParameters, preferences: userNotificationPreferences, bodyText: locationText)

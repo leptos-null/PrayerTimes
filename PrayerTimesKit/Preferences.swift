@@ -16,14 +16,12 @@ public final class Preferences: ObservableObject {
     
     private let logger = Logger(subsystem: "null.leptos.PrayerTimesKit", category: "Preferences")
     
-    @Published public var calculationConfiguration: CalculationParameters.Configuration {
+    @Published public var calculationMethod: CalculationMethod {
         didSet {
-            guard Self.calculationConfiguration(from: userDefaults) != calculationConfiguration else { return }
-            logger.debug("Writing calculationParameters")
+            guard Self.calculationMethod(from: userDefaults) != calculationMethod else { return }
+            logger.debug("Writing calculationMethod")
             
-            userDefaults.set(calculationConfiguration.asrFactor, forKey: .asrFactor)
-            userDefaults.set(calculationConfiguration.fajrAngle, forKey: .fajrAngle)
-            userDefaults.set(calculationConfiguration.ishaAngle, forKey: .ishaAngle)
+            userDefaults.setEncoded(value: calculationMethod, forKey: .calculationMethod)
         }
     }
     
@@ -39,12 +37,8 @@ public final class Preferences: ObservableObject {
         }
     }
     
-    private static func calculationConfiguration(from userDefaults: UserDefaults) -> CalculationParameters.Configuration {
-        CalculationParameters.Configuration(
-            asrFactor: userDefaults.value(forKey: .asrFactor) ?? 1,
-            fajrAngle: userDefaults.value(forKey: .fajrAngle) ?? 15,
-            ishaAngle: userDefaults.value(forKey: .ishaAngle) ?? 15
-        )
+    private static func calculationMethod(from userDefaults: UserDefaults) -> CalculationMethod {
+        userDefaults.decodedValue(forKey: .calculationMethod) ?? .isna
     }
     
     private static func userNotificationPreferences(from userDefaults: UserDefaults) -> UserNotification.Preferences {
@@ -61,18 +55,15 @@ public final class Preferences: ObservableObject {
         guard let userDefaults = UserDefaults(suiteName: "group.null.leptos.PrayerTimesGroup") else { fatalError("Failed to get group user defaults") }
         self.userDefaults = userDefaults
         
-        calculationConfiguration = Self.calculationConfiguration(from: userDefaults)
+        calculationMethod = Self.calculationMethod(from: userDefaults)
         userNotifications = Self.userNotificationPreferences(from: userDefaults)
         
-        let configurationKeys: [UserDefaultsKey] = [ .asrFactor, .fajrAngle, .ishaAngle ]
-        configurationKeys.forEach { key in
-            observer.observe(object: userDefaults, forKeyPath: key.stringValue) { [weak self] _ in
-                guard let self = self else { return }
-                
-                let update = Self.calculationConfiguration(from: userDefaults)
-                guard self.calculationConfiguration != update else { return }
-                self.calculationConfiguration = update
-            }
+        observer.observe(object: userDefaults, forKeyPath: UserDefaultsKey.calculationMethod.stringValue) { [weak self] _ in
+            guard let self = self else { return }
+            
+            let update = Self.calculationMethod(from: userDefaults)
+            guard self.calculationMethod != update else { return }
+            self.calculationMethod = update
         }
         
         UserDefaultsKey.allNotificationCases.forEach { key in
@@ -97,16 +88,12 @@ public extension Preferences {
             }
         }
         
-        case asrFactor
-        case fajrAngle
-        case ishaAngle
+        case calculationMethod
         case notification(UserNotification.Category, Prayer.Name)
         
         public var stringValue: String {
             switch self {
-            case .asrFactor: return "PreferencesAsrFactor"
-            case .fajrAngle: return "PreferencesFajrAngle"
-            case .ishaAngle: return "PreferencesIshaAngle"
+            case .calculationMethod: return "PreferencesCalculationMethod"
             case .notification(let category, let name):
                 return "PreferencesNotification_\(category)_\(name)"
             }
@@ -117,9 +104,7 @@ public extension Preferences {
 extension Preferences.UserDefaultsKey: CustomStringConvertible {
     public var description: String {
         switch self {
-        case .asrFactor: return "asrFactor"
-        case .fajrAngle: return "fajrAngle"
-        case .ishaAngle: return "ishaAngle"
+        case .calculationMethod: return "calculationMethod"
         case .notification(let category, let name):
             return "notification(\(category), \(name))"
         }
@@ -136,7 +121,7 @@ private extension UserDefaults {
     func value<T>(forKey key: Preferences.UserDefaultsKey) -> T? {
         guard let object = object(forKey: key.stringValue) else { return nil }
         guard let value = object as? T else {
-            Self.logger.error("Requested \(String(describing: T.self)) for \(key), found \(String(describing: object))")
+            Self.logger.error("Requested \(T.self) for \(key), found \(String(describing: object))")
             return nil
         }
         return value
@@ -148,7 +133,33 @@ private extension UserDefaults {
         set(value, forKey: key.stringValue)
     }
     
-    func set(_ value: Double, forKey key: Preferences.UserDefaultsKey) {
+    func set(_ value: Data, forKey key: Preferences.UserDefaultsKey) {
         set(value, forKey: key.stringValue)
+    }
+}
+
+private extension UserDefaults {
+    func setEncoded<T: Encodable>(value: T, forKey key: Preferences.UserDefaultsKey) {
+        let encoder = PropertyListEncoder()
+        encoder.outputFormat = .binary
+        do {
+            let data: Data = try encoder.encode(value)
+            set(data, forKey: key)
+        } catch {
+            Self.logger.error("PropertyListEncoder.encode(\(String(describing: value))): \(String(describing: error))")
+            return
+        }
+    }
+    
+    func decodedValue<T: Decodable>(forKey key: Preferences.UserDefaultsKey) -> T? {
+        guard let data: Data = value(forKey: key) else { return nil }
+        let decoder = PropertyListDecoder()
+        do {
+            let value = try decoder.decode(T.self, from: data)
+            return value
+        } catch {
+            Self.logger.error("PropertyListDecoder.decode(\(T.self), from: \(data)): \(String(describing: error))")
+            return nil
+        }
     }
 }

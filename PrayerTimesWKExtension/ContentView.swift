@@ -31,7 +31,7 @@ struct ContentView: View {
         CalculationParameters(
             timeZone: stapledLocation.placemark?.timeZone ?? .current,
             location: stapledLocation.location,
-            configuration: preferences.calculationConfiguration
+            configuration: preferences.calculationMethod.calculationConfiguration
         )
     }
     

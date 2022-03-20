@@ -24,7 +24,10 @@ public struct PreferencesView: View {
                     UserNotificationPreferencesView(preferences: $preferences.userNotifications)
                 }
                 Section("Configuration") {
-                    CalculationConfigurationView(configuration: $preferences.calculationConfiguration)
+                    NavigationLink("Calculation Method") {
+                        CalculationMethodView(calculationMethod: $preferences.calculationMethod)
+                            .navigationTitle("Calculation Method")
+                    }
                 }
             }
             .navigationTitle("Preferences")
@@ -48,6 +51,49 @@ struct UserNotificationPreferencesView: View {
             NavigationLink(category.localizedTitle) {
                 UserNotificationSelectionView(category: category, selection: categoryBinding(category))
                     .navigationTitle("Notifications")
+            }
+        }
+    }
+}
+
+struct CalculationMethodView: View {
+    @Binding var calculationMethod: CalculationMethod
+    
+    private var configurationBinding: Binding<CalculationParameters.Configuration> {
+        Binding {
+            calculationMethod.calculationConfiguration
+        } set: { newValue in
+            calculationMethod = .custom(newValue)
+        }
+    }
+    
+    private var calculationMethods: [CalculationMethod] {
+        [
+            .mwl,
+            .isna,
+            .egypt,
+            .karachi,
+            .custom(calculationMethod.calculationConfiguration)
+        ]
+    }
+    
+    var body: some View {
+        List {
+            ForEach(calculationMethods) { method in
+                HStack {
+                    Text(method.title)
+                    Spacer()
+                    Image(systemName: "checkmark")
+                        .opacity(calculationMethod == method ? 1 : 0)
+                }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    calculationMethod = method
+                }
+            }
+            if case .custom = calculationMethod {
+                CalculationConfigurationView(configuration: configurationBinding)
+                    .padding(.leading, 16)
             }
         }
     }
@@ -117,7 +163,6 @@ struct UserNotificationSelectionView: View {
                 Text(footerText)
             }
         }
-        .listStyle(.insetGrouped)
     }
 }
 
@@ -152,6 +197,22 @@ extension UserNotification.Category {
         case .reminder: return "Reminder"
         }
     }
+}
+
+extension CalculationMethod {
+    var title: String {
+        switch self {
+        case .mwl: return "Muslim World League (MWL)"
+        case .isna: return "Islamic Society of North America (ISNA)"
+        case .egypt: return "Egyptian General Authority of Survey"
+        case .karachi: return "University of Islamic Sciences, Karachi"
+        case .custom: return "Custom"
+        }
+    }
+}
+
+extension CalculationMethod: Identifiable {
+    public var id: Self { self }
 }
 
 extension UserNotification.Category: Identifiable {

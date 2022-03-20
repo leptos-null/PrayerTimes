@@ -9,7 +9,7 @@ import Foundation
 import CoreLocation
 
 public struct CalculationParameters: Hashable {
-    public struct Configuration: Hashable {
+    public struct Configuration: Hashable, Codable {
         public var asrFactor: Double
         public var fajrAngle: AngleDegree
         public var ishaAngle: AngleDegree
@@ -33,7 +33,26 @@ public struct CalculationParameters: Hashable {
 }
 
 // http://praytimes.org/wiki/Calculation_Methods
-public extension CalculationParameters.Configuration {
-    static let mwl = CalculationParameters.Configuration(asrFactor: 1, fajrAngle: 18, ishaAngle: 17)
-    static let isna = CalculationParameters.Configuration(asrFactor: 1, fajrAngle: 15, ishaAngle: 15)
+public enum CalculationMethod: Hashable, Codable {
+    case mwl
+    case isna
+    case egypt
+    case karachi
+    
+    case custom(CalculationParameters.Configuration)
+    
+    public var calculationConfiguration: CalculationParameters.Configuration {
+        switch self {
+        case .mwl:
+            return .init(asrFactor: 1, fajrAngle: 18, ishaAngle: 17)
+        case .isna:
+            return .init(asrFactor: 1, fajrAngle: 15, ishaAngle: 15)
+        case .egypt:
+            return .init(asrFactor: 1, fajrAngle: 19.5, ishaAngle: 17.5)
+        case .karachi:
+            return .init(asrFactor: 1, fajrAngle: 18, ishaAngle: 18)
+        case .custom(let calculationConfiguration):
+            return calculationConfiguration
+        }
+    }
 }
