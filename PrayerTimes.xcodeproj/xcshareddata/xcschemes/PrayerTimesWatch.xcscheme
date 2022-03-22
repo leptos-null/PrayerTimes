@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FA4F365B27E506DA00A63988"
-               BuildableName = "PrayerTimes.app"
+               BuildableName = "PrayerTimesWatch.app"
                BlueprintName = "PrayerTimesWatch"
                ReferencedContainer = "container:PrayerTimes.xcodeproj">
             </BuildableReference>
@@ -59,7 +59,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FA4F365B27E506DA00A63988"
-            BuildableName = "PrayerTimes.app"
+            BuildableName = "PrayerTimesWatch.app"
             BlueprintName = "PrayerTimesWatch"
             ReferencedContainer = "container:PrayerTimes.xcodeproj">
          </BuildableReference>
@@ -76,7 +76,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FA4F365B27E506DA00A63988"
-            BuildableName = "PrayerTimes.app"
+            BuildableName = "PrayerTimesWatch.app"
             BlueprintName = "PrayerTimesWatch"
             ReferencedContainer = "container:PrayerTimes.xcodeproj">
          </BuildableReference>
