@@ -12,7 +12,7 @@ import PrayerTimesKit
 import os
 
 class ComplicationController: NSObject, CLKComplicationDataSource {
-    private static let logger = Logger(subsystem: "null.leptos.PrayerTimes.watchkitapp.watchkitextension", category: "ComplicationController")
+    private static let logger = Logger(subsystem: "null.leptos.prayertimes.watchkitapp.watchkitextension", category: "ComplicationController")
     
     let locationManager: LocationManager = .shared
     let preferences: Preferences = .shared

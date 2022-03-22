@@ -959,8 +959,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = PrayerTimesWKExtension;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = null.leptos.PrayerTimes;
-				PRODUCT_BUNDLE_IDENTIFIER = null.leptos.PrayerTimes.watchkitapp;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = null.leptos.prayertimes;
+				PRODUCT_BUNDLE_IDENTIFIER = null.leptos.prayertimes.watchkitapp;
 				PRODUCT_NAME = PrayerTimes;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -981,8 +981,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = PrayerTimesWKExtension;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = null.leptos.PrayerTimes;
-				PRODUCT_BUNDLE_IDENTIFIER = null.leptos.PrayerTimes.watchkitapp;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = null.leptos.prayertimes;
+				PRODUCT_BUNDLE_IDENTIFIER = null.leptos.prayertimes.watchkitapp;
 				PRODUCT_NAME = PrayerTimes;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -1012,7 +1012,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = null.leptos.PrayerTimes.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = null.leptos.prayertimes.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -1043,7 +1043,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = null.leptos.PrayerTimes.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = null.leptos.prayertimes.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -1369,7 +1369,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = null.leptos.PrayerTimes;
+				PRODUCT_BUNDLE_IDENTIFIER = null.leptos.prayertimes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1403,7 +1403,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = null.leptos.PrayerTimes;
+				PRODUCT_BUNDLE_IDENTIFIER = null.leptos.prayertimes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
