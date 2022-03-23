@@ -10,15 +10,28 @@ import PrayerTimesKit
 
 public struct PrayerNameSelection: View {
     @Binding public var selection: Set<Prayer.Name>
-    public var disable: Set<Prayer.Name>
+    public let prayerNames: [Prayer.Name]
     
-    public init(selection: Binding<Set<Prayer.Name>>, disable: Set<Prayer.Name> = Set()) {
+    public init(selection: Binding<Set<Prayer.Name>>, hidden: Set<Prayer.Name>? = nil) {
         _selection = selection
-        self.disable = disable
+        
+        let allCases = Prayer.Name.allCases
+        if let hidden = hidden {
+            prayerNames = Set(allCases)
+                .symmetricDifference(hidden)
+                .sorted()
+        } else {
+            prayerNames = allCases
+        }
+    }
+    
+    public init(selection: Binding<Set<Prayer.Name>>, include: Set<Prayer.Name>) {
+        _selection = selection
+        prayerNames = include.sorted()
     }
     
     public var body: some View {
-        ForEach(Prayer.Name.allCases) { name in
+        ForEach(prayerNames) { name in
             HStack {
                 Text(name.localized)
                 Spacer()
@@ -33,7 +46,6 @@ public struct PrayerNameSelection: View {
                     selection.insert(name)
                 }
             }
-            .disabled(disable.contains(name))
         }
     }
 }

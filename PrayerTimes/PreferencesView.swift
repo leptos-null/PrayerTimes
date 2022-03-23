@@ -58,12 +58,18 @@ struct PreferencesView: View {
 struct VisiblePrayersView: View {
     @Binding var visiblePrayers: Set<Prayer.Name>
     
+    private let hiddenPrayers: [Prayer.Name] = [ .fajr, .dhuhr, .asr, .maghrib, .isha ]
+    
+    private var footerText: String {
+        "Unselect items to hide them in the Times listing. This selection does not affect notifications.\n" + hiddenPrayers.map(\.localized).formatted(.list(type: .and)) + " are always shown."
+    }
+    
     var body: some View {
         List {
             Section {
-                PrayerNameSelection(selection: $visiblePrayers, disable: [ .fajr, .dhuhr, .asr, .maghrib, .isha ])
+                PrayerNameSelection(selection: $visiblePrayers, hidden: Set(hiddenPrayers))
             } footer: {
-                Text("Unselect items to hide them in the Times listing. This selection does not affect notifications.")
+                Text(footerText)
             }
         }
     }
