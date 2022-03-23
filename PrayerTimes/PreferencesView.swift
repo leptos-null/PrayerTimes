@@ -1,56 +1,69 @@
 //
 //  PreferencesView.swift
-//  PrayerTimesUI
+//  PrayerTimes
 //
-//  Created by Leptos on 2/2/22.
+//  Created by Leptos on 3/22/22.
 //
 
 import SwiftUI
+import PrayerTimesUI
 import PrayerTimesKit
 
-#if os(iOS) /* TODO: Move out of PrayerTimeUI into iOS target */
-
-public struct PreferencesView: View {
+struct PreferencesView: View {
     @ObservedObject var preferences: Preferences
     
-    public init(preferences: Preferences) {
-        self.preferences = preferences
+    private var listStyle: some ListStyle {
+#if targetEnvironment(macCatalyst)
+        return .plain
+#else
+        return .insetGrouped
+#endif
     }
     
-    public var body: some View {
+    var body: some View {
         NavigationView {
             List {
-                Section("Notifications") {
-                    UserNotificationPreferencesView(preferences: $preferences.userNotifications)
-                }
-                Section("Configuration") {
+                Section {
+                    NavigationLink("Visibility") {
+                        VisiblePrayersView(visiblePrayers: $preferences.visiblePrayers)
+                            .navigationTitle("Visibility")
+                    }
                     NavigationLink("Calculation Method") {
                         CalculationMethodView(calculationMethod: $preferences.calculationMethod)
                             .navigationTitle("Calculation Method")
                     }
+                } header: {
+                    Label("Configuration", systemImage: "gear")
+                        .symbolRenderingMode(.multicolor)
+                }
+                
+                Section {
+                    UserNotificationPreferencesView(preferences: $preferences.userNotifications)
+                } header: {
+                    Label("Notifications", systemImage: "bell")
+                        .symbolRenderingMode(.multicolor)
                 }
             }
             .navigationTitle("Preferences")
+            .listStyle(listStyle)
+            
+            Text("No selection")
+                .font(.callout)
+                .foregroundColor(.secondary)
+                .padding(.bottom, 64)
         }
     }
 }
 
-struct UserNotificationPreferencesView: View {
-    @Binding var preferences: UserNotification.Preferences
-    
-    private func categoryBinding(_ category: UserNotification.Category) -> Binding<Set<Prayer.Name>> {
-        Binding {
-            preferences.categories[category] ?? Set()
-        } set: {
-            preferences.categories[category] = $0
-        }
-    }
+struct VisiblePrayersView: View {
+    @Binding var visiblePrayers: Set<Prayer.Name>
     
     var body: some View {
-        ForEach(UserNotification.Category.allCases) { category in
-            NavigationLink(category.localizedTitle) {
-                UserNotificationSelectionView(category: category, selection: categoryBinding(category))
-                    .navigationTitle("Notifications")
+        List {
+            Section {
+                PrayerNameSelection(selection: $visiblePrayers, disable: [ .fajr, .dhuhr, .asr, .maghrib, .isha ])
+            } footer: {
+                Text("Unselect items to hide them in the Times listing. This selection does not affect notifications.")
             }
         }
     }
@@ -84,6 +97,7 @@ struct CalculationMethodView: View {
                     Text(method.title)
                     Spacer()
                     Image(systemName: "checkmark")
+                        .foregroundColor(.accentColor)
                         .opacity(calculationMethod == method ? 1 : 0)
                 }
                 .contentShape(Rectangle())
@@ -135,14 +149,31 @@ struct FloatingRangeSelection<Value: BinaryFloatingPoint>: View {
     }
 }
 
+struct UserNotificationPreferencesView: View {
+    @Binding var preferences: UserNotification.Preferences
+    
+    private func categoryBinding(_ category: UserNotification.Category) -> Binding<Set<Prayer.Name>> {
+        Binding {
+            preferences.categories[category] ?? Set()
+        } set: {
+            preferences.categories[category] = $0
+        }
+    }
+    
+    var body: some View {
+        ForEach(UserNotification.Category.allCases) { category in
+            NavigationLink(category.localizedTitle) {
+                UserNotificationSelectionView(category: category, selection: categoryBinding(category))
+                    .navigationTitle(category.localizedTitle)
+            }
+        }
+    }
+}
+
 struct UserNotificationSelectionView: View {
     let category: UserNotification.Category
     
     @Binding var selection: Set<Prayer.Name>
-    
-    var headerText: String {
-        return category.localizedTitle
-    }
     
     var footerText: String {
         switch category {
@@ -157,34 +188,8 @@ struct UserNotificationSelectionView: View {
         List {
             Section {
                 PrayerNameSelection(selection: $selection)
-            } header: {
-                Text(headerText)
             } footer: {
                 Text(footerText)
-            }
-        }
-    }
-}
-
-#endif
-
-struct PrayerNameSelection: View {
-    @Binding var selection: Set<Prayer.Name>
-    
-    var body: some View {
-        ForEach(Prayer.Name.allCases) { name in
-            HStack {
-                Text(name.localized)
-                Spacer()
-                Image(systemName: "checkmark")
-                    .opacity(selection.contains(name) ? 1 : 0)
-            }
-            .contentShape(Rectangle())
-            .onTapGesture {
-                // if name is in selection, remove it, otherwise insert
-                if selection.remove(name) == nil {
-                    selection.insert(name)
-                }
             }
         }
     }
@@ -219,6 +224,8 @@ extension UserNotification.Category: Identifiable {
     public var id: Self { self }
 }
 
-extension Prayer.Name: Identifiable {
-    public var id: Self { self }
+struct PreferencesView_Previews: PreviewProvider {
+    static var previews: some View {
+        PreferencesView(preferences: .shared)
+    }
 }
