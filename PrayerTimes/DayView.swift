@@ -17,8 +17,12 @@ struct DayView: View {
     
     var body: some View {
         VStack {
-            DailyPrayersView(dailyPrayers: dailyPrayers, time: nowTime, visiblePrayers: visiblePrayers)
-                .scenePadding()
+            HStack {
+                Spacer(minLength: 68)
+                DailyPrayersView(dailyPrayers: dailyPrayers, time: nowTime, visiblePrayers: visiblePrayers)
+                Spacer(minLength: 68)
+            }
+            .scenePadding(.vertical)
             Spacer()
             SolarPositionsView(dailyPrayers: dailyPrayers, visiblePrayers: visiblePrayers, currentTime: nowTime)
                 .aspectRatio(2, contentMode: .fit)

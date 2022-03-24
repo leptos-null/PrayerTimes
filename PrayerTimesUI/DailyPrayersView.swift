@@ -38,7 +38,7 @@ public struct DailyPrayersView: View {
                     Text(prayer.start, style: .time)
                         .fontWeight((prayer == current) ? .semibold : .regular)
                 }
-                .padding(.vertical, 1)
+                .padding(.vertical, 6)
             }
         }
         .environment(\.timeZone, dailyPrayers.calculationParameters.timeZone)
