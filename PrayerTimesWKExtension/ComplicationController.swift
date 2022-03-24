@@ -1,6 +1,6 @@
 //
 //  ComplicationController.swift
-//  PrayerTimesWatch WatchKit Extension
+//  PrayerTimesWKExtension
 //
 //  Created by Leptos on 3/18/22.
 //

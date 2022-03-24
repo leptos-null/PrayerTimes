@@ -1,6 +1,6 @@
 //
 //  PrayerTimesApp.swift
-//  PrayerTimesWatch WatchKit Extension
+//  PrayerTimesWKExtension
 //
 //  Created by Leptos on 3/18/22.
 //
@@ -18,9 +18,7 @@ struct PrayerTimesApp: App {
     
     var body: some Scene {
         WindowGroup {
-            NavigationView {
-                ContentView()
-            }
+            ContentView()
         }
     }
 }

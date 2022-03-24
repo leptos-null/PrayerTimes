@@ -14,15 +14,17 @@ struct TimesView: View {
     let locationTitle: String
     
     var body: some View {
-        ScrollView {
-            TimelineView(.prayers(with: calculationParameters, visiblePrayers: visiblePrayers)) { timelineContext in
-                VStack(alignment: .leading, spacing: 4) {
-                    // this label is effectively static and doesn't need to be in the TimelineView
-                    //   but including it inside the TimelineView simplifies layout
-                    Text(locationTitle)
-                        .font(.headline)
-                    RollingPrayersView(startDate: timelineContext.date, calculationParameters: calculationParameters, visiblePrayers: visiblePrayers)
-                        .environment(\.timeZone, calculationParameters.timeZone)
+        NavigationView {
+            ScrollView {
+                TimelineView(.prayers(with: calculationParameters, visiblePrayers: visiblePrayers)) { timelineContext in
+                    VStack(alignment: .leading, spacing: 4) {
+                        // this label is effectively static and doesn't need to be in the TimelineView
+                        //   but including it inside the TimelineView simplifies layout
+                        Text(locationTitle)
+                            .font(.headline)
+                        RollingPrayersView(startDate: timelineContext.date, calculationParameters: calculationParameters, visiblePrayers: visiblePrayers)
+                            .environment(\.timeZone, calculationParameters.timeZone)
+                    }
                 }
             }
         }

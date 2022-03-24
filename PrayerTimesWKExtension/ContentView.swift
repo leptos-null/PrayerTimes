@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  PrayerTimesWatch WatchKit Extension
+//  PrayerTimesWKExtension
 //
 //  Created by Leptos on 3/18/22.
 //
@@ -42,7 +42,6 @@ struct ContentView: View {
     var body: some View {
         TabView(selection: $tab) {
             QuiblaView(quiblaManager: quiblaManager)
-                .navigationTitle("Quibla")
                 .tag(Tab.quibla)
             
             if let stapledLocation = locationManager.stapledLocation {
@@ -53,8 +52,8 @@ struct ContentView: View {
                     .tag(Tab.times)
             }
             
-            // PreferencesView(preferences: preferences)
-            //     .tag(Tab.preferences)
+            PreferencesView(preferences: preferences)
+                .tag(Tab.preferences)
         }
         .onReceive(locationManager.$authorizationStatus) { authorizationStatus in
             switch authorizationStatus {

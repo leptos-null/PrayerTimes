@@ -15,17 +15,21 @@ struct QuiblaView: View {
     var body: some View {
         // in my testing, headingManager reacts very well to orientation changes by itself on watchOS
         if HeadingManager.headingAvailable() {
-            Group {
-                if let heading = quiblaManager.quiblaHeading {
-                    SimpleCompass()
-                        .aspectRatio(1, contentMode: .fit)
-                        .rotationEffect(Angle(degrees: heading))
-                } else {
-                    Text("Direction unavailable")
+            NavigationView {
+                Group {
+                    if let heading = quiblaManager.quiblaHeading {
+                        SimpleCompass()
+                            .aspectRatio(1, contentMode: .fit)
+                            .rotationEffect(Angle(degrees: heading))
+                    } else {
+                        Text("Direction unavailable")
+                    }
                 }
+                .onAppear(perform: quiblaManager.headingManager.startUpdatingHeading)
+                .onDisappear(perform: quiblaManager.headingManager.stopUpdatingHeading)
+                .navigationTitle("Quibla")
+                .navigationBarTitleDisplayMode(.inline)
             }
-            .onAppear(perform: quiblaManager.headingManager.startUpdatingHeading)
-            .onDisappear(perform: quiblaManager.headingManager.stopUpdatingHeading)
         }
     }
 }
