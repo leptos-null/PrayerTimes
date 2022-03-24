@@ -26,10 +26,11 @@ struct CompassView: View {
     
     var body: some View {
         Group {
-            if let heading = quiblaManager.quiblaHeading {
+            switch quiblaManager.quiblaHeading {
+            case .success(let heading):
                 LineUpCompass(facing: Angle(degrees: heading))
-            } else {
-                Text("Direction unavailable")
+            case .failure(let error):
+                Text(error.localizedDescription)
             }
         }
         .onAppear(perform: quiblaManager.headingManager.startUpdatingHeading)

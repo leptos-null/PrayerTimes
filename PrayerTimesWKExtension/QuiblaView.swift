@@ -17,12 +17,13 @@ struct QuiblaView: View {
         if HeadingManager.headingAvailable() {
             NavigationView {
                 Group {
-                    if let heading = quiblaManager.quiblaHeading {
+                    switch quiblaManager.quiblaHeading {
+                    case .success(let heading):
                         SimpleCompass()
                             .aspectRatio(1, contentMode: .fit)
                             .rotationEffect(Angle(degrees: heading))
-                    } else {
-                        Text("Direction unavailable")
+                    case .failure(let error):
+                        Text(error.localizedDescription)
                     }
                 }
                 .onAppear(perform: quiblaManager.headingManager.startUpdatingHeading)

@@ -12,43 +12,63 @@ import os
 #if os(iOS) || os(watchOS)
 
 public final class QuiblaManager: ObservableObject {
-    private static let logger = Logger(subsystem: "null.leptos.PrayerTimesKit", category: "QuiblaManager")
+    public enum Error: Swift.Error {
+        case locationMissing
+        case coordinateInvalid
+        case headingMissing
+        case trueHeadingInvalid
+        
+        public var localizedDescription: String {
+            switch self {
+            case .locationMissing:
+                return "Location unavailable"
+            case .coordinateInvalid:
+                return "Location coordinate is not valid"
+            case .headingMissing:
+                return "Device heading unavailable"
+            case .trueHeadingInvalid:
+                return "True heading is not valid"
+            }
+        }
+    }
     
     public let locationManager: LocationManager
     public let headingManager: HeadingManager
     
-    @Published public private(set) var quiblaCourse: CLLocationDirection?
-    @Published public private(set) var quiblaHeading: CLLocationDirection?
+    @Published public private(set) var quiblaCourse: Result<CLLocationDirection, Error>
+    @Published public private(set) var quiblaHeading: Result<CLLocationDirection, Error>
+    
+    private static func quiblaCourse(for location: CLLocation?) -> Result<CLLocationDirection, Error> {
+        guard let location = location else { return .failure(.locationMissing) }
+        guard location.horizontalAccuracy >= 0 else { return .failure(.coordinateInvalid) }
+        return .success(location.coordinate.course(to: .kaaba))
+    }
+    
+    private static func quiblaHeadingFor(heading: CLHeading?, quiblaCourse: Result<CLLocationDirection, Error>) -> Result<CLLocationDirection, Error> {
+        guard let heading = heading else { return .failure(.headingMissing) }
+        let trueHeading = heading.trueHeading
+        guard trueHeading >= 0 else { return .failure(.trueHeadingInvalid) }
+        
+        switch quiblaCourse {
+        case .success(let course): return .success(course - trueHeading)
+        case .failure(let error):  return .failure(error)
+        }
+    }
     
     public init(locationManager: LocationManager, headingManager: HeadingManager) {
         self.locationManager = locationManager
         self.headingManager = headingManager
         
+        let quiblaCourse = Self.quiblaCourse(for: locationManager.location)
+        self.quiblaCourse = quiblaCourse
+        self.quiblaHeading = Self.quiblaHeadingFor(heading: headingManager.heading, quiblaCourse: quiblaCourse)
+        
         locationManager.$location
-            .map { location -> CLLocationDirection? in
-                guard let location = location,
-                      location.horizontalAccuracy >= 0 else {
-                          Self.logger.notice("location is nil or coordinate is not valid")
-                          return nil
-                      }
-                return location.coordinate.course(to: .kaaba)
-            }
+            .map(Self.quiblaCourse(for:))
             .assign(to: &$quiblaCourse)
         
         headingManager.$heading
-            .combineLatest($quiblaCourse) { heading, quiblaCourse -> CLLocationDirection? in
-                guard let heading = heading,
-                      let quiblaCourse = quiblaCourse else {
-                          Self.logger.notice("heading or quiblaCourse is nil")
-                          return nil
-                      }
-                let trueHeading = heading.trueHeading
-                guard trueHeading >= 0 else {
-                    Self.logger.notice("trueHeading is not valid")
-                    return nil
-                }
-                return quiblaCourse - trueHeading
-            }
+            .combineLatest($quiblaCourse, Self.quiblaHeadingFor(heading:quiblaCourse:))
             .assign(to: &$quiblaHeading)
     }
 }
