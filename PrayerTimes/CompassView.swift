@@ -13,13 +13,11 @@ import Combine
 
 struct CompassView: View {
     @ObservedObject private var quiblaManager: QuiblaManager
-    @ObservedObject private var orientationManager: OrientationManager
     
     private let orientationCancellable: AnyCancellable
     
     init(quiblaManager: QuiblaManager, orientationManager: OrientationManager) {
         self.quiblaManager = quiblaManager
-        self.orientationManager = orientationManager
         
         orientationCancellable = orientationManager.$orientation
             .map { CLDeviceOrientation($0) }

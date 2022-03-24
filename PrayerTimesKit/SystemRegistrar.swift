@@ -41,8 +41,8 @@ public final class SystemRegistrar {
         
         locationManager.$stapledLocation
             .compactMap { $0 }
-            .combineLatest(preferences.$calculationMethod, preferences.$userNotifications) { ($0, $1, $2) }
-            .sink { (stapledLocation, calculationMethod, userNotificationPreferences) in
+            .combineLatest(preferences.$calculationMethod, preferences.$userNotifications)
+            .sink { stapledLocation, calculationMethod, userNotificationPreferences in
                 let locationText: String
                 if let placemarkTitle = stapledLocation.placemark?.locationTitle {
                     locationText = "in \(placemarkTitle)"

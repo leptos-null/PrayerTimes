@@ -34,18 +34,14 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     override init() {
         super.init()
         
-        let currentTimeZoneSubject: CurrentValueSubject<TimeZone, Never> = .init(.current)
-        
-        NotificationCenter.default.publisher(for: .NSSystemTimeZoneDidChange)
-            .sink { _ in
-                currentTimeZoneSubject.send(.current)
-            }
-            .store(in: &cancellables)
-        
         let locationPublisher = locationManager.$location
             .compactMap { $0 }
         
-        currentTimeZoneSubject
+        NotificationCenter.default.publisher(for: .NSSystemTimeZoneDidChange)
+            .map { notification -> TimeZone in
+                return .current
+            }
+            .prepend(.current)
             .combineLatest(locationPublisher, preferences.$calculationMethod) { timeZone, location, calculationMethod in
                 CalculationParameters(
                     timeZone: timeZone,
