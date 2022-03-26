@@ -282,19 +282,6 @@ extension CLLocation {
     }
 }
 
-
-extension UserDefaults {
-    func unarchivedObject<Object>(forKey key: String) throws -> Object? where Object: NSObject, Object: NSSecureCoding {
-        guard let data = data(forKey: key) else { return nil }
-        return try NSKeyedUnarchiver.unarchivedObject(ofClass: Object.self, from: data)
-    }
-    
-    func setArchived<Object>(object: Object, forKey key: String) throws where Object: NSObject, Object: NSSecureCoding {
-        let data = try NSKeyedArchiver.archivedData(withRootObject: object, requiringSecureCoding: true)
-        set(data, forKey: key)
-    }
-}
-
 extension CLAuthorizationStatus: CustomStringConvertible {
     public var description: String {
         switch self {

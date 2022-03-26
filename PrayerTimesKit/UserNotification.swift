@@ -111,6 +111,14 @@ public extension UserNotification {
     }
 }
 
+extension UserNotification.Category: Codable {
+    
+}
+
+extension UserNotification.Preferences: Codable {
+    
+}
+
 #if os(iOS) || os(macOS)
 
 public extension UserNotification {

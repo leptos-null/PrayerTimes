@@ -18,31 +18,19 @@ public final class Preferences: ObservableObject {
     
     @Published public var calculationMethod: CalculationMethod {
         didSet {
-            guard Self.calculationMethod(from: userDefaults) != calculationMethod else { return }
-            logger.debug("Writing calculationMethod")
-            
-            userDefaults.setEncoded(value: calculationMethod, forKey: .calculationMethod)
+            updateUserDefaults(calculationMethod, for: .calculationMethod, read: Self.calculationMethod(from:))
         }
     }
     
     @Published public var userNotifications: UserNotification.Preferences {
         didSet {
-            guard Self.userNotificationPreferences(from: userDefaults) != userNotifications else { return }
-            logger.debug("Writing userNotifications")
-            
-            UserDefaultsKey.allNotificationCases.forEach { key in
-                guard case .notification(let category, let name) = key else { return }
-                userDefaults.set(userNotifications.enabledFor(category: category, name: name), forKey: key)
-            }
+            updateUserDefaults(userNotifications, for: .userNotifications, read: Self.userNotifications(from:))
         }
     }
     
     @Published public var visiblePrayers: Set<Prayer.Name> {
         didSet {
-            guard Self.visiblePrayers(from: userDefaults) != visiblePrayers else { return }
-            logger.debug("Writing visiblePrayers")
-            
-            userDefaults.setEncoded(value: visiblePrayers, forKey: .visiblePrayers)
+            updateUserDefaults(visiblePrayers, for: .visiblePrayers, read: Self.visiblePrayers(from:))
         }
     }
     
@@ -50,18 +38,29 @@ public final class Preferences: ObservableObject {
         userDefaults.decodedValue(forKey: .calculationMethod) ?? .isna
     }
     
-    private static func userNotificationPreferences(from userDefaults: UserDefaults) -> UserNotification.Preferences {
-        let categories: [UserNotification.Category: Set<Prayer.Name>] = UserNotification.Category.allCases.reduce(into: [:]) { partialResult, category in
-            let names = Prayer.Name.allCases.filter {
-                userDefaults.bool(forKey: .notification(category, $0))
-            }
-            partialResult[category] = Set(names)
-        }
-        return UserNotification.Preferences(categories: categories)
+    private static func userNotifications(from userDefaults: UserDefaults) -> UserNotification.Preferences {
+        userDefaults.decodedValue(forKey: .userNotifications) ?? .init(categories: [:])
     }
     
     private static func visiblePrayers(from userDefaults: UserDefaults) -> Set<Prayer.Name> {
         userDefaults.decodedValue(forKey: .visiblePrayers) ?? [ .fajr, .sunrise, .dhuhr, .asr, .maghrib, .isha ]
+    }
+    
+    private func updateUserDefaults<T: Equatable>(_ value: T, for key: UserDefaultsKey, read: @escaping (UserDefaults) -> T) where T: Encodable {
+        guard read(userDefaults) != value else { return }
+        logger.debug("Writing \(String(describing: value)) for \(key)")
+        
+        userDefaults.setEncoded(value: value, forKey: key)
+    }
+    
+    private func observeUserDefaults<T: Equatable>(for key: UserDefaultsKey, property: ReferenceWritableKeyPath<Preferences, T>, read: @escaping (UserDefaults) -> T) {
+        observer.observe(object: userDefaults, forKeyPath: key.rawValue) { [weak self] _ in
+            guard let self = self else { return }
+            
+            let update = read(self.userDefaults)
+            guard self[keyPath: property] != update else { return }
+            self[keyPath: property] = update
+        }
     }
     
     init() {
@@ -69,59 +68,20 @@ public final class Preferences: ObservableObject {
         self.userDefaults = userDefaults
         
         calculationMethod = Self.calculationMethod(from: userDefaults)
-        userNotifications = Self.userNotificationPreferences(from: userDefaults)
+        userNotifications = Self.userNotifications(from: userDefaults)
         visiblePrayers = Self.visiblePrayers(from: userDefaults)
         
-        observer.observe(object: userDefaults, forKeyPath: UserDefaultsKey.calculationMethod.stringValue) { [weak self] _ in
-            guard let self = self else { return }
-            
-            let update = Self.calculationMethod(from: userDefaults)
-            guard self.calculationMethod != update else { return }
-            self.calculationMethod = update
-        }
-        
-        UserDefaultsKey.allNotificationCases.forEach { key in
-            observer.observe(object: userDefaults, forKeyPath: key.stringValue) { [weak self] _ in
-                guard let self = self else { return }
-                
-                let update = Self.userNotificationPreferences(from: userDefaults)
-                guard self.userNotifications != update else { return }
-                self.userNotifications = update
-            }
-        }
-        
-        observer.observe(object: userDefaults, forKeyPath: UserDefaultsKey.visiblePrayers.stringValue) { [weak self] _ in
-            guard let self = self else { return }
-            
-            let update = Self.visiblePrayers(from: userDefaults)
-            guard self.visiblePrayers != update else { return }
-            self.visiblePrayers = update
-        }
+        observeUserDefaults(for: .calculationMethod, property: \.calculationMethod, read: Self.calculationMethod(from:))
+        observeUserDefaults(for: .userNotifications, property: \.userNotifications, read: Self.userNotifications(from:))
+        observeUserDefaults(for: .visiblePrayers,    property: \.visiblePrayers,    read: Self.visiblePrayers(from:))
     }
 }
 
-public extension Preferences {
-    enum UserDefaultsKey {
-        static var allNotificationCases: [UserDefaultsKey] {
-            UserNotification.Category.allCases.flatMap { category in
-                Prayer.Name.allCases.map { name in
-                    UserDefaultsKey.notification(category, name)
-                }
-            }
-        }
-        
-        case calculationMethod
-        case visiblePrayers
-        case notification(UserNotification.Category, Prayer.Name)
-        
-        public var stringValue: String {
-            switch self {
-            case .calculationMethod: return "PreferencesCalculationMethod"
-            case .visiblePrayers: return "PreferencesVisiblePrayers"
-            case .notification(let category, let name):
-                return "PreferencesNotification_\(category)_\(name)"
-            }
-        }
+extension Preferences {
+    enum UserDefaultsKey: String {
+        case calculationMethod = "PreferencesCalculationMethod"
+        case userNotifications = "PreferencesUserNotifications"
+        case visiblePrayers = "PreferencesVisiblePrayers"
     }
 }
 
@@ -129,61 +89,27 @@ extension Preferences.UserDefaultsKey: CustomStringConvertible {
     public var description: String {
         switch self {
         case .calculationMethod: return "calculationMethod"
+        case .userNotifications: return "userNotifications"
         case .visiblePrayers: return "visiblePrayers"
-        case .notification(let category, let name):
-            return "notification(\(category), \(name))"
         }
-    }
-}
-
-private extension UserDefaults {
-    private static let logger = Logger(subsystem: "null.leptos.PrayerTimesKit", category: "UserDefaults")
-    
-    func bool(forKey key: Preferences.UserDefaultsKey) -> Bool {
-        bool(forKey: key.stringValue)
-    }
-    
-    func value<T>(forKey key: Preferences.UserDefaultsKey) -> T? {
-        guard let object = object(forKey: key.stringValue) else { return nil }
-        guard let value = object as? T else {
-            Self.logger.error("Requested \(T.self) for \(key), found \(String(describing: object))")
-            return nil
-        }
-        return value
-    }
-}
-
-private extension UserDefaults {
-    func set(_ value: Bool, forKey key: Preferences.UserDefaultsKey) {
-        set(value, forKey: key.stringValue)
-    }
-    
-    func set(_ value: Data, forKey key: Preferences.UserDefaultsKey) {
-        set(value, forKey: key.stringValue)
     }
 }
 
 private extension UserDefaults {
     func setEncoded<T: Encodable>(value: T, forKey key: Preferences.UserDefaultsKey) {
-        let encoder = PropertyListEncoder()
-        encoder.outputFormat = .binary
         do {
-            let data: Data = try encoder.encode(value)
-            set(data, forKey: key)
+            try setEncoded(value: value, forKey: key.rawValue)
         } catch {
-            Self.logger.error("PropertyListEncoder.encode(\(String(describing: value))): \(String(describing: error))")
+            Self.logger.error("setEncoded(value: \(String(describing: value)), forKey: \(key)): \(String(describing: error))")
             return
         }
     }
     
     func decodedValue<T: Decodable>(forKey key: Preferences.UserDefaultsKey) -> T? {
-        guard let data: Data = value(forKey: key) else { return nil }
-        let decoder = PropertyListDecoder()
         do {
-            let value = try decoder.decode(T.self, from: data)
-            return value
+            return try decodedValue(forKey: key.rawValue)
         } catch {
-            Self.logger.error("PropertyListDecoder.decode(\(T.self), from: \(data)): \(String(describing: error))")
+            Self.logger.error("decodedValue(forKey: \(key)): \(String(describing: error))")
             return nil
         }
     }
