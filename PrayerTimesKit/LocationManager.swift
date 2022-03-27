@@ -56,18 +56,15 @@ public final class LocationManager: ObservableObject {
                 logger.log("stapledLocation set to nil")
                 return
             }
+            logger.debug("stapledLocation = \(String(describing: stapledLocation))")
             guard let userDefaults = userDefaults else { return }
             
-            let dictionaryRepresentation: [String: Data]
+            // TODO: avoid writing stapledLocation to UserDefaults if the value in UserDefaults is the same
             do {
-                dictionaryRepresentation = try stapledLocation.dictionaryRepresentation
+                try userDefaults.setEncoded(value: stapledLocation, forKey: stapledLocationUserDefaultsKey)
             } catch {
-                logger.error("stapledLocation.dictionaryRepresentation: \(String(describing: error))")
-                return
+                logger.error("userDefaults.setEncoded(value: \((String(describing: stapledLocation))), forKey: \(self.stapledLocationUserDefaultsKey)): \(String(describing: error))")
             }
-            // TODO: avoid writing location to UserDefaults if the value in UserDefaults is the same
-            logger.debug("userDefaults.set(\(dictionaryRepresentation), forKey: \(self.stapledLocationUserDefaultsKey))")
-            userDefaults.set(dictionaryRepresentation, forKey: stapledLocationUserDefaultsKey)
         }
     }
     
@@ -96,18 +93,14 @@ public final class LocationManager: ObservableObject {
             
             observer.observe(object: userDefaults, forKeyPath: stapledLocationUserDefaultsKey, options: .initial) { [weak self] change in
                 guard let self = self else { return }
-                let object = userDefaults.object(forKey: self.stapledLocationUserDefaultsKey)
-                guard let value = object as? [String: Data] else {
-                    self.logger.error("Requested [String: Data] for \(self.stapledLocationUserDefaultsKey), found \(String(describing: object))")
-                    return
-                }
-                let stapledLocation: StapledLocation
+                let stapledLocation: StapledLocation?
                 do {
-                    stapledLocation = try StapledLocation(dictionaryRepresentation: value)
+                    stapledLocation = try userDefaults.decodedValue(forKey: self.stapledLocationUserDefaultsKey)
                 } catch {
-                    self.logger.error("StapledLocation(dictionaryRepresentation: \(value)): \(String(describing: error))")
+                    self.logger.error("decodedValue(forKey: \(self.stapledLocationUserDefaultsKey)): \(String(describing: error))")
                     return
                 }
+                guard let stapledLocation = stapledLocation else { return }
                 if let current = self.stapledLocation {
                     // new location must be at least newer than the current
                     guard stapledLocation.location.timestamp.timeIntervalSince(current.location.timestamp) > 0 else { return }

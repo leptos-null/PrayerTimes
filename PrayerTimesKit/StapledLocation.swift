@@ -11,40 +11,46 @@ import CoreLocation
 public struct StapledLocation: Equatable {
     public let placemark: CLPlacemark?
     public let location: CLLocation
-    
-    private let placemarkDictionaryRepresentationKey = "Placemark"
-    private let locationDictionaryRepresentationKey = "Location"
-    
-    var dictionaryRepresentation: [String: Data] {
-        get throws {
-            var representation: [String: Data] = [:]
-            
-            if let placemark = placemark {
-                let placemarkData = try NSKeyedArchiver.archivedData(withRootObject: placemark, requiringSecureCoding: true)
-                representation[placemarkDictionaryRepresentationKey] = placemarkData
-            }
-            
-            let locationData = try NSKeyedArchiver.archivedData(withRootObject: location, requiringSecureCoding: true)
-            representation[locationDictionaryRepresentationKey] = locationData
-            
-            return representation
-        }
+}
+
+extension StapledLocation: Codable {
+    private enum CodingKeys: String, CodingKey {
+        case placemark
+        case location
     }
     
-    init(dictionaryRepresentation: [String: Data]) throws {
-        guard let locationData = dictionaryRepresentation[locationDictionaryRepresentationKey] else {
-            throw CocoaError(.coderValueNotFound)
-        }
-        if let placemarkData = dictionaryRepresentation[placemarkDictionaryRepresentationKey] {
-            placemark = try NSKeyedUnarchiver.unarchivedObject(ofClass: CLPlacemark.self, from: placemarkData)!
-        } else {
-            placemark = nil
-        }
-        location = try NSKeyedUnarchiver.unarchivedObject(ofClass: CLLocation.self, from: locationData)!
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        placemark = try container.decodeObjectIfPresent(forKey: .placemark)
+        location = try container.decodeObject(forKey: .location)
     }
     
-    init(placemark: CLPlacemark?, location: CLLocation) {
-        self.placemark = placemark
-        self.location = location
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        if let placemark = placemark {
+            try container.encode(object: placemark, forKey: .placemark)
+        }
+        
+        try container.encode(object: location, forKey: .location)
+    }
+}
+
+extension KeyedEncodingContainer {
+    mutating func encode<Object>(object: Object, forKey key: KeyedEncodingContainer<K>.Key) throws where Object: NSObject, Object: NSSecureCoding {
+        let data: Data = try NSKeyedArchiver.archivedData(withRootObject: object, requiringSecureCoding: true)
+        try encode(data, forKey: key)
+    }
+}
+
+extension KeyedDecodingContainer {
+    func decodeObject<Object>(forKey key: KeyedDecodingContainer<K>.Key) throws -> Object where Object: NSObject, Object: NSSecureCoding {
+        let data = try decode(Data.self, forKey: key)
+        return try NSKeyedUnarchiver.unarchivedObject(ofClass: Object.self, from: data)!
+    }
+    
+    func decodeObjectIfPresent<Object>(forKey key: KeyedDecodingContainer<K>.Key) throws -> Object? where Object: NSObject, Object: NSSecureCoding {
+        guard let data = try decodeIfPresent(Data.self, forKey: key) else { return nil }
+        return try NSKeyedUnarchiver.unarchivedObject(ofClass: Object.self, from: data)!
     }
 }
