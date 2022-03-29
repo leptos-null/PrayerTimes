@@ -209,8 +209,10 @@ struct PlacemarkProperties: View {
             }
             if let areasOfInterest = placemark.areasOfInterest {
                 TitleDetailView(title: "areasOfInterest") {
-                    ForEach(areasOfInterest, id: \.self) {
-                        Text($0)
+                    VStack(alignment: .leading) {
+                        ForEach(areasOfInterest, id: \.self) {
+                            Text($0)
+                        }
                     }
                 }
             }
@@ -228,7 +230,7 @@ struct TitleDetailView<Content: View>: View {
     }
     
     var body: some View {
-        HStack {
+        HStack(alignment: .firstTextBaseline) {
             Text(title)
                 .font(.subheadline)
             detail
