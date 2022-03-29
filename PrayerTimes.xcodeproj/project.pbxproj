@@ -21,6 +21,9 @@
 		FA2B41E927A6727F0032C29A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA2B41E827A6727F0032C29A /* Assets.xcassets */; };
 		FA2B41EC27A6727F0032C29A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA2B41EA27A6727F0032C29A /* LaunchScreen.storyboard */; };
 		FA2B41F727A6F5CD0032C29A /* PrayerTimesKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA573112279CE54100E5C9A6 /* PrayerTimesKit.framework */; };
+		FA37EB3927F36DA80082FEB1 /* LocationPrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA37EB3827F36DA80082FEB1 /* LocationPrompt.swift */; };
+		FA37EB3B27F36E6A0082FEB1 /* CoordinatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA37EB3A27F36E6A0082FEB1 /* CoordinatePicker.swift */; };
+		FA37EB3D27F381600082FEB1 /* OverrideLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA37EB3C27F381600082FEB1 /* OverrideLocationView.swift */; };
 		FA4F365F27E506DA00A63988 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA4F365E27E506DA00A63988 /* Assets.xcassets */; };
 		FA4F366527E506DB00A63988 /* PrayerTimesWKExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FA4F366427E506DB00A63988 /* PrayerTimesWKExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FA4F366A27E506DB00A63988 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4F366927E506DB00A63988 /* ContentView.swift */; };
@@ -203,6 +206,9 @@
 		FA2B41E827A6727F0032C29A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA2B41EB27A6727F0032C29A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA2B41ED27A6727F0032C29A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA37EB3827F36DA80082FEB1 /* LocationPrompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPrompt.swift; sourceTree = "<group>"; };
+		FA37EB3A27F36E6A0082FEB1 /* CoordinatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatePicker.swift; sourceTree = "<group>"; };
+		FA37EB3C27F381600082FEB1 /* OverrideLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideLocationView.swift; sourceTree = "<group>"; };
 		FA4F365C27E506DA00A63988 /* PrayerTimesWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrayerTimesWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA4F365E27E506DA00A63988 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA4F366427E506DB00A63988 /* PrayerTimesWKExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PrayerTimesWKExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -442,6 +448,9 @@
 				FAB8F8552797DF7400F21628 /* SceneDelegate.swift */,
 				FAB8F8572797DF7400F21628 /* ViewController.swift */,
 				FA573127279D01DA00E5C9A6 /* ContentView.swift */,
+				FA37EB3827F36DA80082FEB1 /* LocationPrompt.swift */,
+				FA37EB3C27F381600082FEB1 /* OverrideLocationView.swift */,
+				FA37EB3A27F36E6A0082FEB1 /* CoordinatePicker.swift */,
 				FA0C286227CA925400C191C9 /* LocationHeader.swift */,
 				FA0C286427CC146D00C191C9 /* TimesView.swift */,
 				FA7EB36227C6747C00642F63 /* DayView.swift */,
@@ -814,9 +823,12 @@
 				FA0C286327CA925400C191C9 /* LocationHeader.swift in Sources */,
 				FA6542A527BF7249002C4777 /* CLDeviceOrientation+UIKit.swift in Sources */,
 				FA573128279D01DA00E5C9A6 /* ContentView.swift in Sources */,
+				FA37EB3B27F36E6A0082FEB1 /* CoordinatePicker.swift in Sources */,
 				FA7EB35F27C48F3800642F63 /* CompassView.swift in Sources */,
+				FA37EB3D27F381600082FEB1 /* OverrideLocationView.swift in Sources */,
 				FA6542A327BF71BD002C4777 /* OrientationManager.swift in Sources */,
 				FA0C286D27CD465800C191C9 /* NowDayView.swift in Sources */,
+				FA37EB3927F36DA80082FEB1 /* LocationPrompt.swift in Sources */,
 				FA7EB36327C6747C00642F63 /* DayView.swift in Sources */,
 				FA0C286527CC146D00C191C9 /* TimesView.swift in Sources */,
 				FAB8F8562797DF7400F21628 /* SceneDelegate.swift in Sources */,

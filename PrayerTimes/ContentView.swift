@@ -58,7 +58,7 @@ struct ContentView: View {
                     }
                     .tag(Tab.times)
             } else {
-                Text("Location unavailable")
+                LocationPrompt(locationManager: locationManager)
                     .tabItem {
                         Label("Location", systemImage: "location")
                     }
@@ -79,7 +79,7 @@ struct ContentView: View {
         .onReceive(locationManager.$authorizationStatus) { authorizationStatus in
             switch authorizationStatus {
             case .notDetermined:
-                locationManager.requestWhenInUseAuthorization()
+                break
             case .restricted, .denied:
                 break
             case .authorizedAlways, .authorizedWhenInUse:
