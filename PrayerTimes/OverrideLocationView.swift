@@ -15,6 +15,10 @@ struct OverrideLocationView: View {
     
     @State private var coordinate: CLLocationCoordinate2D?
     
+    private var isCoordinateOriginal: Bool {
+        locationManager.location?.coordinate == coordinate
+    }
+    
     var body: some View {
         VStack {
             Text("Long press on the map to drop a pin.")
@@ -22,13 +26,12 @@ struct OverrideLocationView: View {
             Button {
                 guard let coordinate = coordinate else { return }
                 locationManager.override(location: CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude))
-                
             } label: {
                 Label("Use Selected", systemImage: "mappin.and.ellipse")
             }
             .buttonStyle(.bordered)
             .hoverEffect()
-            .disabled((locationManager.location?.coordinate == coordinate) && (coordinate != nil))
+            .disabled(isCoordinateOriginal && (coordinate != nil))
             
             CoordinatePicker(coordinate: $coordinate)
                 .overlay(alignment: .topTrailing) {
@@ -42,12 +45,13 @@ struct OverrideLocationView: View {
                 .cornerRadius(8)
                 .padding()
         }
-        .onAppear {
-            // we don't want to have this tied up always, because we don't want a new location coming in
-            //   and then the user's selection changes by itself, potentially losing their current selection
-            if let location = locationManager.location {
-                coordinate = location.coordinate
-            }
+        .onReceive(locationManager.$location) { location in
+            guard let location = location else { return }
+            // Published publishes before its wrapped value updates
+            // this behavior allows the input parameter to this block be the new value
+            // while `locationManager.location` still has the previous value
+            guard (coordinate == nil) || isCoordinateOriginal else { return }
+            coordinate = location.coordinate
         }
     }
 }

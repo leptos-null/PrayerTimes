@@ -65,7 +65,7 @@ struct ContentView: View {
                     .tag(Tab.times)
             }
             
-            PreferencesView(preferences: preferences)
+            PreferencesView(locationManager: locationManager, preferences: preferences)
                 .tabItem {
                     Label("Preferences", systemImage: "gear")
                 }

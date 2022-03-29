@@ -10,6 +10,7 @@ import PrayerTimesUI
 import PrayerTimesKit
 
 struct PreferencesView: View {
+    @ObservedObject var locationManager: LocationManager
     @ObservedObject var preferences: Preferences
     
     private var listStyle: some ListStyle {
@@ -20,9 +21,29 @@ struct PreferencesView: View {
 #endif
     }
     
+    private var shouldShowLocationSection: Bool {
+        switch locationManager.authorizationStatus {
+        case .notDetermined, .restricted, .denied: return true
+        case .authorizedAlways, .authorizedWhenInUse: return false
+        @unknown default: return true
+        }
+    }
+    
     var body: some View {
         NavigationView {
             List {
+                if shouldShowLocationSection {
+                    Section {
+                        NavigationLink("Select Location") {
+                            OverrideLocationView(locationManager: locationManager)
+                                .navigationTitle("Select Location")
+                        }
+                    } header: {
+                        Label("Location", systemImage: "location")
+                            .symbolRenderingMode(.multicolor)
+                    }
+                }
+                
                 Section {
                     NavigationLink("Visibility") {
                         VisiblePrayersView(visiblePrayers: $preferences.visiblePrayers)
@@ -232,6 +253,6 @@ extension UserNotification.Category: Identifiable {
 
 struct PreferencesView_Previews: PreviewProvider {
     static var previews: some View {
-        PreferencesView(preferences: .shared)
+        PreferencesView(locationManager: .shared, preferences: .shared)
     }
 }
