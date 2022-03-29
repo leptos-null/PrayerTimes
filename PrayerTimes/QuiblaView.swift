@@ -59,6 +59,7 @@ struct QuiblaView: View {
                 .font(.title)
                 .buttonStyle(.borderedProminent)
                 .labelStyle(.iconOnly)
+                .hoverEffect()
                 .aspectRatio(1, contentMode: .fit)
                 .scenePadding()
             }
