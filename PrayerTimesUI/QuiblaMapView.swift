@@ -49,7 +49,7 @@ private struct CourseMapView {
         let view = MKMapView()
         view.delegate = context.coordinator
         view.mapType = .satelliteFlyover
-        view.showsCompass = true
+        view.showsCompass = false
         return view
     }
     
