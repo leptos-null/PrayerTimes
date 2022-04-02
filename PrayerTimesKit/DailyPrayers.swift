@@ -67,8 +67,8 @@ public struct DailyPrayers {
         self.calculationParameters = calculationParameters
         
         self.qiyam = Prayer(.qiyam, start: qiyam)
-        self.sunrise = Prayer(.sunrise, start: sunrise)
         self.fajr = Prayer(.fajr, start: fajr)
+        self.sunrise = Prayer(.sunrise, start: sunrise)
         self.dhuhr = Prayer(.dhuhr, start: dhuhr)
         self.asr = Prayer(.asr, start: asr)
         self.maghrib = Prayer(.maghrib, start: maghrib)

@@ -64,7 +64,6 @@ public final class SystemRegistrar {
     }
     
     public func stopRegistering() {
-        cancellables.forEach { $0.cancel() }
         cancellables.removeAll()
     }
 }
