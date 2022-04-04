@@ -31,7 +31,7 @@ struct OverrideLocationView: View {
             }
             .buttonStyle(.bordered)
             .hoverEffect()
-            .disabled(isCoordinateOriginal && (coordinate != nil))
+            .disabled(isCoordinateOriginal || (coordinate == nil))
             
             CoordinatePicker(coordinate: $coordinate)
                 .overlay(alignment: .topTrailing) {
