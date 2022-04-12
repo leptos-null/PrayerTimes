@@ -15,14 +15,29 @@ struct DayView: View {
     let visiblePrayers: Set<Prayer.Name>
     let nowTime: Date?
     
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize: DynamicTypeSize
+    
+    private var listingWidth: CGFloat? {
+        switch dynamicTypeSize {
+        case .xSmall, .small, .medium, .large:
+            return 240
+        case .xLarge, .xxLarge, .xxxLarge:
+            return 240
+        case .accessibility1: return 272
+        case .accessibility2: return 328
+        case .accessibility3: return 376
+        case .accessibility4: return 424
+        case .accessibility5: return 468
+        @unknown default: return nil
+        }
+    }
+    
     var body: some View {
         VStack {
-            HStack {
-                Spacer(minLength: 68)
-                DailyPrayersView(dailyPrayers: dailyPrayers, time: nowTime, visiblePrayers: visiblePrayers)
-                Spacer(minLength: 68)
-            }
-            .scenePadding(.vertical)
+            DailyPrayersView(dailyPrayers: dailyPrayers, time: nowTime, visiblePrayers: visiblePrayers)
+                .frame(width: listingWidth)
+                .scenePadding()
+            
             Spacer()
             SolarPositionsView(dailyPrayers: dailyPrayers, visiblePrayers: visiblePrayers, currentTime: nowTime)
                 .aspectRatio(2, contentMode: .fit)
