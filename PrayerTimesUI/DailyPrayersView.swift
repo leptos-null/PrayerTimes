@@ -11,15 +11,16 @@ import PrayerTimesKit
 
 public struct DailyPrayersView: View {
     public let dailyPrayers: DailyPrayers
-    public let visiblePrayers: Set<Prayer.Name>
+    public let orderedPrayers: [Prayer]
     let current: Prayer?
     
     public init(dailyPrayers: DailyPrayers, time: Date? = nil, visiblePrayers: Set<Prayer.Name>) {
+        let filteredPrayers = dailyPrayers.ordered.filter(visiblePrayers)
         self.dailyPrayers = dailyPrayers
-        self.visiblePrayers = visiblePrayers
+        self.orderedPrayers = filteredPrayers
         
         if let time = time {
-            current = dailyPrayers.ordered.filter(visiblePrayers).activePrayer(for: time)
+            current = filteredPrayers.activePrayer(for: time)
         } else {
             current = nil
         }
@@ -29,16 +30,19 @@ public struct DailyPrayersView: View {
         VStack {
             Text(dailyPrayers.dhuhr.start, style: .date)
                 .font(.title3)
-            ForEach(dailyPrayers.ordered.filter(visiblePrayers)) { prayer in
+            ForEach(orderedPrayers) { prayer in
                 HStack {
                     Text(prayer.name.localized)
                         .fontWeight((prayer == current) ? .semibold : .regular)
-                    Spacer()
+                    Spacer(minLength: 4)
                     
                     Text(prayer.start, style: .time)
                         .fontWeight((prayer == current) ? .semibold : .regular)
                 }
                 .padding(.vertical, 6)
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel(prayer.name.localized)
+                .accessibilityValue(Text(prayer.start, style: .time))
             }
         }
         .environment(\.timeZone, dailyPrayers.calculationParameters.timeZone)
