@@ -21,7 +21,7 @@ struct NowDayView: View {
     }
     
     var body: some View {
-        TimelineView(ZipTimelineSchedule.zip(.explicit(prayerStartTimes), .everyMinute)) { timelineContext in
+        TimelineView(MergeTimelineSchedule.merge(.explicit(prayerStartTimes), .everyMinute)) { timelineContext in
             DayView(dailyPrayers: dailyPrayers, visiblePrayers: visiblePrayers, nowTime: timelineContext.date)
         }
     }

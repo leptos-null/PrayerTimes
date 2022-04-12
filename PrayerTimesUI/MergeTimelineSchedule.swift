@@ -1,5 +1,5 @@
 //
-//  ZipTimelineSchedule.swift
+//  MergeTimelineSchedule.swift
 //  PrayerTimesUI
 //
 //  Created by Leptos on 2/28/22.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct ZipTimelineSchedule<TimelineSchedule1: TimelineSchedule, TimelineSchedule2: TimelineSchedule>: TimelineSchedule {
+public struct MergeTimelineSchedule<TimelineSchedule1: TimelineSchedule, TimelineSchedule2: TimelineSchedule>: TimelineSchedule {
     let timelineSchedule1: TimelineSchedule1
     let timelineSchedule2: TimelineSchedule2
     
@@ -54,8 +54,8 @@ public struct ZipTimelineSchedule<TimelineSchedule1: TimelineSchedule, TimelineS
     }
 }
 
-extension ZipTimelineSchedule {
-    public static func zip(_ ts1: TimelineSchedule1, _ ts2: TimelineSchedule2) -> Self {
-        ZipTimelineSchedule(timelineSchedule1: ts1, timelineSchedule2: ts2)
+extension MergeTimelineSchedule {
+    public static func merge(_ ts1: TimelineSchedule1, _ ts2: TimelineSchedule2) -> Self {
+        MergeTimelineSchedule(timelineSchedule1: ts1, timelineSchedule2: ts2)
     }
 }
