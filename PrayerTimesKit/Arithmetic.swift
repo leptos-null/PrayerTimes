@@ -49,59 +49,48 @@ extension Date {
     }
 }
 
-// Thanks to "Astronomical Algorithms (Seconds Edition)" by Jean Meeus
-// referred to by https://squarewidget.com/solar-coordinates/
+// https://aa.usno.navy.mil/faq/sun_approx
+// more: http://stjarnhimlen.se/comp/ppcomp.html
 func solarApproximations(julianDay: JulianDay) -> (declination: AngleRadians, equationOfTime: TimeInterval) {
-    /// T (Meeus 25.1)
-    let time: Double = (julianDay - 2451545.0)/36525
-    /// T^2
-    let timeSq: Double = (time * time)
+    // Date(timeIntervalSince1970: 946728000)
+    let julianReference = julianDay - 2451545.0
     
-    /// L_0 (Meeus 25.2 and 28.2)
-    let meanSolarLng = (280.46646 + 36000.76982779 * time + 0.0003032028 * timeSq)
-        .constrict(to: Arithmetic.degreesInCircle).radians()
+    // https://astronomy.swin.edu.au/cosmos/A/Anomalistic+Year
+    let daysPerAnomalisticYear = 365.25964
+    let daysPerTropicalYear = 365.24219
     
-    /// M (Meeus 25.3)
-    let meanSolarAnomaly = (357.52911 + 35999.05029 * time - 0.0001537 * timeSq)
-        .constrict(to: Arithmetic.degreesInCircle).radians()
+    // https://www.physicsforums.com/threads/539999/post-3558510
+    let meanAnomalyReference = Arithmetic.radians(from: 357.529)
+    let meanSolarLngReference = Arithmetic.radians(from: 280.459)
+    let earthEclipticObliquityReference = Arithmetic.radians(from: 23.4393)
     
-    /// C (Meeus unlabeled, page 164)
-    let center = (1.914602 - 0.004187 * time - 0.000014 * timeSq) * sin(1 * meanSolarAnomaly)
-    + (0.019993 - 0.0000101 * time) * sin(2 * meanSolarAnomaly)
-    + (0.000289) * sin(3 * meanSolarAnomaly)
+    let meanAnomalyDailyDelta = Arithmetic.radiansInCircle/daysPerAnomalisticYear // 0.98560027053632315 deg
+    let meanSolarLngDailyDelta = Arithmetic.radiansInCircle/daysPerTropicalYear   // 0.98564735908521416 deg
     
-    /// odot (Meeus unlabeled, page 164)
-    let trueSolarLng = meanSolarLng + center.radians()
+    let earthEclipticObliquityDailyDelta = Arithmetic.radiansInCircle/1e9
     
-    /// U
-    let U: Double = time/100
-    let eclipticCoefficients: [AngleDegree] = [ 23.439291, -1.3002583, -1.55, 1999.25, -51.38, -249.67, -39.05, 7.12, 27.87, 5.79, 2.45 ]
-    /// epsilon_0 (Meeus 22.3)
-    let meanEclipticObliquity: AngleDegree = eclipticCoefficients.enumerated().reduce(into: 0) { partialResult, zipped in
-        partialResult += zipped.element * pow(U, Double(zipped.offset))
-    }
+    let meanSolarAnomaly = (meanAnomalyReference + meanAnomalyDailyDelta * julianReference)
+        .constrict(to: Arithmetic.radiansInCircle)
+    let meanSolarLng = (meanSolarLngReference + meanSolarLngDailyDelta * julianReference)
+        .constrict(to: Arithmetic.radiansInCircle)
+    let eclipticLng = (meanSolarLng + Arithmetic.radians(from: 1.915) * sin(meanSolarAnomaly) + Arithmetic.radians(from: 0.02) * sin(2 * meanSolarAnomaly))
+        .constrict(to: Arithmetic.radiansInCircle)
     
-    /// Omega (Meeus unlabeled, page 144)
-    let omega = (125.04452 - 1934.136261 * time + 0.0020708 * timeSq)
-        .constrict(to: Arithmetic.degreesInCircle).radians()
-    /// Delta psi (Meeus unlabeled, page 144)
-    let longitudeNutation: AngleRadians = -0.000083388 * sin(omega) - 0.0000064 * sin(2 * meanSolarLng)
-    /// Delta epsilon (Meeus unlabeled, page 144)
-    let obliquityNutation: AngleRadians = 0.0000446 * cos(omega) + 0.0000028 * cos(2 * meanSolarLng)
-    /// epsilon (Meeus unlabeled, page 147)
-    let trueEclipticObliquity: AngleRadians = meanEclipticObliquity.radians() + obliquityNutation
-    /// alpha (Meeus 25.6)
-    let rightAscension: AngleRadians = atan2(
-        cos(trueEclipticObliquity) * sin(trueSolarLng),
-        cos(trueSolarLng)
+    let eclipticObliquity = earthEclipticObliquityReference - earthEclipticObliquityDailyDelta * julianReference
+    let declination = asin(sin(eclipticObliquity) * sin(eclipticLng))
+    
+    let rightAscension = atan2(
+        cos(eclipticObliquity) * sin(eclipticLng),
+        cos(eclipticLng)
     )
         .constrict(to: Arithmetic.radiansInCircle)
-    /// delta (Meeus 25.7)
-    let declination: AngleRadians = asin(sin(trueEclipticObliquity) * sin(trueSolarLng))
     
-    let longitudeAberration: AngleRadians = Arithmetic.radians(from: 0.0057183)
-    /// E (Meeus 28.1)
-    let equationOfTime: TimeInterval = (meanSolarLng - longitudeAberration - rightAscension + longitudeNutation * cos(trueEclipticObliquity))/Arithmetic.radiansInCircle * .day
+    // "apparent solar time minus mean solar time"
+    let equationOfTime: TimeInterval = (meanSolarLng - rightAscension)/Arithmetic.radiansInCircle * .day
+    
+    // equationOfTime should approximately be bound to (-0.5, +0.5)
+    // since `constrict(to:)` constricts values to [0, bound)
+    // shift the input by half the range, and then shift the bounded value back
     let halfDay: TimeInterval = .day/2
     let constrictedTime = (equationOfTime + halfDay).constrict(to: .day) - halfDay
     
