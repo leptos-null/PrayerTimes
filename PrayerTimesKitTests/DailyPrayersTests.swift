@@ -38,18 +38,18 @@ class DailyPrayersTests: XCTestCase {
                 // based on https://gml.noaa.gov/grad/solcalc/
                 // relatively high tolerance on these values, because of the lack of seconds
                 //   and these values should not change, regardless of implementation
-                XCTAssert(daily.dhuhr.start.timeBetween(dateComponents, solarNoon) < 60)
-                XCTAssert(daily.sunrise.start.timeBetween(dateComponents, sunrise) < 120)
-                XCTAssert(daily.maghrib.start.timeBetween(dateComponents, sunset) < 120)
+                XCTAssertEqual(daily.dhuhr.start.timeSince(solarNoon, using: dateComponents), 0, accuracy: 60, "solarNoon")
+                XCTAssertEqual(daily.sunrise.start.timeSince(sunrise, using: dateComponents), 0, accuracy: 120, "sunrise")
+                XCTAssertEqual(daily.maghrib.start.timeSince(sunset, using: dateComponents), 0, accuracy: 120, "sunset")
                 
                 // based on previous calculations
                 // as the implementation is updated, these values may be updated
                 // i.e. the purpose of these tests are to let us know if a change
                 //   inadvertently results in different output
                 //   (as opposed to these tests strictly representing the desired output)
-                XCTAssert(daily.fajr.start.timeBetween(dateComponents, fajr) < 2)
-                XCTAssert(daily.asr.start.timeBetween(dateComponents, asr) < 2)
-                XCTAssert(daily.isha.start.timeBetween(dateComponents, isha) < 2)
+                XCTAssertEqual(daily.fajr.start.timeSince(fajr, using: dateComponents), 0, accuracy: 2, "fajr")
+                XCTAssertEqual(daily.asr.start.timeSince(asr, using: dateComponents), 0, accuracy: 2, "asr")
+                XCTAssertEqual(daily.isha.start.timeSince(isha, using: dateComponents), 0, accuracy: 2, "isha")
                 
                 // ensure isha is after maghrib, maghrib is after asr, etc.
                 XCTAssert(daily.isha.start.timeIntervalSince(daily.maghrib.start) > 0)
@@ -60,9 +60,9 @@ class DailyPrayersTests: XCTestCase {
                 XCTAssert(daily.fajr.start.timeIntervalSince(daily.qiyam.start) > 0)
                 
                 // failure cases to make sure logic is working
-                XCTAssertFalse(daily.fajr.start.timeBetween(dateComponents, (12, 00)) < 200)
-                XCTAssertFalse(daily.dhuhr.start.timeBetween(dateComponents, (18, 00)) < 200)
-                XCTAssertFalse(daily.isha.start.timeBetween(dateComponents, (04, 00)) < 200)
+                XCTAssertNotEqual(daily.fajr.start.timeSince((12, 00), using: dateComponents), 0, accuracy: 200)
+                XCTAssertNotEqual(daily.dhuhr.start.timeSince((18, 00), using: dateComponents), 0, accuracy: 200)
+                XCTAssertNotEqual(daily.isha.start.timeSince((04, 00), using: dateComponents), 0, accuracy: 200)
                 
                 XCTAssertFalse(daily.asr.start.timeIntervalSince(daily.maghrib.start) > 0)
                 XCTAssertFalse(daily.fajr.start.timeIntervalSince(daily.isha.start) > 0)
@@ -274,17 +274,17 @@ class DailyPrayersTests: XCTestCase {
 }
 
 private extension Date {
-    func timeBetween(_ dateComponents: DateComponents, _ hourMinute: HourMinute) -> TimeInterval {
+    func timeSince(_ hourMinute: HourMinute, using dateComponents: DateComponents) -> TimeInterval {
         var componentsCopy = dateComponents
         componentsCopy.hour = hourMinute.hour
         componentsCopy.minute = hourMinute.minute
-        return timeIntervalSince(componentsCopy.date!).magnitude
+        return timeIntervalSince(componentsCopy.date!)
     }
-    func timeBetween(_ dateComponents: DateComponents, _ hourMinuteSecond: HourMinuteSecond) -> TimeInterval {
+    func timeSince(_ hourMinuteSecond: HourMinuteSecond, using dateComponents: DateComponents) -> TimeInterval {
         var componentsCopy = dateComponents
         componentsCopy.hour = hourMinuteSecond.hour
         componentsCopy.minute = hourMinuteSecond.minute
         componentsCopy.second = hourMinuteSecond.second
-        return timeIntervalSince(componentsCopy.date!).magnitude
+        return timeIntervalSince(componentsCopy.date!)
     }
 }
