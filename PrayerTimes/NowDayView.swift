@@ -20,9 +20,17 @@ struct NowDayView: View {
             .map { $0.start }
     }
     
+    private func nowTime<Schedule: TimelineSchedule, Content>(for timelineContext: TimelineView<Schedule, Content>.Context) -> Date {
+#if SCREENSHOT_MODE
+        .statusBarDate
+#else
+        timelineContext.date
+#endif
+    }
+    
     var body: some View {
         TimelineView(MergeTimelineSchedule.merge(.explicit(prayerStartTimes), .everyMinute)) { timelineContext in
-            DayView(dailyPrayers: dailyPrayers, visiblePrayers: visiblePrayers, nowTime: timelineContext.date)
+            DayView(dailyPrayers: dailyPrayers, visiblePrayers: visiblePrayers, nowTime: nowTime(for: timelineContext))
         }
     }
 }

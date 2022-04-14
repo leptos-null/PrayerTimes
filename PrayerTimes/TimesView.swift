@@ -27,6 +27,18 @@ struct TimesView: View {
         self.calendar = calendar
     }
     
+    private func nowTime<Schedule: TimelineSchedule, Content>(for timelineContext: TimelineView<Schedule, Content>.Context) -> Date {
+#if SCREENSHOT_MODE
+        .statusBarDate
+#else
+        timelineContext.date
+#endif
+    }
+    
+    private func dailyPrayers(for date: Date) -> DailyPrayers {
+        DailyPrayers(day: date, calculationParameters: calculationParameters)
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             LocationHeader(title: locationTitle)
@@ -35,11 +47,11 @@ struct TimesView: View {
                 // these need to seperate otherwise the TabView is only given 1 view to layout
                 // if the TabView is inside the TimelineView, the entire timeline is computed
                 TimelineView(.everyDay(using: calendar)) { dayTimelineContext in
-                    NowDayView(dailyPrayers: DailyPrayers(day: dayTimelineContext.date, calculationParameters: calculationParameters), visiblePrayers: visiblePrayers)
+                    NowDayView(dailyPrayers: dailyPrayers(for: nowTime(for: dayTimelineContext)), visiblePrayers: visiblePrayers)
                 }
                 TimelineView(.everyDay(using: calendar)) { dayTimelineContext in
-                    if let nextDay = calendar.date(byAdding: .day, value: 1, to: dayTimelineContext.date) {
-                        DayView(dailyPrayers: DailyPrayers(day: nextDay, calculationParameters: calculationParameters), visiblePrayers: visiblePrayers, nowTime: nil)
+                    if let nextDay = calendar.date(byAdding: .day, value: 1, to: nowTime(for: dayTimelineContext)) {
+                        DayView(dailyPrayers: dailyPrayers(for: nextDay), visiblePrayers: visiblePrayers, nowTime: nil)
                     }
                 }
             }
@@ -47,6 +59,12 @@ struct TimesView: View {
         }
     }
 }
+
+#if SCREENSHOT_MODE
+extension Date {
+    static let statusBarDate = try! Date.ISO8601FormatStyle.iso8601.parse("2021-09-14T16:41:00Z")
+}
+#endif
 
 struct TimesView_Previews: PreviewProvider {
     static var previews: some View {

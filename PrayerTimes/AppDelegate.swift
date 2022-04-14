@@ -15,7 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         UserNotification.Manager.current.configure()
+#if !SCREENSHOT_MODE
         systemRegistrar.startRegistering()
+#endif
         return true
     }
     

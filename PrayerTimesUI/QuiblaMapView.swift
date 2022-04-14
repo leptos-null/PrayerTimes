@@ -86,7 +86,6 @@ private struct CourseMapView {
         var destination: MKPointAnnotation?
         var geodesicLine: MKGeodesicPolyline?
         
-#if !targetEnvironment(simulator) /* in the simulator this causes errors to be constantly printed */
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
             if let polyline = overlay as? MKPolyline {
                 let renderer = MKPolylineRenderer(polyline: polyline)
@@ -96,7 +95,6 @@ private struct CourseMapView {
             }
             return MKOverlayRenderer(overlay: overlay)
         }
-#endif
     }
 }
 

@@ -31,7 +31,11 @@ public final class HeadingManager: ObservableObject {
     }
     
     public class func headingAvailable() -> Bool {
+#if SCREENSHOT_MODE && !targetEnvironment(macCatalyst)
+        true
+#else
         CLLocationManager.headingAvailable()
+#endif
     }
     
     public func startUpdatingHeading() {

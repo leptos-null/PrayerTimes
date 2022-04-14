@@ -35,15 +35,30 @@ public final class Preferences: ObservableObject {
     }
     
     private static func calculationMethod(from userDefaults: UserDefaults) -> CalculationMethod {
+#if SCREENSHOT_MODE
+        .isna
+#else
         userDefaults.decodedValue(forKey: .calculationMethod) ?? .isna
+#endif
     }
     
     private static func userNotifications(from userDefaults: UserDefaults) -> UserNotification.Preferences {
+#if SCREENSHOT_MODE
+        .init(categories: [
+            .start: [ .fajr, .dhuhr, .asr, .maghrib, .isha ],
+            .reminder: [ .sunrise, .maghrib, .isha ]
+        ])
+#else
         userDefaults.decodedValue(forKey: .userNotifications) ?? .init(categories: [:])
+#endif
     }
     
     private static func visiblePrayers(from userDefaults: UserDefaults) -> Set<Prayer.Name> {
+#if SCREENSHOT_MODE
+        [ .fajr, .sunrise, .dhuhr, .asr, .maghrib, .isha ]
+#else
         userDefaults.decodedValue(forKey: .visiblePrayers) ?? [ .fajr, .sunrise, .dhuhr, .asr, .maghrib, .isha ]
+#endif
     }
     
     private func updateUserDefaults<T: Equatable>(_ value: T, for key: UserDefaultsKey, read: @escaping (UserDefaults) -> T) where T: Encodable {

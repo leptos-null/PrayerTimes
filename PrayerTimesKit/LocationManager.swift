@@ -73,11 +73,15 @@ public final class LocationManager: ObservableObject {
     init() {
         locationManager.distanceFilter = 500
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+#if SCREENSHOT_MODE
+        authorizationStatus = .authorizedAlways // our desired state is what should show up in screenshots
+#else
         authorizationStatus = locationManager.authorizationStatus
-        
+#endif
         delegate.locationManager = self
+#if !SCREENSHOT_MODE /* don't connect the delegate in screenshot mode- that way we won't get real data */
         locationManager.delegate = delegate
-        
+#endif
         if let userDefaults = userDefaults {
             // the checks before writing to the instance variable have two intentions:
             //   1. prevent a cached value replacing an updated/ more accurate value

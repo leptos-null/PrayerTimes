@@ -77,6 +77,9 @@ struct ContentView: View {
             userNotificationManager.fulfillOpenSettingsRequest()
         }
         .onReceive(locationManager.$authorizationStatus) { authorizationStatus in
+#if SCREENSHOT_MODE
+            locationManager.override(location: CLLocation(latitude: 37.334886, longitude: -122.008988))
+#else
             switch authorizationStatus {
             case .notDetermined:
                 break
@@ -87,6 +90,7 @@ struct ContentView: View {
             @unknown default:
                 break
             }
+#endif
         }
     }
 }

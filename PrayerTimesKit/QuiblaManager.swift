@@ -45,6 +45,9 @@ public final class QuiblaManager: ObservableObject {
     }
     
     private static func quiblaHeadingFor(heading: CLHeading?, quiblaCourse: Result<CLLocationDirection, Error>) -> Result<CLLocationDirection, Error> {
+#if SCREENSHOT_MODE
+        return .success(30)
+#else
         guard let heading = heading else { return .failure(.headingMissing) }
         let trueHeading = heading.trueHeading
         guard trueHeading >= 0 else { return .failure(.trueHeadingInvalid) }
@@ -53,6 +56,7 @@ public final class QuiblaManager: ObservableObject {
         case .success(let course): return .success(course - trueHeading)
         case .failure(let error):  return .failure(error)
         }
+#endif
     }
     
     public init(locationManager: LocationManager, headingManager: HeadingManager) {
