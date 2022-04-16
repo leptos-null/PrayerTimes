@@ -85,12 +85,43 @@ class GatherScreenshots: XCTestCase {
         paths[path.lastPathComponent] = (description ?? name)
     }
     
+    /*
+     influenced by https://github.com/jessesquires/Nine41
+     
+     $ xcrun simctl list | grep Booted # find booted devices
+     run the following for the device you'll be gathering screenshots on:
+     
+     xcrun simctl status_bar <device> override \
+     --time "2021-09-14T16:41:00Z" \
+     --dataNetwork "wifi" --wifiMode "active" --wifiBars 3 \
+     --cellularMode active --cellularBars 4 --operatorName " " \
+     --batteryState charged --batteryLevel 100
+     */
+    private func statusBarOverrideCommand() -> String {
+        let environment = ProcessInfo.processInfo.environment
+        guard let deviceUDID = environment["SIMULATOR_UDID"] else {
+            fatalError("SIMULATOR_UDID is not set")
+        }
+        return
+"""
+xcrun simctl status_bar \(deviceUDID) override \
+--time "2021-09-14T16:41:00Z" \
+--dataNetwork "wifi" --wifiMode "active" --wifiBars 3 \
+--cellularMode active --cellularBars 4 --operatorName " " \
+--batteryState charged --batteryLevel 100
+"""
+    }
+    
     func testGetScreenshots() {
+#if !SCREENSHOT_MODE
+        XCTAssert(false, "SCREENSHOT_MODE should be set to gather screenshot")
+#endif
         let app = XCUIApplication()
         
         app.launch()
         
 #if targetEnvironment(macCatalyst)
+        sleep(1) // window isn't available immediately, seemingly
         let window: XCUIElement = app.windows["SceneWindow"]
 #else
         let window: XCUIElement = app
@@ -99,5 +130,20 @@ class GatherScreenshots: XCTestCase {
         write(screenshot: window.screenshot(), name: "0_today", description: "Today")
         window.scrollViews.firstMatch.swipeLeft()
         write(screenshot: window.screenshot(), name: "1_tomorrow", description: "Tomorrow")
+        
+        let tabBar = window.tabBars.firstMatch
+        
+        tabBar.buttons["Quibla"].tap()
+#if !targetEnvironment(macCatalyst)
+        write(screenshot: window.screenshot(), name: "2_quibla_compass", description: "Quibla Compass")
+        
+        window.buttons["Map"].tap()
+#endif
+        sleep(2) // give the map time to load
+        write(screenshot: window.screenshot(), name: "2_quibla_map", description: "Quibla Map")
+        
+        tabBar.buttons["Preferences"].tap()
+        
+        write(screenshot: window.screenshot(), name: "3_preferences", description: "Preferences")
     }
 }
