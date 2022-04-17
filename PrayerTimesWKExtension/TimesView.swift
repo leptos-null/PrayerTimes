@@ -31,57 +31,64 @@ struct TimesView: View {
     }
 }
 
+struct KeyValuePair<Key, Value> {
+    var key: Key
+    var value: Value
+}
+
+extension KeyValuePair: Equatable where Key: Equatable, Value: Equatable {
+    
+}
+
+extension KeyValuePair: Hashable where Key: Hashable, Value: Hashable {
+    
+}
+
+extension KeyValuePair: Identifiable where Key: Hashable {
+    var id: Key { key }
+}
+
 struct RollingPrayersView: View {
-    let todayPrayers: [Prayer]
-    let tomorrowPrayers: [Prayer]
+    private static let relativeDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.timeZone = .autoupdatingCurrent
+        formatter.calendar = .autoupdatingCurrent
+        formatter.dateStyle = .long
+        formatter.timeStyle = .none
+        formatter.doesRelativeDateFormatting = true
+        return formatter
+    }()
+    
+    let groupedPrayers: [KeyValuePair<Date, [Prayer]>]
     
     private let currentPrayer: Prayer?
     private let nextPrayer: Prayer?
     
-    init(startDate: Date, calculationParameters: CalculationParameters, visiblePrayers: Set<Prayer.Name>, maxPrayers: Int = 6) {
-        guard !visiblePrayers.isEmpty else {
-            todayPrayers = []
-            tomorrowPrayers = []
-            currentPrayer = nil
-            nextPrayer = nil
-            return
-        }
+    init(startDate: Date, calculationParameters: CalculationParameters, visiblePrayers: Set<Prayer.Name>) {
+        let maxPrayers = visiblePrayers.count
         
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = calculationParameters.timeZone
         
-        let tomorrowDate = calendar.date(byAdding: .day, value: 1, to: startDate)!
+        let todayStart = calendar.startOfDay(for: startDate)
+        let prayerSequence = PrayerIterator(start: startDate, calculationParameters: calculationParameters, filter: visiblePrayers)
         
-        let today = DailyPrayers(day: startDate, calculationParameters: calculationParameters)
-        let tomorrow = DailyPrayers(day: tomorrowDate, calculationParameters: calculationParameters)
+        var prayerIterator = prayerSequence
+        currentPrayer = prayerIterator.next()
+        nextPrayer = prayerIterator.next()
         
-        let sortedFilter = visiblePrayers.sorted()
-        
-        let todayFiltered = today.ordered.filter(visiblePrayers)
-        if let activePrayer = todayFiltered.activePrayer(for: startDate) {
-            let suffix = todayFiltered.drop { $0 != activePrayer }
-            todayPrayers = Array(suffix)
-            
-            let currentNameIndex = sortedFilter.firstIndex(of: activePrayer.name)!
-            if currentNameIndex != sortedFilter.indices.last {
-                let nextNameIndex = sortedFilter.index(after: currentNameIndex)
-                nextPrayer = today.prayer(named: sortedFilter[nextNameIndex])
-            } else {
-                nextPrayer = tomorrow.prayer(named: sortedFilter.first!)
+        groupedPrayers = prayerSequence
+            .drop { $0.start < todayStart }
+            .prefix(maxPrayers)
+            .reduce(into: []) { partialResult, prayer in
+                let key: Date = calendar.startOfDay(for: prayer.start)
+                // the input is in order, so either we have the same day as the previous prayer or we're on the next day
+                if let index = partialResult.indices.last, partialResult[index].key == key {
+                    partialResult[index].value.append(prayer)
+                } else {
+                    partialResult.append(.init(key: key, value: [ prayer ]))
+                }
             }
-            currentPrayer = activePrayer
-        } else {
-            todayPrayers = today.ordered.filter(visiblePrayers)
-            nextPrayer = today.prayer(named: sortedFilter.first!)
-            currentPrayer = nil
-        }
-        
-        let tomorrowCount = maxPrayers - todayPrayers.count
-        if tomorrowCount > 0 {
-            tomorrowPrayers = Array(tomorrow.ordered.filter(visiblePrayers).prefix(tomorrowCount))
-        } else {
-            tomorrowPrayers = []
-        }
     }
     
     var body: some View {
@@ -89,14 +96,15 @@ struct RollingPrayersView: View {
             Text("\(nextPrayer.name.localized) starts in:")
             Text(nextPrayer.start, style: .timer)
         }
-        
-        if todayPrayers.count > 0 {
-            PrayerListView(prayers: todayPrayers, current: currentPrayer)
-        }
-        if tomorrowPrayers.count > 0 {
-            Text("Tomorrow")
-                .font(.headline)
-            PrayerListView(prayers: tomorrowPrayers, current: nil)
+        ForEach(groupedPrayers) { keyValuePair in
+            Section {
+                PrayerListView(prayers: keyValuePair.value, current: currentPrayer)
+            } header: {
+                if keyValuePair != groupedPrayers.first {
+                    Text(keyValuePair.key, formatter: Self.relativeDateFormatter)
+                        .font(.headline)
+                }
+            }
         }
     }
 }
