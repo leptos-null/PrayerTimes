@@ -81,6 +81,7 @@
 		FAB8F85B2797DF7400F21628 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAB8F8592797DF7400F21628 /* Main.storyboard */; };
 		FAB8F85D2797DF7500F21628 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAB8F85C2797DF7500F21628 /* Assets.xcassets */; };
 		FAB8F8602797DF7500F21628 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAB8F85E2797DF7500F21628 /* LaunchScreen.storyboard */; };
+		FAE3EDED280CC19D00A5F9D7 /* GatherScreenshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE3EDEC280CC19D00A5F9D7 /* GatherScreenshots.swift */; };
 		FAF6BF1528079CC900C8D474 /* GatherScreenshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF6BF1428079CC900C8D474 /* GatherScreenshots.swift */; };
 /* End PBXBuildFile section */
 
@@ -140,6 +141,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = FAA6988E27A1B3B5000585D9;
 			remoteInfo = PrayerTimesUI;
+		};
+		FAE3EDE7280CC16F00A5F9D7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAB8F8482797DF7400F21628 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FA4F365B27E506DA00A63988;
+			remoteInfo = PrayerTimesWatch;
 		};
 		FAF6BF0F28079C8900C8D474 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -275,6 +283,8 @@
 		FAB8F85F2797DF7500F21628 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FAB8F8612797DF7500F21628 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FAB8F8672797E00E00F21628 /* PrayerTimes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PrayerTimes.entitlements; sourceTree = "<group>"; };
+		FAE3EDE1280CC16F00A5F9D7 /* PrayerTimesWatchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PrayerTimesWatchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAE3EDEC280CC19D00A5F9D7 /* GatherScreenshots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatherScreenshots.swift; sourceTree = "<group>"; };
 		FAF6BF0928079C8900C8D474 /* PrayerTimesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PrayerTimesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAF6BF1428079CC900C8D474 /* GatherScreenshots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatherScreenshots.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -325,6 +335,13 @@
 			files = (
 				FAA6989527A1B3B5000585D9 /* PrayerTimesUI.framework in Frameworks */,
 				FAA6988527A110C9000585D9 /* PrayerTimesKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAE3EDDE280CC16F00A5F9D7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,6 +461,7 @@
 				FA57311D279CE54100E5C9A6 /* PrayerTimesKitTests */,
 				FA2B41DE27A6727E0032C29A /* PrayerTimesIcon */,
 				FAF6BF0A28079C8900C8D474 /* PrayerTimesUITests */,
+				FAE3EDE2280CC16F00A5F9D7 /* PrayerTimesWatchUITests */,
 				FAB8F8512797DF7400F21628 /* Products */,
 				FAA6988427A110C9000585D9 /* Frameworks */,
 			);
@@ -460,6 +478,7 @@
 				FA4F365C27E506DA00A63988 /* PrayerTimesWatch.app */,
 				FA4F366427E506DB00A63988 /* PrayerTimesWKExtension.appex */,
 				FAF6BF0928079C8900C8D474 /* PrayerTimesUITests.xctest */,
+				FAE3EDE1280CC16F00A5F9D7 /* PrayerTimesWatchUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -490,6 +509,14 @@
 				FAB8F8612797DF7500F21628 /* Info.plist */,
 			);
 			path = PrayerTimes;
+			sourceTree = "<group>";
+		};
+		FAE3EDE2280CC16F00A5F9D7 /* PrayerTimesWatchUITests */ = {
+			isa = PBXGroup;
+			children = (
+				FAE3EDEC280CC19D00A5F9D7 /* GatherScreenshots.swift */,
+			);
+			path = PrayerTimesWatchUITests;
 			sourceTree = "<group>";
 		};
 		FAF6BF0A28079C8900C8D474 /* PrayerTimesUITests */ = {
@@ -654,6 +681,24 @@
 			productReference = FAB8F8502797DF7400F21628 /* PrayerTimes.app */;
 			productType = "com.apple.product-type.application";
 		};
+		FAE3EDE0280CC16F00A5F9D7 /* PrayerTimesWatchUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FAE3EDEB280CC16F00A5F9D7 /* Build configuration list for PBXNativeTarget "PrayerTimesWatchUITests" */;
+			buildPhases = (
+				FAE3EDDD280CC16F00A5F9D7 /* Sources */,
+				FAE3EDDE280CC16F00A5F9D7 /* Frameworks */,
+				FAE3EDDF280CC16F00A5F9D7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FAE3EDE8280CC16F00A5F9D7 /* PBXTargetDependency */,
+			);
+			name = PrayerTimesWatchUITests;
+			productName = PrayerTimesWatchUITests;
+			productReference = FAE3EDE1280CC16F00A5F9D7 /* PrayerTimesWatchUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		FAF6BF0828079C8900C8D474 /* PrayerTimesUITests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FAF6BF1328079C8900C8D474 /* Build configuration list for PBXNativeTarget "PrayerTimesUITests" */;
@@ -705,6 +750,10 @@
 					FAB8F84F2797DF7400F21628 = {
 						CreatedOnToolsVersion = 13.2.1;
 					};
+					FAE3EDE0280CC16F00A5F9D7 = {
+						CreatedOnToolsVersion = 13.3;
+						TestTargetID = FA4F365B27E506DA00A63988;
+					};
 					FAF6BF0828079C8900C8D474 = {
 						CreatedOnToolsVersion = 13.3;
 						TestTargetID = FAB8F84F2797DF7400F21628;
@@ -732,6 +781,7 @@
 				FA4F365B27E506DA00A63988 /* PrayerTimesWatch */,
 				FA4F366327E506DB00A63988 /* PrayerTimesWKExtension */,
 				FAF6BF0828079C8900C8D474 /* PrayerTimesUITests */,
+				FAE3EDE0280CC16F00A5F9D7 /* PrayerTimesWatchUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -791,6 +841,13 @@
 				FAB8F8602797DF7500F21628 /* LaunchScreen.storyboard in Resources */,
 				FAB8F85D2797DF7500F21628 /* Assets.xcassets in Resources */,
 				FAB8F85B2797DF7400F21628 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAE3EDDF280CC16F00A5F9D7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -898,6 +955,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FAE3EDDD280CC16F00A5F9D7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAE3EDED280CC19D00A5F9D7 /* GatherScreenshots.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FAF6BF0528079C8900C8D474 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -949,6 +1014,11 @@
 			isa = PBXTargetDependency;
 			target = FAA6988E27A1B3B5000585D9 /* PrayerTimesUI */;
 			targetProxy = FAA6989327A1B3B5000585D9 /* PBXContainerItemProxy */;
+		};
+		FAE3EDE8280CC16F00A5F9D7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FA4F365B27E506DA00A63988 /* PrayerTimesWatch */;
+			targetProxy = FAE3EDE7280CC16F00A5F9D7 /* PBXContainerItemProxy */;
 		};
 		FAF6BF1028079C8900C8D474 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1515,6 +1585,40 @@
 			};
 			name = Release;
 		};
+		FAE3EDE9280CC16F00A5F9D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7P56K8K4MY;
+				GENERATE_INFOPLIST_FILE = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = null.leptos.PrayerTimesWatchUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = PrayerTimesWatch;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
+			};
+			name = Debug;
+		};
+		FAE3EDEA280CC16F00A5F9D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7P56K8K4MY;
+				GENERATE_INFOPLIST_FILE = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = null.leptos.PrayerTimesWatchUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = PrayerTimesWatch;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
+			};
+			name = Release;
+		};
 		FAF6BF1128079C8900C8D474 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1618,6 +1722,15 @@
 			buildConfigurations = (
 				FAB8F8652797DF7500F21628 /* Debug */,
 				FAB8F8662797DF7500F21628 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FAE3EDEB280CC16F00A5F9D7 /* Build configuration list for PBXNativeTarget "PrayerTimesWatchUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FAE3EDE9280CC16F00A5F9D7 /* Debug */,
+				FAE3EDEA280CC16F00A5F9D7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -42,6 +42,16 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FAE3EDE0280CC16F00A5F9D7"
+               BuildableName = "PrayerTimesWatchUITests.xctest"
+               BlueprintName = "PrayerTimesWatchUITests"
+               ReferencedContainer = "container:PrayerTimes.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
