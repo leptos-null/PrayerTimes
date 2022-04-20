@@ -1129,7 +1129,7 @@
 				DEVELOPMENT_TEAM = 7P56K8K4MY;
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = PrayerTimesWKExtension;
-				INFOPLIST_KEY_CFBundleDisplayName = PrayerTimes;
+				INFOPLIST_KEY_CFBundleDisplayName = "Prayer Times";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = null.leptos.prayertimes;
 				PRODUCT_BUNDLE_IDENTIFIER = null.leptos.prayertimes.watchkitapp;
@@ -1151,7 +1151,7 @@
 				DEVELOPMENT_TEAM = 7P56K8K4MY;
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = PrayerTimesWKExtension;
-				INFOPLIST_KEY_CFBundleDisplayName = PrayerTimes;
+				INFOPLIST_KEY_CFBundleDisplayName = "Prayer Times";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = null.leptos.prayertimes;
 				PRODUCT_BUNDLE_IDENTIFIER = null.leptos.prayertimes.watchkitapp;
@@ -1173,7 +1173,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PrayerTimesWKExtension/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = PrayerTimes;
+				INFOPLIST_KEY_CFBundleDisplayName = "Prayer Times";
 				INFOPLIST_KEY_CLKComplicationPrincipalClass = PrayerTimesWKExtension.ComplicationController;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Your location is used to show local prayer times. Always access allows notifications to stay up-to-date for your current location.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is used to show local prayer times.";
@@ -1203,7 +1203,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PrayerTimesWKExtension/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = PrayerTimes;
+				INFOPLIST_KEY_CFBundleDisplayName = "Prayer Times";
 				INFOPLIST_KEY_CLKComplicationPrincipalClass = PrayerTimesWKExtension.ComplicationController;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Your location is used to show local prayer times. Always access allows notifications to stay up-to-date for your current location.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is used to show local prayer times.";
@@ -1525,7 +1525,7 @@
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PrayerTimes/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = PrayerTimes;
+				INFOPLIST_KEY_CFBundleDisplayName = "Prayer Times";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.reference";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Your location is used to show local prayer times. Always access allows notifications to stay up-to-date for your current location.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is used to show local prayer times.";
@@ -1559,7 +1559,7 @@
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PrayerTimes/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = PrayerTimes;
+				INFOPLIST_KEY_CFBundleDisplayName = "Prayer Times";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.reference";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Your location is used to show local prayer times. Always access allows notifications to stay up-to-date for your current location.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is used to show local prayer times.";
