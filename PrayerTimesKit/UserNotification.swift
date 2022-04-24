@@ -57,6 +57,16 @@ public enum UserNotification {
 }
 
 public extension UserNotification {
+    // This structure is serialized and stored in UserDefaults.
+    // For this reason, any changes to the declared properties should
+    // be accompanied by a new version in the extension below.
+    // A new version entails the following:
+    //   assume the current version is `c`, and the new version we're adding is `n`
+    //   n = c + 1
+    //   Add `vn` as a case to `EncodingVersion`
+    //   Create a private struct below `Vc` called Vn that has all the properties that Preferences now has
+    //   Update the switch in init(from:) to handle `vn`
+    //   Update encode(to:) such that `latest` is of type `Vn` and `vn` is encoded for `.version`
     struct Preferences: Hashable {
         public var categories: [Category: Set<Prayer.Name>]
         
@@ -84,8 +94,46 @@ public extension UserNotification {
     }
 }
 
+extension UserNotification.Preferences: Codable {
+    private enum CodingKeys: String, CodingKey {
+        case version
+        case payload
+    }
+    
+    private enum EncodingVersion: Int, Codable, CaseIterable {
+        case v0
+    }
+    
+    // Exact copy of properties at v0
+    private struct V0: Codable {
+        var categories: [UserNotification.Category: Set<Prayer.Name>]
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let version = try container.decode(EncodingVersion.self, forKey: .version)
+        switch version {
+        case .v0:
+            let versioned: V0 = try container.decode(V0.self, forKey: .payload)
+            self.init(categories: versioned.categories)
+        }
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        let latest = V0(categories: categories)
+        
+        try container.encode(EncodingVersion.v0, forKey: .version)
+        try container.encode(latest, forKey: .payload)
+    }
+}
+
 public extension UserNotification {
-    enum Category: Hashable, CaseIterable {
+    // This enum is involved in serialization.
+    // For this reason, in has certain stability requirements.
+    //  - case names may not be renamed or remove
+    //  - this type may not conform to RawRepresentable
+    enum Category: Hashable, Codable, CaseIterable {
         case start, reminder
     }
     
@@ -109,14 +157,6 @@ public extension UserNotification {
             }
         }
     }
-}
-
-extension UserNotification.Category: Codable {
-    
-}
-
-extension UserNotification.Preferences: Codable {
-    
 }
 
 #if os(iOS) || os(macOS)

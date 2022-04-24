@@ -8,6 +8,10 @@
 import Foundation
 
 public struct Prayer: Hashable {
+    // This enum is involved in serialization.
+    // For this reason, in has certain stability requirements.
+    //   - case names may not be renamed or remove
+    //   - this type may not conform to RawRepresentable
     public enum Name: Hashable, CaseIterable, Codable, Comparable {
         case qiyam
         case fajr
