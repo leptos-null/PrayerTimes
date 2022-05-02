@@ -13,6 +13,7 @@ import Combine
 
 struct CompassView: View {
     @ObservedObject private var quiblaManager: QuiblaManager
+    private let impactGenerator = UIImpactFeedbackGenerator(style: .medium)
     
     private let orientationCancellable: AnyCancellable
     
@@ -26,7 +27,7 @@ struct CompassView: View {
     
     var body: some View {
         Group {
-            switch quiblaManager.quiblaHeading {
+            switch quiblaManager.snapAdjustedHeading {
             case .success(let heading):
                 LineUpCompass(facing: Angle(degrees: heading))
             case .failure(let error):
@@ -35,5 +36,8 @@ struct CompassView: View {
         }
         .onAppear(perform: quiblaManager.headingManager.startUpdatingHeading)
         .onDisappear(perform: quiblaManager.headingManager.stopUpdatingHeading)
+        .onReceive(quiblaManager.enteredSnapAdjustment) {
+            impactGenerator.impactOccurred()
+        }
     }
 }

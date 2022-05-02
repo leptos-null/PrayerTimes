@@ -7,7 +7,7 @@
 
 import Foundation
 import CoreLocation
-import os
+import Combine
 
 #if os(iOS) || os(watchOS)
 
@@ -35,8 +35,29 @@ public final class QuiblaManager: ObservableObject {
     public let locationManager: LocationManager
     public let headingManager: HeadingManager
     
+    @Published public var forwardEpsilon: CLLocationDirectionAccuracy
+    
     @Published public private(set) var quiblaCourse: Result<CLLocationDirection, Error>
     @Published public private(set) var quiblaHeading: Result<CLLocationDirection, Error>
+    @Published public private(set) var snapAdjustedHeading: Result<CLLocationDirection, Error>
+    
+    
+    public private(set) lazy var enteredSnapAdjustment: AnyPublisher<Void, Never> = {
+        $snapAdjustedHeading
+            .map { snapAdjustedHeading in
+                switch snapAdjustedHeading {
+                case .success(let heading):
+                    return (heading == 0)
+                case .failure:
+                    return false
+                }
+            }
+            .removeDuplicates()
+            .filter { $0 }
+            .map { _ -> Void in
+            }
+            .eraseToAnyPublisher()
+    }()
     
     private static func quiblaCourse(for location: CLLocation?) -> Result<CLLocationDirection, Error> {
         guard let location = location else { return .failure(.locationMissing) }
@@ -53,19 +74,39 @@ public final class QuiblaManager: ObservableObject {
         guard trueHeading >= 0 else { return .failure(.trueHeadingInvalid) }
         
         switch quiblaCourse {
-        case .success(let course): return .success(course - trueHeading)
-        case .failure(let error):  return .failure(error)
+        case .success(let course):
+            let delta = course - trueHeading
+            return .success(delta.constrict(to: Arithmetic.degreesInCircle))
+        case .failure(let error):
+            return .failure(error)
         }
 #endif
     }
     
-    public init(locationManager: LocationManager, headingManager: HeadingManager) {
+    private static func snapAdjustedHeadingFor(quiblaHeading: Result<CLLocationDirection, Error>, forwardEpsilon: CLLocationDirectionAccuracy) -> Result<CLLocationDirection, Error> {
+        switch quiblaHeading {
+        case .success(let heading):
+            let circle: Range<CLLocationDirection> = 0..<360
+            let range = (circle.lowerBound + forwardEpsilon)..<(circle.upperBound - forwardEpsilon)
+            let inRange = range.contains(heading)
+            return .success(inRange ? heading : 0)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    public init(locationManager: LocationManager, headingManager: HeadingManager, forwardEpsilon: CLLocationDirectionAccuracy = 0.5) {
         self.locationManager = locationManager
         self.headingManager = headingManager
         
         let quiblaCourse = Self.quiblaCourse(for: locationManager.location)
+        let quiblaHeading = Self.quiblaHeadingFor(heading: headingManager.heading, quiblaCourse: quiblaCourse)
+        let snapAdjustedHeading = Self.snapAdjustedHeadingFor(quiblaHeading: quiblaHeading, forwardEpsilon: forwardEpsilon)
+        
         self.quiblaCourse = quiblaCourse
-        self.quiblaHeading = Self.quiblaHeadingFor(heading: headingManager.heading, quiblaCourse: quiblaCourse)
+        self.quiblaHeading = quiblaHeading
+        self.snapAdjustedHeading = snapAdjustedHeading
+        self.forwardEpsilon = forwardEpsilon
         
         locationManager.$location
             .map(Self.quiblaCourse(for:))
@@ -74,6 +115,10 @@ public final class QuiblaManager: ObservableObject {
         headingManager.$heading
             .combineLatest($quiblaCourse, Self.quiblaHeadingFor(heading:quiblaCourse:))
             .assign(to: &$quiblaHeading)
+        
+        $quiblaHeading
+            .combineLatest($forwardEpsilon, Self.snapAdjustedHeadingFor(quiblaHeading:forwardEpsilon:))
+            .assign(to: &$snapAdjustedHeading)
     }
 }
 

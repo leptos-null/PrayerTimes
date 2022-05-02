@@ -17,7 +17,7 @@ struct QuiblaView: View {
         if HeadingManager.headingAvailable() {
             NavigationView {
                 Group {
-                    switch quiblaManager.quiblaHeading {
+                    switch quiblaManager.snapAdjustedHeading {
                     case .success(let heading):
                         SimpleCompass()
                             .aspectRatio(1, contentMode: .fit)
@@ -30,6 +30,9 @@ struct QuiblaView: View {
                 .onDisappear(perform: quiblaManager.headingManager.stopUpdatingHeading)
                 .navigationTitle("Quibla")
                 .navigationBarTitleDisplayMode(.inline)
+                .onReceive(quiblaManager.enteredSnapAdjustment) {
+                    WKInterfaceDevice.current().play(.click)
+                }
             }
         }
     }
