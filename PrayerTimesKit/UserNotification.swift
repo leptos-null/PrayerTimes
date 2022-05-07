@@ -11,6 +11,8 @@ import CoreLocation
 import os
 
 public enum UserNotification {
+    private static let logger = Logger(subsystem: "null.leptos.PrayerTimesKit", category: "UserNotification")
+    
 #if os(iOS) || os(macOS) || os(watchOS)
     public static func registerFor(calculationParameters: CalculationParameters, preferences: Preferences, bodyText: String) async throws {
         let userNotificationCenter: UNUserNotificationCenter = .current()
@@ -49,8 +51,10 @@ public enum UserNotification {
         
         guard try await isAuthorized else { return }
         notificationRequests.forEach { notificationRequest in
-            // TODO: Check for errors
-            userNotificationCenter.add(notificationRequest)
+            userNotificationCenter.add(notificationRequest) { error in
+                guard let error = error else { return }
+                Self.logger.error("userNotificationCenter.add(\(notificationRequest)): \(error as NSError)")
+            }
         }
     }
 #endif
