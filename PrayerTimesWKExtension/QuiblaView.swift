@@ -22,6 +22,9 @@ struct QuiblaView: View {
                         SimpleCompass()
                             .aspectRatio(1, contentMode: .fit)
                             .rotationEffect(Angle(degrees: heading))
+                            .accessibilityLabel("Quibla direction")
+                            .accessibilityValue(QuiblaManager.directionDescription(for: heading))
+                            .accessibilityAddTraits(.updatesFrequently)
                     case .failure(let error):
                         Text(error.localizedDescription)
                     }

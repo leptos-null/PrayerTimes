@@ -32,6 +32,23 @@ public final class QuiblaManager: ObservableObject {
         }
     }
     
+    /// A human readable string that describes `heading` with respect to the observer
+    ///
+    /// A value of "40 degrees left" means that in order to be facing forward,
+    /// the observer should rotate 40 degrees to their left.
+    public static func directionDescription(for heading: CLLocationDirection) -> String {
+        if heading == 0 {
+            return "Forward"
+        }
+        
+        let isTowardsLeft = (heading > 180)
+        let relativeDirection = isTowardsLeft ? "left" : "right"
+        let offsetAngle = isTowardsLeft ? (360 - heading) : (0 + heading)
+        let formattedAngle = Measurement(value: offsetAngle, unit: UnitAngle.degrees)
+            .formatted(.measurement(width: .wide, usage: .general, numberFormatStyle: .number.precision(.fractionLength(0))))
+        return "\(formattedAngle) \(relativeDirection)"
+    }
+    
     public let locationManager: LocationManager
     public let headingManager: HeadingManager
     

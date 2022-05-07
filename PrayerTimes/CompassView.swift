@@ -30,6 +30,9 @@ struct CompassView: View {
             switch quiblaManager.snapAdjustedHeading {
             case .success(let heading):
                 LineUpCompass(facing: Angle(degrees: heading))
+                    .accessibilityLabel("Quibla direction")
+                    .accessibilityValue(QuiblaManager.directionDescription(for: heading))
+                    .accessibilityAddTraits(.updatesFrequently)
             case .failure(let error):
                 Text(error.localizedDescription)
             }
