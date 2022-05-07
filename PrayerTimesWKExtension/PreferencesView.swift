@@ -94,6 +94,9 @@ struct CalculationMethodView: View {
                         .foregroundColor(.accentColor)
                         .opacity(calculationMethod == method ? 1 : 0)
                 }
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel(method.title)
+                .accessibilityAddTraits((calculationMethod == method) ? [ .isSelected ] : [])
                 .onTapGesture {
                     calculationMethod = method
                 }
@@ -138,6 +141,7 @@ struct FloatingRangeSelection<Value: BinaryFloatingPoint>: View where Value.Stri
                     Text(title)
                 }
                 Text(value.formatted())
+                    .accessibilityHidden(true) // the Slider above is providing the value
             }
             .navigationTitle(title)
         } label: {
@@ -147,6 +151,9 @@ struct FloatingRangeSelection<Value: BinaryFloatingPoint>: View where Value.Stri
                 Text(value.formatted())
             }
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(title)
+        .accessibilityValue(value.formatted())
     }
 }
 

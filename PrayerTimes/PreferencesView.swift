@@ -128,6 +128,9 @@ struct CalculationMethodView: View {
                         .opacity(calculationMethod == method ? 1 : 0)
                 }
                 .contentShape(Rectangle())
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel(method.title)
+                .accessibilityAddTraits((calculationMethod == method) ? [ .isSelected ] : [])
                 .onTapGesture {
                     calculationMethod = method
                 }
@@ -173,6 +176,9 @@ struct FloatingRangeSelection<Value: BinaryFloatingPoint>: View {
                 Text(value.formatted())
             }
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(title)
+        .accessibilityValue(value.formatted())
     }
 }
 

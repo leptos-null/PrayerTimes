@@ -40,6 +40,9 @@ public struct PrayerNameSelection: View {
                     .opacity(selection.contains(name) ? 1 : 0)
             }
             .contentShape(Rectangle())
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel(name.localized)
+            .accessibilityAddTraits(selection.contains(name) ? [ .isSelected ] : [])
             .onTapGesture {
                 // if name is in selection, remove it, otherwise insert
                 if selection.remove(name) == nil {
