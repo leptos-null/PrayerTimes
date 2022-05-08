@@ -110,23 +110,43 @@ struct RollingPrayersView: View {
 }
 
 struct PrayerListView: View {
-    let prayers: [Prayer]
-    let current: Prayer?
-    
-    var body: some View {
-        ForEach(prayers) { prayer in
+    private struct Row: View {
+        let title: Text
+        let detail: Text
+        
+        init(title: () -> Text, detail: () -> Text) {
+            self.title = title()
+            self.detail = detail()
+        }
+        
+        var body: some View {
             HStack {
-                Text(prayer.name.localized)
-                    .fontWeight((prayer == current) ? .semibold : .regular)
+                title
                 Spacer()
-                
-                Text(prayer.start, style: .time)
-                    .fontWeight((prayer == current) ? .semibold : .regular)
+                detail
             }
             .padding()
             .frame(minHeight: 44)
             .background(.quaternary)
             .cornerRadius(8)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(title)
+            .accessibilityValue(detail)
+        }
+    }
+    
+    let prayers: [Prayer]
+    let current: Prayer?
+    
+    var body: some View {
+        ForEach(prayers) { prayer in
+            Row {
+                Text(prayer.name.localized)
+                    .fontWeight((prayer == current) ? .semibold : .regular)
+            } detail: {
+                Text(prayer.start, style: .time)
+                    .fontWeight((prayer == current) ? .semibold : .regular)
+            }
         }
     }
 }
