@@ -1,0 +1,11 @@
+@import url("core_colors.css");
+
+body {
+    font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 22px;
+
+    line-height: 1.4;
+
+    margin-right: 40px;
+    margin-left: 40px;
+}
