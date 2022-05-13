@@ -266,9 +266,12 @@ extension CLLocationCoordinate2D {
 
 extension CLPlacemark {
     public var locationTitle: String? {
-        guard let city = locality,
-              let state = administrativeArea else { return nil }
-        return "\(city), \(state)"
+        if let city = locality, let state = administrativeArea { return "\(city), \(state)" }
+        if let city = locality, let country = country { return "\(city), \(country)" }
+        if let neighborhood = subLocality, let country = country { return "\(neighborhood), \(country)" }
+        if let state = administrativeArea, let country = country { return "\(state), \(country)" }
+        if let country = country { return country }
+        return nil
     }
 }
 
