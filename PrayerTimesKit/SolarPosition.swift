@@ -36,7 +36,8 @@ struct SolarPosition {
     func timeIntervalTo(elevationAngle: AngleRadians) -> TimeInterval {
         let a = sin(elevationAngle) - sin_latitude * sin_declination
         let b = cos_latitude * cos_declination
-        return acos(a/b) / Arithmetic.radiansInCircle * .day
+        let q = max(-1, min(a/b, 1)) // restrict `q` to the domain of `acos`
+        return acos(q) / Arithmetic.radiansInCircle * .day
     }
     
     func timeIntervalTo(shadowFactor: Double) -> TimeInterval {
