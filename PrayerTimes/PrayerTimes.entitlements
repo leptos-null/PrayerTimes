@@ -8,8 +8,6 @@
 	<array>
 		<string>group.null.leptos.PrayerTimesGroup</string>
 	</array>
-	<key>com.apple.security.network.client</key>
-	<true/>
 	<key>com.apple.security.personal-information.location</key>
 	<true/>
 </dict>
