@@ -68,6 +68,8 @@
 		FA8A8583283291B600B15180 /* RealTimeRateLimit.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A8582283291B600B15180 /* RealTimeRateLimit.swift */; };
 		FA8A85852832920600B15180 /* ScrubDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A85842832920600B15180 /* ScrubDayView.swift */; };
 		FA8A858A28388BAD00B15180 /* DailyPrayersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6989A27A1B3D4000585D9 /* DailyPrayersView.swift */; };
+		FA8A858C283953E900B15180 /* DateTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A858B283953E900B15180 /* DateTitle.swift */; };
+		FA8A858E2839540C00B15180 /* DateSubtitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A858D2839540C00B15180 /* DateSubtitle.swift */; };
 		FA9809D827D536C50048D0F7 /* StapledLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9809D727D536C50048D0F7 /* StapledLocation.swift */; };
 		FAA6988327A10D0B000585D9 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6988227A10D0B000585D9 /* LocationManager.swift */; };
 		FAA6988527A110C9000585D9 /* PrayerTimesKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA573112279CE54100E5C9A6 /* PrayerTimesKit.framework */; };
@@ -270,6 +272,8 @@
 		FA8A4D5527B0307000D43455 /* HeadingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingManager.swift; sourceTree = "<group>"; };
 		FA8A8582283291B600B15180 /* RealTimeRateLimit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealTimeRateLimit.swift; sourceTree = "<group>"; };
 		FA8A85842832920600B15180 /* ScrubDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrubDayView.swift; sourceTree = "<group>"; };
+		FA8A858B283953E900B15180 /* DateTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTitle.swift; sourceTree = "<group>"; };
+		FA8A858D2839540C00B15180 /* DateSubtitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSubtitle.swift; sourceTree = "<group>"; };
 		FA9809D727D536C50048D0F7 /* StapledLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StapledLocation.swift; sourceTree = "<group>"; };
 		FAA6988227A10D0B000585D9 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		FAA6988F27A1B3B5000585D9 /* PrayerTimesUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PrayerTimesUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -428,6 +432,20 @@
 			path = PrayerTimesKitTests;
 			sourceTree = "<group>";
 		};
+		FA8A858F2839548500B15180 /* TimesView */ = {
+			isa = PBXGroup;
+			children = (
+				FA0C286427CC146D00C191C9 /* TimesView.swift */,
+				FAA6989A27A1B3D4000585D9 /* DailyPrayersView.swift */,
+				FA8A858B283953E900B15180 /* DateTitle.swift */,
+				FA8A858D2839540C00B15180 /* DateSubtitle.swift */,
+				FA7EB36227C6747C00642F63 /* DayView.swift */,
+				FA0C286C27CD465800C191C9 /* NowDayView.swift */,
+				FA8A85842832920600B15180 /* ScrubDayView.swift */,
+			);
+			path = TimesView;
+			sourceTree = "<group>";
+		};
 		FAA6988427A110C9000585D9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -495,11 +513,7 @@
 				FA37EB3C27F381600082FEB1 /* OverrideLocationView.swift */,
 				FA37EB3A27F36E6A0082FEB1 /* CoordinatePicker.swift */,
 				FA0C286227CA925400C191C9 /* LocationHeader.swift */,
-				FA0C286427CC146D00C191C9 /* TimesView.swift */,
-				FAA6989A27A1B3D4000585D9 /* DailyPrayersView.swift */,
-				FA7EB36227C6747C00642F63 /* DayView.swift */,
-				FA0C286C27CD465800C191C9 /* NowDayView.swift */,
-				FA8A85842832920600B15180 /* ScrubDayView.swift */,
+				FA8A858F2839548500B15180 /* TimesView */,
 				FA7EB35C27C48D6600642F63 /* QuiblaView.swift */,
 				FA7EB35E27C48F3800642F63 /* CompassView.swift */,
 				FA5271F927EA1E2600506D5A /* PreferencesView.swift */,
@@ -952,6 +966,8 @@
 				FA6542A327BF71BD002C4777 /* OrientationManager.swift in Sources */,
 				FA0C286D27CD465800C191C9 /* NowDayView.swift in Sources */,
 				FA37EB3927F36DA80082FEB1 /* LocationPrompt.swift in Sources */,
+				FA8A858C283953E900B15180 /* DateTitle.swift in Sources */,
+				FA8A858E2839540C00B15180 /* DateSubtitle.swift in Sources */,
 				FA7EB36327C6747C00642F63 /* DayView.swift in Sources */,
 				FA0C286527CC146D00C191C9 /* TimesView.swift in Sources */,
 				FAB8F8562797DF7400F21628 /* SceneDelegate.swift in Sources */,

@@ -9,18 +9,20 @@ import SwiftUI
 import CoreLocation
 import PrayerTimesKit
 
-struct DailyPrayersView: View {
+struct DailyPrayersView<Header: View>: View {
     let dailyPrayers: DailyPrayers
     let orderedPrayers: [Prayer]
     private let current: Prayer?
+    private let headerBuilder: (Date) -> Header
     
     // for everything to line up, each VStack involved must have the same spacing
-    private static let verticalSpacing: CGFloat = 8
+    private let verticalSpacing: CGFloat = 8
     
-    init(dailyPrayers: DailyPrayers, time: Date? = nil, visiblePrayers: Set<Prayer.Name>) {
+    init(dailyPrayers: DailyPrayers, time: Date? = nil, visiblePrayers: Set<Prayer.Name>, @ViewBuilder header: @escaping (Date) -> Header) {
         let filteredPrayers = dailyPrayers.ordered.filter(visiblePrayers)
         self.dailyPrayers = dailyPrayers
         self.orderedPrayers = filteredPrayers
+        self.headerBuilder = header
         
         if let time = time {
             current = filteredPrayers.activePrayer(for: time)
@@ -31,11 +33,15 @@ struct DailyPrayersView: View {
     
     var body: some View {
         VStack {
-            Text(dailyPrayers.dhuhr.start, style: .date)
-                .font(.title3)
+            headerBuilder(dailyPrayers.dhuhr.start)
+            
+            Spacer()
+                .frame(height: 4)
+            
+            DateSubtitle(date: dailyPrayers.dhuhr.start)
             
             HStack(spacing: 0) {
-                VStack(alignment: .leading, spacing: Self.verticalSpacing) {
+                VStack(alignment: .leading, spacing: verticalSpacing) {
                     ForEach(orderedPrayers) { prayer in
                         viewFor(prayer: prayer, mode: .title)
                     }
@@ -44,14 +50,14 @@ struct DailyPrayersView: View {
                 Spacer()
                     .frame(minWidth: 4, maxWidth: 84)
                 
-                VStack(alignment: .trailing, spacing: Self.verticalSpacing) {
+                VStack(alignment: .trailing, spacing: verticalSpacing) {
                     ForEach(orderedPrayers) { prayer in
                         viewFor(prayer: prayer, mode: .detail)
                     }
                 }
             }
             .accessibilityRepresentation {
-                VStack(spacing: Self.verticalSpacing) {
+                VStack(spacing: verticalSpacing) {
                     ForEach(orderedPrayers) { prayer in
                         HStack(spacing: 0) {
                             viewFor(prayer: prayer, mode: .title)
@@ -104,6 +110,6 @@ struct DailyPrayersView_Previews: PreviewProvider {
                 location: CLLocation(latitude: -29.856687, longitude: 31.017086),
                 configuration: CalculationParameters.Configuration(asrFactor: 1, fajrAngle: 18, ishaAngle: 17)
             )
-        ), visiblePrayers: Set(Prayer.Name.allCases))
+        ), visiblePrayers: Set(Prayer.Name.allCases), header: DateTitle.init(date:))
     }
 }

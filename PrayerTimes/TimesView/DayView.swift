@@ -10,14 +10,26 @@ import CoreLocation
 import PrayerTimesKit
 import PrayerTimesUI
 
-struct DayView: View {
+struct DayView<Header: View>: View {
     let dailyPrayers: DailyPrayers
     let visiblePrayers: Set<Prayer.Name>
     let nowTime: Date?
+    private let headerBuilder: (Date) -> Header
+    
+    init(dailyPrayers: DailyPrayers, visiblePrayers: Set<Prayer.Name>, nowTime: Date? = nil, @ViewBuilder headerBuilder: @escaping (Date) -> Header) {
+        self.dailyPrayers = dailyPrayers
+        self.visiblePrayers = visiblePrayers
+        self.nowTime = nowTime
+        self.headerBuilder = headerBuilder
+    }
+    
+    init(dailyPrayers: DailyPrayers, visiblePrayers: Set<Prayer.Name>, nowTime: Date? = nil) where Header == DateTitle {
+        self.init(dailyPrayers: dailyPrayers, visiblePrayers: visiblePrayers, nowTime: nowTime, headerBuilder: DateTitle.init(date:))
+    }
     
     var body: some View {
         VStack {
-            DailyPrayersView(dailyPrayers: dailyPrayers, time: nowTime, visiblePrayers: visiblePrayers)
+            DailyPrayersView(dailyPrayers: dailyPrayers, time: nowTime, visiblePrayers: visiblePrayers, header: headerBuilder)
                 .scenePadding()
             
             Spacer()

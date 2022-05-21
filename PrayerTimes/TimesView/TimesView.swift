@@ -51,7 +51,7 @@ struct TimesView: View {
                 }
                 TimelineView(.everyDay(using: calendar)) { dayTimelineContext in
                     if let nextDay = calendar.date(byAdding: .day, value: 1, to: nowTime(for: dayTimelineContext)) {
-                        DayView(dailyPrayers: dailyPrayers(for: nextDay), visiblePrayers: visiblePrayers, nowTime: nil)
+                        DayView(dailyPrayers: dailyPrayers(for: nextDay), visiblePrayers: visiblePrayers)
                     }
                 }
                 ScrubDayView(calculationParameters: calculationParameters, visiblePrayers: visiblePrayers)

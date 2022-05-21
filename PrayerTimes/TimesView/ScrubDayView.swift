@@ -16,11 +16,19 @@ struct ScrubDayView: View {
     
     var body: some View {
         // TODO: Improve macOS and trackpad experience
-        DayView(dailyPrayers: DailyPrayers(day: date, calculationParameters: calculationParameters), visiblePrayers: visiblePrayers, nowTime: nil)
-            .frame(maxWidth: .infinity, alignment: .center) // use the full available width so the scrubber is on the apparent trailing edge
-            .overlay(alignment: .trailing) {
-                DateScrubber(date: $date)
-            }
+        DayView(dailyPrayers: DailyPrayers(day: date, calculationParameters: calculationParameters), visiblePrayers: visiblePrayers) { date in
+            DatePicker("Day", selection: $date, displayedComponents: .date)
+                .labelsHidden()
+                .datePickerStyle(.compact)
+#if !targetEnvironment(macCatalyst)
+                .id(date) // causes DatePicker to re-layout for each date, otherwise the width stays the same as it was for the initial date
+                .padding(.top, -8) // remove top padding in an attempt to align first baseline with DateTitle
+#endif
+        }
+        .frame(maxWidth: .infinity, alignment: .center) // use the full available width so the scrubber is on the apparent trailing edge
+        .overlay(alignment: .trailing) {
+            DateScrubber(date: $date)
+        }
     }
 }
 
