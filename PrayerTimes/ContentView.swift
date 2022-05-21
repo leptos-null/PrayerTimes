@@ -18,6 +18,7 @@ struct ContentView: View {
     @ObservedObject var locationManager: LocationManager
     @ObservedObject var preferences: Preferences
     let userNotificationManager: UserNotification.Manager
+    let preferencesViewModel = PreferencesViewModel()
     
     @State var tab: Tab = .times
     
@@ -65,15 +66,24 @@ struct ContentView: View {
                     .tag(Tab.times)
             }
             
-            PreferencesView(locationManager: locationManager, preferences: preferences)
+            PreferencesView(locationManager: locationManager, preferences: preferences, viewModel: preferencesViewModel)
                 .tabItem {
                     Label("Preferences", systemImage: "gear")
                 }
                 .tag(Tab.preferences)
         }
-        .onReceive(userNotificationManager.$hasOpenSettingsRequest) { hasRequest in
-            guard hasRequest else { return }
+        .onReceive(userNotificationManager.$settingsRequest) { settingsRequest in
+            guard case .active(let category) = settingsRequest else { return }
+            
+            let preferenceSelection: PreferencesView.NavigationSelection?
+            if let category = category {
+                preferenceSelection = .notification(category)
+            } else {
+                preferenceSelection = .none
+            }
             tab = .preferences
+            preferencesViewModel.navigationSelection = preferenceSelection
+            
             userNotificationManager.fulfillOpenSettingsRequest()
         }
         .onReceive(locationManager.$authorizationStatus) { authorizationStatus in

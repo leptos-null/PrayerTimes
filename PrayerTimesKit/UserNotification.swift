@@ -167,12 +167,17 @@ public extension UserNotification {
 
 public extension UserNotification {
     final class Manager: ObservableObject {
+        public enum SettingsRequest {
+            case inactive
+            case active(Category?)
+        }
+        
         public static let current = Manager()
         
         private let center: UNUserNotificationCenter
         private let delegate = Delegate()
         
-        @Published public private(set) var hasOpenSettingsRequest: Bool = false
+        @Published public private(set) var settingsRequest: SettingsRequest = .inactive
         
         init(center: UNUserNotificationCenter = .current())  {
             self.center = center
@@ -184,7 +189,7 @@ public extension UserNotification {
         }
         
         public func fulfillOpenSettingsRequest() {
-            hasOpenSettingsRequest = false
+            settingsRequest = .inactive
         }
     }
 }
@@ -201,7 +206,19 @@ extension UserNotification.Manager {
                 return
             }
             logger.debug("openSettingsFor(\(String(describing: notification)))")
-            manager.hasOpenSettingsRequest = true
+            
+            let request: SettingsRequest
+            
+            if let notification = notification {
+                let identifier = notification.request.identifier
+                let category = UserNotification.Category.allCases.first { category in
+                    identifier.hasPrefix("prayer-\(category)")
+                }
+                request = .active(category)
+            } else {
+                request = .active(.none)
+            }
+            manager.settingsRequest = request
         }
     }
 }

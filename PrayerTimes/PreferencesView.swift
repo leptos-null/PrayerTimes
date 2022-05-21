@@ -10,8 +10,16 @@ import PrayerTimesUI
 import PrayerTimesKit
 
 struct PreferencesView: View {
+    enum NavigationSelection: Hashable {
+        case selectLocation
+        case visibility, calculationMethod
+        case notification(UserNotification.Category)
+    }
+    
     @ObservedObject var locationManager: LocationManager
     @ObservedObject var preferences: Preferences
+    
+    @ObservedObject var viewModel: PreferencesViewModel
     
     private var listStyle: some ListStyle {
 #if targetEnvironment(macCatalyst)
@@ -34,7 +42,7 @@ struct PreferencesView: View {
             List {
                 if shouldShowLocationSection {
                     Section {
-                        NavigationLink("Select Location") {
+                        NavigationLink("Select Location", tag: .selectLocation, selection: $viewModel.navigationSelection) {
                             OverrideLocationView(locationManager: locationManager)
                                 .navigationTitle("Select Location")
                         }
@@ -45,11 +53,11 @@ struct PreferencesView: View {
                 }
                 
                 Section {
-                    NavigationLink("Visibility") {
+                    NavigationLink("Visibility", tag: .visibility, selection: $viewModel.navigationSelection) {
                         VisiblePrayersView(visiblePrayers: $preferences.visiblePrayers)
                             .navigationTitle("Visibility")
                     }
-                    NavigationLink("Calculation Method") {
+                    NavigationLink("Calculation Method", tag: .calculationMethod, selection: $viewModel.navigationSelection) {
                         CalculationMethodView(calculationMethod: $preferences.calculationMethod)
                             .navigationTitle("Calculation Method")
                     }
@@ -59,7 +67,7 @@ struct PreferencesView: View {
                 }
                 
                 Section {
-                    UserNotificationPreferencesView(preferences: $preferences.userNotifications)
+                    UserNotificationPreferencesView(preferences: $preferences.userNotifications, navigationSelection: $viewModel.navigationSelection)
                 } header: {
                     Label("Notifications", systemImage: "bell")
                         .symbolRenderingMode(.multicolor)
@@ -184,6 +192,7 @@ struct FloatingRangeSelection<Value: BinaryFloatingPoint>: View {
 
 struct UserNotificationPreferencesView: View {
     @Binding var preferences: UserNotification.Preferences
+    @Binding var navigationSelection: PreferencesView.NavigationSelection?
     
     private func categoryBinding(_ category: UserNotification.Category) -> Binding<Set<Prayer.Name>> {
         Binding {
@@ -195,7 +204,7 @@ struct UserNotificationPreferencesView: View {
     
     var body: some View {
         ForEach(UserNotification.Category.allCases) { category in
-            NavigationLink(category.localizedTitle) {
+            NavigationLink(category.localizedTitle, tag: .notification(category), selection: $navigationSelection) {
                 UserNotificationSelectionView(category: category, selection: categoryBinding(category))
                     .navigationTitle(category.localizedTitle)
             }
@@ -259,6 +268,6 @@ extension UserNotification.Category: Identifiable {
 
 struct PreferencesView_Previews: PreviewProvider {
     static var previews: some View {
-        PreferencesView(locationManager: .shared, preferences: .shared)
+        PreferencesView(locationManager: .shared, preferences: .shared, viewModel: .init())
     }
 }

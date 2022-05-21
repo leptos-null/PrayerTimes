@@ -70,6 +70,7 @@
 		FA8A858A28388BAD00B15180 /* DailyPrayersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6989A27A1B3D4000585D9 /* DailyPrayersView.swift */; };
 		FA8A858C283953E900B15180 /* DateTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A858B283953E900B15180 /* DateTitle.swift */; };
 		FA8A858E2839540C00B15180 /* DateSubtitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A858D2839540C00B15180 /* DateSubtitle.swift */; };
+		FA8A85952839985400B15180 /* PreferencesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A85942839985400B15180 /* PreferencesViewModel.swift */; };
 		FA9809D827D536C50048D0F7 /* StapledLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9809D727D536C50048D0F7 /* StapledLocation.swift */; };
 		FAA6988327A10D0B000585D9 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6988227A10D0B000585D9 /* LocationManager.swift */; };
 		FAA6988527A110C9000585D9 /* PrayerTimesKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA573112279CE54100E5C9A6 /* PrayerTimesKit.framework */; };
@@ -274,6 +275,7 @@
 		FA8A85842832920600B15180 /* ScrubDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrubDayView.swift; sourceTree = "<group>"; };
 		FA8A858B283953E900B15180 /* DateTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTitle.swift; sourceTree = "<group>"; };
 		FA8A858D2839540C00B15180 /* DateSubtitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSubtitle.swift; sourceTree = "<group>"; };
+		FA8A85942839985400B15180 /* PreferencesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewModel.swift; sourceTree = "<group>"; };
 		FA9809D727D536C50048D0F7 /* StapledLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StapledLocation.swift; sourceTree = "<group>"; };
 		FAA6988227A10D0B000585D9 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		FAA6988F27A1B3B5000585D9 /* PrayerTimesUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PrayerTimesUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -516,6 +518,7 @@
 				FA8A858F2839548500B15180 /* TimesView */,
 				FA7EB35C27C48D6600642F63 /* QuiblaView.swift */,
 				FA7EB35E27C48F3800642F63 /* CompassView.swift */,
+				FA8A85942839985400B15180 /* PreferencesViewModel.swift */,
 				FA5271F927EA1E2600506D5A /* PreferencesView.swift */,
 				FA6542A227BF71BD002C4777 /* OrientationManager.swift */,
 				FA6542A427BF7249002C4777 /* CLDeviceOrientation+UIKit.swift */,
@@ -962,6 +965,7 @@
 				FA8A858A28388BAD00B15180 /* DailyPrayersView.swift in Sources */,
 				FA37EB3B27F36E6A0082FEB1 /* CoordinatePicker.swift in Sources */,
 				FA7EB35F27C48F3800642F63 /* CompassView.swift in Sources */,
+				FA8A85952839985400B15180 /* PreferencesViewModel.swift in Sources */,
 				FA37EB3D27F381600082FEB1 /* OverrideLocationView.swift in Sources */,
 				FA6542A327BF71BD002C4777 /* OrientationManager.swift in Sources */,
 				FA0C286D27CD465800C191C9 /* NowDayView.swift in Sources */,
