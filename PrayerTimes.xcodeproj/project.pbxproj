@@ -65,6 +65,8 @@
 		FA8A4D4E27AA460300D43455 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A4D4D27AA460300D43455 /* Preferences.swift */; };
 		FA8A4D5227ABA48200D43455 /* KeyValueObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A4D5127ABA48200D43455 /* KeyValueObserver.swift */; };
 		FA8A4D5627B0307000D43455 /* HeadingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A4D5527B0307000D43455 /* HeadingManager.swift */; };
+		FA8A8583283291B600B15180 /* RealTimeRateLimit.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A8582283291B600B15180 /* RealTimeRateLimit.swift */; };
+		FA8A85852832920600B15180 /* ScrubDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A85842832920600B15180 /* ScrubDayView.swift */; };
 		FA9809D827D536C50048D0F7 /* StapledLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9809D727D536C50048D0F7 /* StapledLocation.swift */; };
 		FAA6988327A10D0B000585D9 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6988227A10D0B000585D9 /* LocationManager.swift */; };
 		FAA6988527A110C9000585D9 /* PrayerTimesKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA573112279CE54100E5C9A6 /* PrayerTimesKit.framework */; };
@@ -266,6 +268,8 @@
 		FA8A4D4D27AA460300D43455 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		FA8A4D5127ABA48200D43455 /* KeyValueObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueObserver.swift; sourceTree = "<group>"; };
 		FA8A4D5527B0307000D43455 /* HeadingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingManager.swift; sourceTree = "<group>"; };
+		FA8A8582283291B600B15180 /* RealTimeRateLimit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealTimeRateLimit.swift; sourceTree = "<group>"; };
+		FA8A85842832920600B15180 /* ScrubDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrubDayView.swift; sourceTree = "<group>"; };
 		FA9809D727D536C50048D0F7 /* StapledLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StapledLocation.swift; sourceTree = "<group>"; };
 		FAA6988227A10D0B000585D9 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		FAA6988F27A1B3B5000585D9 /* PrayerTimesUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PrayerTimesUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -409,6 +413,7 @@
 				FA8A4D4D27AA460300D43455 /* Preferences.swift */,
 				FA5271FF27ECFE0300506D5A /* UserDefaults+Typed.swift */,
 				FA8A4D5127ABA48200D43455 /* KeyValueObserver.swift */,
+				FA8A8582283291B600B15180 /* RealTimeRateLimit.swift */,
 				FA0C286027C9ACB000C191C9 /* SystemRegistrar.swift */,
 			);
 			path = PrayerTimesKit;
@@ -494,6 +499,7 @@
 				FA0C286427CC146D00C191C9 /* TimesView.swift */,
 				FA7EB36227C6747C00642F63 /* DayView.swift */,
 				FA0C286C27CD465800C191C9 /* NowDayView.swift */,
+				FA8A85842832920600B15180 /* ScrubDayView.swift */,
 				FA7EB35C27C48D6600642F63 /* QuiblaView.swift */,
 				FA7EB35E27C48F3800642F63 /* CompassView.swift */,
 				FA5271F927EA1E2600506D5A /* PreferencesView.swift */,
@@ -885,6 +891,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA8A8583283291B600B15180 /* RealTimeRateLimit.swift in Sources */,
 				FA8A4D5227ABA48200D43455 /* KeyValueObserver.swift in Sources */,
 				FA9809D827D536C50048D0F7 /* StapledLocation.swift in Sources */,
 				FA0C286127C9ACB000C191C9 /* SystemRegistrar.swift in Sources */,
@@ -948,6 +955,7 @@
 				FA7EB36327C6747C00642F63 /* DayView.swift in Sources */,
 				FA0C286527CC146D00C191C9 /* TimesView.swift in Sources */,
 				FAB8F8562797DF7400F21628 /* SceneDelegate.swift in Sources */,
+				FA8A85852832920600B15180 /* ScrubDayView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

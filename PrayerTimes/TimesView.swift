@@ -54,6 +54,7 @@ struct TimesView: View {
                         DayView(dailyPrayers: dailyPrayers(for: nextDay), visiblePrayers: visiblePrayers, nowTime: nil)
                     }
                 }
+                ScrubDayView(calculationParameters: calculationParameters, visiblePrayers: visiblePrayers)
             }
             .tabViewStyle(.page(indexDisplayMode: .always))
             .indexViewStyle(.page(backgroundDisplayMode: .always))
