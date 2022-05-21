@@ -151,6 +151,10 @@ struct PrayerListView: View {
     }
 }
 
+extension Prayer: Identifiable {
+    public var id: Prayer { self }
+}
+
 struct TimesView_Previews: PreviewProvider {
     static var previews: some View {
         TimesView(calculationParameters: CalculationParameters(

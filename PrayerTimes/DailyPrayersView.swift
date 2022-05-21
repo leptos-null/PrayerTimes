@@ -9,15 +9,15 @@ import SwiftUI
 import CoreLocation
 import PrayerTimesKit
 
-public struct DailyPrayersView: View {
-    public let dailyPrayers: DailyPrayers
-    public let orderedPrayers: [Prayer]
-    let current: Prayer?
+struct DailyPrayersView: View {
+    let dailyPrayers: DailyPrayers
+    let orderedPrayers: [Prayer]
+    private let current: Prayer?
     
     // for everything to line up, each VStack involved must have the same spacing
     private static let verticalSpacing: CGFloat = 8
     
-    public init(dailyPrayers: DailyPrayers, time: Date? = nil, visiblePrayers: Set<Prayer.Name>) {
+    init(dailyPrayers: DailyPrayers, time: Date? = nil, visiblePrayers: Set<Prayer.Name>) {
         let filteredPrayers = dailyPrayers.ordered.filter(visiblePrayers)
         self.dailyPrayers = dailyPrayers
         self.orderedPrayers = filteredPrayers
@@ -29,7 +29,7 @@ public struct DailyPrayersView: View {
         }
     }
     
-    public var body: some View {
+    var body: some View {
         VStack {
             Text(dailyPrayers.dhuhr.start, style: .date)
                 .font(.title3)

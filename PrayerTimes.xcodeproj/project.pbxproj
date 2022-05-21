@@ -67,6 +67,7 @@
 		FA8A4D5627B0307000D43455 /* HeadingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A4D5527B0307000D43455 /* HeadingManager.swift */; };
 		FA8A8583283291B600B15180 /* RealTimeRateLimit.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A8582283291B600B15180 /* RealTimeRateLimit.swift */; };
 		FA8A85852832920600B15180 /* ScrubDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A85842832920600B15180 /* ScrubDayView.swift */; };
+		FA8A858A28388BAD00B15180 /* DailyPrayersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6989A27A1B3D4000585D9 /* DailyPrayersView.swift */; };
 		FA9809D827D536C50048D0F7 /* StapledLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9809D727D536C50048D0F7 /* StapledLocation.swift */; };
 		FAA6988327A10D0B000585D9 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6988227A10D0B000585D9 /* LocationManager.swift */; };
 		FAA6988527A110C9000585D9 /* PrayerTimesKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA573112279CE54100E5C9A6 /* PrayerTimesKit.framework */; };
@@ -74,7 +75,6 @@
 		FAA6989227A1B3B5000585D9 /* PrayerTimesUI.h in Headers */ = {isa = PBXBuildFile; fileRef = FAA6989127A1B3B5000585D9 /* PrayerTimesUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FAA6989527A1B3B5000585D9 /* PrayerTimesUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6988F27A1B3B5000585D9 /* PrayerTimesUI.framework */; };
 		FAA6989627A1B3B5000585D9 /* PrayerTimesUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6988F27A1B3B5000585D9 /* PrayerTimesUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FAA6989B27A1B3D4000585D9 /* DailyPrayersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6989A27A1B3D4000585D9 /* DailyPrayersView.swift */; };
 		FAA6989F27A2713F000585D9 /* PrayerIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6989E27A2713F000585D9 /* PrayerIterator.swift */; };
 		FAB8F8542797DF7400F21628 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB8F8532797DF7400F21628 /* AppDelegate.swift */; };
 		FAB8F8562797DF7400F21628 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB8F8552797DF7400F21628 /* SceneDelegate.swift */; };
@@ -439,7 +439,6 @@
 			isa = PBXGroup;
 			children = (
 				FAA6989127A1B3B5000585D9 /* PrayerTimesUI.h */,
-				FAA6989A27A1B3D4000585D9 /* DailyPrayersView.swift */,
 				FA5271FB27EA1F1600506D5A /* PrayerNameSelection.swift */,
 				FA7950B227BD56B900170000 /* SimpleCompass.swift */,
 				FA7950B027BCB95600170000 /* LineUpCompass.swift */,
@@ -497,6 +496,7 @@
 				FA37EB3A27F36E6A0082FEB1 /* CoordinatePicker.swift */,
 				FA0C286227CA925400C191C9 /* LocationHeader.swift */,
 				FA0C286427CC146D00C191C9 /* TimesView.swift */,
+				FAA6989A27A1B3D4000585D9 /* DailyPrayersView.swift */,
 				FA7EB36227C6747C00642F63 /* DayView.swift */,
 				FA0C286C27CD465800C191C9 /* NowDayView.swift */,
 				FA8A85842832920600B15180 /* ScrubDayView.swift */,
@@ -924,7 +924,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA7950B127BCB95600170000 /* LineUpCompass.swift in Sources */,
-				FAA6989B27A1B3D4000585D9 /* DailyPrayersView.swift in Sources */,
 				FA5271F527E642ED00506D5A /* PrayerTimelineSchedule.swift in Sources */,
 				FA5271FC27EA1F1600506D5A /* PrayerNameSelection.swift in Sources */,
 				FA0C286B27CD45E000C191C9 /* MergeTimelineSchedule.swift in Sources */,
@@ -946,6 +945,7 @@
 				FA0C286327CA925400C191C9 /* LocationHeader.swift in Sources */,
 				FA6542A527BF7249002C4777 /* CLDeviceOrientation+UIKit.swift in Sources */,
 				FA573128279D01DA00E5C9A6 /* ContentView.swift in Sources */,
+				FA8A858A28388BAD00B15180 /* DailyPrayersView.swift in Sources */,
 				FA37EB3B27F36E6A0082FEB1 /* CoordinatePicker.swift in Sources */,
 				FA7EB35F27C48F3800642F63 /* CompassView.swift in Sources */,
 				FA37EB3D27F381600082FEB1 /* OverrideLocationView.swift in Sources */,
