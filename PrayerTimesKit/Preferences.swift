@@ -61,14 +61,14 @@ public final class Preferences: ObservableObject {
 #endif
     }
     
-    private func updateUserDefaults<T: Equatable>(_ value: T, for key: UserDefaultsKey, read: @escaping (UserDefaults) -> T) where T: Encodable {
+    private func updateUserDefaults<T: Equatable>(_ value: T, for key: UserDefaultsKey<T>, read: @escaping (UserDefaults) -> T) where T: Encodable {
         guard read(userDefaults) != value else { return }
         logger.debug("Writing \(String(describing: value)) for \(key)")
         
         userDefaults.setEncoded(value: value, forKey: key)
     }
     
-    private func observeUserDefaults<T: Equatable>(for key: UserDefaultsKey, property: ReferenceWritableKeyPath<Preferences, T>, read: @escaping (UserDefaults) -> T) {
+    private func observeUserDefaults<T: Equatable>(for key: UserDefaultsKey<T>, property: ReferenceWritableKeyPath<Preferences, T>, read: @escaping (UserDefaults) -> T) {
         observer.observe(object: userDefaults, forKeyPath: key.rawValue) { [weak self] _ in
             guard let self = self else { return }
             
@@ -93,25 +93,41 @@ public final class Preferences: ObservableObject {
 }
 
 extension Preferences {
-    enum UserDefaultsKey: String {
-        case calculationMethod = "PreferencesCalculationMethod"
-        case userNotifications = "PreferencesUserNotifications"
-        case visiblePrayers = "PreferencesVisiblePrayers"
-    }
-}
-
-extension Preferences.UserDefaultsKey: CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case .calculationMethod: return "calculationMethod"
-        case .userNotifications: return "userNotifications"
-        case .visiblePrayers: return "visiblePrayers"
+    struct UserDefaultsKey<ValueType>: RawRepresentable {
+        let rawValue: String
+        
+        init(rawValue: String) {
+            self.rawValue = rawValue
         }
     }
 }
 
+extension Preferences.UserDefaultsKey: ExpressibleByStringLiteral {
+    init(stringLiteral: String) {
+        self.rawValue = stringLiteral
+    }
+}
+
+extension Preferences.UserDefaultsKey where ValueType == CalculationMethod {
+    static let calculationMethod: Self = "PreferencesCalculationMethod"
+}
+
+extension Preferences.UserDefaultsKey where ValueType == UserNotification.Preferences {
+    static let userNotifications: Self = "PreferencesUserNotifications"
+}
+
+extension Preferences.UserDefaultsKey where ValueType == Set<Prayer.Name> {
+    static let visiblePrayers: Self = "PreferencesVisiblePrayers"
+}
+
+extension Preferences.UserDefaultsKey: CustomStringConvertible {
+    public var description: String {
+        rawValue
+    }
+}
+
 private extension UserDefaults {
-    func setEncoded<T: Encodable>(value: T, forKey key: Preferences.UserDefaultsKey) {
+    func setEncoded<T: Encodable>(value: T, forKey key: Preferences.UserDefaultsKey<T>) {
         do {
             try setEncoded(value: value, forKey: key.rawValue)
         } catch {
@@ -120,7 +136,7 @@ private extension UserDefaults {
         }
     }
     
-    func decodedValue<T: Decodable>(forKey key: Preferences.UserDefaultsKey) -> T? {
+    func decodedValue<T: Decodable>(forKey key: Preferences.UserDefaultsKey<T>) -> T? {
         do {
             return try decodedValue(forKey: key.rawValue)
         } catch {
