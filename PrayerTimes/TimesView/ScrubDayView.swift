@@ -12,7 +12,11 @@ struct ScrubDayView: View {
     let calculationParameters: CalculationParameters
     let visiblePrayers: Set<Prayer.Name>
     
+#if SCREENSHOT_MODE
+    @State private var date: Date = .statusBarDate
+#else
     @State private var date: Date = .now
+#endif
     
     var body: some View {
         // TODO: Improve macOS and trackpad experience
@@ -53,6 +57,7 @@ private struct DateScrubber: View {
                 Spacer()
                 ScaledMonthStack(calendar: calendar, era: era, year: year, height: height)
                     .equatable()
+                    .padding(.trailing, 4)
                     .contentShape(.interaction, Rectangle())
                     .onDragGesture(minimumDistance: 0) { dragValue in
                         let previousDate = date

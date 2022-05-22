@@ -2,7 +2,7 @@
 
 ![Today](0_today.png)
 
-![Tomorrow](1_tomorrow.png)
+![Date Scrubber](1_date_scrub.png)
 
 ![Quibla Map](2_quibla_map.png)
 

@@ -129,7 +129,9 @@ xcrun simctl status_bar \(deviceUDID) override \
         
         write(screenshot: window.screenshot(), name: "0_today", description: "Today")
         window.scrollViews.firstMatch.swipeLeft()
-        write(screenshot: window.screenshot(), name: "1_tomorrow", description: "Tomorrow")
+        // skip tomorrow view, it has similar aspects to today and date scrubber
+        window.scrollViews.firstMatch.swipeLeft()
+        write(screenshot: window.screenshot(), name: "1_date_scrub", description: "Date Scrubber")
         
         let tabBar = window.tabBars.firstMatch
         
