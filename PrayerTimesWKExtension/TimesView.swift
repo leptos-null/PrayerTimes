@@ -70,7 +70,6 @@ struct RollingPrayersView: View {
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = calculationParameters.timeZone
         
-        let todayStart = calendar.startOfDay(for: startDate)
         let prayerSequence = PrayerIterator(start: startDate, calculationParameters: calculationParameters, filter: visiblePrayers)
         
         var prayerIterator = prayerSequence
@@ -78,7 +77,6 @@ struct RollingPrayersView: View {
         nextPrayer = prayerIterator.next()
         
         groupedPrayers = prayerSequence
-            .drop { $0.start < todayStart }
             .prefix(maxPrayers)
             .reduce(into: []) { partialResult, prayer in
                 let key: Date = calendar.startOfDay(for: prayer.start)
