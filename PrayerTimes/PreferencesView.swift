@@ -81,6 +81,11 @@ struct PreferencesView: View {
                 .foregroundColor(.secondary)
                 .padding(.bottom, 64)
         }
+        .onChange(of: shouldShowLocationSection) { shouldShowLocationSection in
+            if !shouldShowLocationSection && viewModel.navigationSelection == .selectLocation {
+                viewModel.navigationSelection = .none
+            }
+        }
     }
 }
 
