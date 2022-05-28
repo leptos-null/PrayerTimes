@@ -77,6 +77,10 @@ public struct DailyPrayers {
 }
 
 extension DailyPrayers {
+    public static let accuracyInterval = solarApproximationsAccuracyInterval()
+}
+
+extension DailyPrayers {
     public var ordered: [Prayer] {
         [
             qiyam,

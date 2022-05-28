@@ -40,20 +40,41 @@ extension AngleRadians {
     }
 }
 
+extension JulianDay {
+    /// Julian reference date (2000/01/01 12:00:00 UTC)
+    static let referenceDay: Self = 2451545.0
+    
+    /// Julian date at the system reference date
+    static let systemReferenceDate: Self = 2451910.5
+}
+
 extension Date {
     func julianDate() -> Double {
-        timeIntervalSinceReferenceDate / .day + 2451910.5
+        timeIntervalSinceReferenceDate / .day + JulianDay.systemReferenceDate
     }
     func julianDay() -> JulianDay {
-        (timeIntervalSinceReferenceDate / .day).rounded(.down) + 2451910.5
+        (timeIntervalSinceReferenceDate / .day).rounded(.down) + JulianDay.systemReferenceDate
     }
+}
+
+func solarApproximationsAccuracyInterval() -> DateInterval {
+    // in testing, I observed that solarApproximations.equationOfTime was
+    // within 2.75 seconds of Meeus calculations between 1964/06/17 - 2037/10/04
+    // we'll say that's the reference date +/- 36 years
+    let base: TimeInterval = .day * (JulianDay.referenceDay - JulianDay.systemReferenceDate)
+    let magnitude: TimeInterval = .day * 365.25 * 36
+    let center = Date(timeIntervalSinceReferenceDate: base)
+    return DateInterval(
+        start: center.addingTimeInterval(-magnitude),
+        end:   center.addingTimeInterval(+magnitude)
+    )
 }
 
 // https://aa.usno.navy.mil/faq/sun_approx
 // more: http://stjarnhimlen.se/comp/ppcomp.html
 func solarApproximations(julianDay: JulianDay) -> (declination: AngleRadians, equationOfTime: TimeInterval) {
     // Date(timeIntervalSince1970: 946728000)
-    let julianReference = julianDay - 2451545.0
+    let julianReference = julianDay - JulianDay.referenceDay
     
     // https://astronomy.swin.edu.au/cosmos/A/Anomalistic+Year
     let daysPerAnomalisticYear = 365.25964
