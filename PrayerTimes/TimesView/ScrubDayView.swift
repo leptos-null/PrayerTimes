@@ -10,7 +10,6 @@ import PrayerTimesKit
 
 struct ScrubDayView: View {
     let calculationParameters: CalculationParameters
-    let visiblePrayers: Set<Prayer.Name>
     
 #if SCREENSHOT_MODE
     @State private var date: Date = .statusBarDate
@@ -46,7 +45,7 @@ struct ScrubDayView: View {
     
     var body: some View {
         // TODO: Improve macOS and trackpad experience
-        DayView(dailyPrayers: DailyPrayers(day: date, calculationParameters: calculationParameters), visiblePrayers: visiblePrayers) { date in
+        DayView(dailyPrayers: DailyPrayers(day: date, calculationParameters: calculationParameters)) { date in
             DatePicker("Day", selection: $date, in: datePickerRange ?? (date...date), displayedComponents: .date)
                 .labelsHidden()
                 .datePickerStyle(.compact)

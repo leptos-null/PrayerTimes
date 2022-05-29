@@ -10,8 +10,9 @@ import PrayerTimesKit
 
 struct TimesView: View {
     let calculationParameters: CalculationParameters
-    let visiblePrayers: Set<Prayer.Name>
     let locationTitle: String
+    
+    @Environment(\.visiblePrayers) private var visiblePrayers
     
     var body: some View {
         NavigationView {
@@ -159,6 +160,6 @@ struct TimesView_Previews: PreviewProvider {
             timeZone: TimeZone(identifier: "Asia/Riyadh")!,
             location: CLLocation(latitude: 21.422495, longitude: 39.826158),
             configuration: CalculationParameters.Configuration(asrFactor: 1, fajrAngle: 18.5, ishaAngle: 19)
-        ), visiblePrayers: Set(Prayer.Name.allCases), locationTitle: "Mecca, Makkah")
+        ), locationTitle: "Mecca, Makkah")
     }
 }

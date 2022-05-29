@@ -12,7 +12,8 @@ import PrayerTimesUI
 
 struct NowDayView: View {
     let dailyPrayers: DailyPrayers
-    let visiblePrayers: Set<Prayer.Name>
+    
+    @Environment(\.visiblePrayers) private var visiblePrayers
     
     private var prayerStartTimes: [Date] {
         dailyPrayers.ordered
@@ -30,7 +31,7 @@ struct NowDayView: View {
     
     var body: some View {
         TimelineView(MergeTimelineSchedule.merge(.explicit(prayerStartTimes), .everyMinute)) { timelineContext in
-            DayView(dailyPrayers: dailyPrayers, visiblePrayers: visiblePrayers, nowTime: nowTime(for: timelineContext))
+            DayView(dailyPrayers: dailyPrayers, nowTime: nowTime(for: timelineContext))
         }
     }
 }
@@ -41,6 +42,6 @@ struct NowDayView_Previews: PreviewProvider {
             timeZone: TimeZone(identifier: "Asia/Riyadh")!,
             location: CLLocation(latitude: 21.422495, longitude: 39.826158),
             configuration: CalculationParameters.Configuration(asrFactor: 1, fajrAngle: 18.5, ishaAngle: 19)
-        )), visiblePrayers: Set(Prayer.Name.allCases))
+        )))
     }
 }
