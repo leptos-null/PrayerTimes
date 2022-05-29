@@ -18,10 +18,36 @@ struct ScrubDayView: View {
     @State private var date: Date = .now
 #endif
     
+    @Environment(\.calendar) private var calendar
+    
+    var datePickerRange: ClosedRange<Date>? {
+        let accuracyInterval = DailyPrayers.accuracyInterval
+        
+        var userCalendar = calendar
+        userCalendar.timeZone = calculationParameters.timeZone
+        
+        // mask off everything less significant than the year
+        let startYear = userCalendar.dateComponents([ .era, .year ], from: accuracyInterval.start)
+        let endYear = userCalendar.dateComponents([ .era, .year ], from: accuracyInterval.end)
+        
+        guard let startDate = userCalendar.date(from: startYear),
+              let endDate = userCalendar.date(from: endYear) else {
+            assertionFailure("Expected to be able to get the date from date components")
+            return nil
+        }
+        
+        // we got the "floor" of `startDate`, we want the next value
+        guard let nextYear = calendar.date(byAdding: .year, value: 1, to: startDate) else { return nil }
+        // drop a second since we're providing an inclusive (closed) date range
+        let dropLast = endDate.addingTimeInterval(-1)
+        
+        return nextYear...dropLast
+    }
+    
     var body: some View {
         // TODO: Improve macOS and trackpad experience
         DayView(dailyPrayers: DailyPrayers(day: date, calculationParameters: calculationParameters), visiblePrayers: visiblePrayers) { date in
-            DatePicker("Day", selection: $date, displayedComponents: .date)
+            DatePicker("Day", selection: $date, in: datePickerRange ?? (date...date), displayedComponents: .date)
                 .labelsHidden()
                 .datePickerStyle(.compact)
 #if !targetEnvironment(macCatalyst)
