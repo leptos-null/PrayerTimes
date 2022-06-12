@@ -135,14 +135,14 @@ xcrun simctl status_bar \(deviceUDID) override \
         
         let tabBar = window.tabBars.firstMatch
         
-        tabBar.buttons["Quibla"].tap()
+        tabBar.buttons["Qibla"].tap()
 #if !targetEnvironment(macCatalyst)
-        write(screenshot: window.screenshot(), name: "2_quibla_compass", description: "Quibla Compass")
+        write(screenshot: window.screenshot(), name: "2_qibla_compass", description: "Qibla Compass")
         
         window.buttons["Map"].tap()
 #endif
         sleep(2) // give the map time to load
-        write(screenshot: window.screenshot(), name: "2_quibla_map", description: "Quibla Map")
+        write(screenshot: window.screenshot(), name: "2_qibla_map", description: "Qibla Map")
         
         tabBar.buttons["Preferences"].tap()
         

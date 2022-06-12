@@ -11,7 +11,7 @@ import PrayerTimesUI
 
 struct ContentView: View {
     enum Tab: Int {
-        case quibla, times, preferences
+        case qibla, times, preferences
     }
     
     @ObservedObject var locationManager: LocationManager
@@ -19,12 +19,12 @@ struct ContentView: View {
     
     @State var tab: Tab = .times
     
-    let quiblaManager: QuiblaManager
+    let qiblaManager: QiblaManager
     
     init(locationManager: LocationManager = .shared, preferences: Preferences = .shared) {
         self.locationManager = locationManager
         self.preferences = preferences
-        self.quiblaManager = QuiblaManager(locationManager: locationManager, headingManager: HeadingManager())
+        self.qiblaManager = QiblaManager(locationManager: locationManager, headingManager: HeadingManager())
     }
     
     private func calculationParameters(for stapledLocation: StapledLocation) -> CalculationParameters {
@@ -41,8 +41,8 @@ struct ContentView: View {
     
     var body: some View {
         TabView(selection: $tab) {
-            QuiblaView(quiblaManager: quiblaManager)
-                .tag(Tab.quibla)
+            QiblaView(qiblaManager: qiblaManager)
+                .tag(Tab.qibla)
             
             if let stapledLocation = locationManager.stapledLocation {
                 TimesView(calculationParameters: calculationParameters(for: stapledLocation), locationTitle: locationTitle(for: stapledLocation))

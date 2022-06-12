@@ -36,12 +36,12 @@ PrayerTimes supports the following preferences:
     - 30 minutes before time
 
 On iPhone and iPad, view prayer times for any day, with pages dedicated to today and tomorrow.
-Visualize the quibla direction with a map overlaid with the shortest
+Visualize the qibla direction with a map overlaid with the shortest
 line connecting your location to the Kaaba. On supported devices, find
-the quibla direction using the compass.
+the qibla direction using the compass.
 
 On Apple Watch, view a rolling set of prayer times, beginning with the
-current prayer. On supported devices, find the quibla direction using
+current prayer. On supported devices, find the qibla direction using
 the compass.
 
 
@@ -49,9 +49,9 @@ the compass.
 
 ![iPhone Today](docs/Screenshots/iPhone14%2C3/0_today.png)
 
-![iPhone Quibla Compass](docs/Screenshots/iPhone14%2C3/2_quibla_compass.png)
+![iPhone Qibla Compass](docs/Screenshots/iPhone14%2C3/2_qibla_compass.png)
 
-![iPhone Quibla Map](docs/Screenshots/iPhone14%2C3/2_quibla_map.png)
+![iPhone Qibla Map](docs/Screenshots/iPhone14%2C3/2_qibla_map.png)
 
 ![iPhone Preferences](docs/Screenshots/iPhone14%2C3/3_preferences.png)
 

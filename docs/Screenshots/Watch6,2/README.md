@@ -2,7 +2,7 @@
 
 ![Today](0_today.png)
 
-![Quibla Compass](1_quibla_compass.png)
+![Qibla Compass](1_qibla_compass.png)
 
 ![Preferences](2_preferences.png)
 

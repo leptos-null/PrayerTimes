@@ -12,34 +12,34 @@ import PrayerTimesKit
 import Combine
 
 struct CompassView: View {
-    @ObservedObject private var quiblaManager: QuiblaManager
+    @ObservedObject private var qiblaManager: QiblaManager
     private let impactGenerator = UIImpactFeedbackGenerator(style: .medium)
     
     private let orientationCancellable: AnyCancellable
     
-    init(quiblaManager: QuiblaManager, orientationManager: OrientationManager) {
-        self.quiblaManager = quiblaManager
+    init(qiblaManager: QiblaManager, orientationManager: OrientationManager) {
+        self.qiblaManager = qiblaManager
         
         orientationCancellable = orientationManager.$orientation
             .map { CLDeviceOrientation($0) }
-            .assign(to: \.headingOrientation, on: quiblaManager.headingManager)
+            .assign(to: \.headingOrientation, on: qiblaManager.headingManager)
     }
     
     var body: some View {
         Group {
-            switch quiblaManager.snapAdjustedHeading {
+            switch qiblaManager.snapAdjustedHeading {
             case .success(let heading):
                 LineUpCompass(facing: Angle(degrees: heading))
-                    .accessibilityLabel("Quibla direction")
-                    .accessibilityValue(QuiblaManager.directionDescription(for: heading))
+                    .accessibilityLabel("Qibla direction")
+                    .accessibilityValue(QiblaManager.directionDescription(for: heading))
                     .accessibilityAddTraits(.updatesFrequently)
             case .failure(let error):
                 Text(error.localizedDescription)
             }
         }
-        .onAppear(perform: quiblaManager.headingManager.startUpdatingHeading)
-        .onDisappear(perform: quiblaManager.headingManager.stopUpdatingHeading)
-        .onReceive(quiblaManager.enteredSnapAdjustment) {
+        .onAppear(perform: qiblaManager.headingManager.startUpdatingHeading)
+        .onDisappear(perform: qiblaManager.headingManager.stopUpdatingHeading)
+        .onReceive(qiblaManager.enteredSnapAdjustment) {
             impactGenerator.impactOccurred()
         }
     }

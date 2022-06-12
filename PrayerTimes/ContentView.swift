@@ -12,7 +12,7 @@ import PrayerTimesUI
 
 struct ContentView: View {
     enum Tab: Int {
-        case quibla, times, preferences
+        case qibla, times, preferences
     }
     
     @ObservedObject var locationManager: LocationManager
@@ -22,13 +22,13 @@ struct ContentView: View {
     
     @State var tab: Tab = .times
     
-    let quiblaManager: QuiblaManager
+    let qiblaManager: QiblaManager
     let orientationManager = OrientationManager(device: .current)
     
     init(locationManager: LocationManager = .shared, preferences: Preferences = .shared, userNotificationManager: UserNotification.Manager = .current) {
         self.locationManager = locationManager
         self.preferences = preferences
-        self.quiblaManager = QuiblaManager(locationManager: locationManager, headingManager: HeadingManager())
+        self.qiblaManager = QiblaManager(locationManager: locationManager, headingManager: HeadingManager())
         self.userNotificationManager = userNotificationManager
     }
     
@@ -47,11 +47,11 @@ struct ContentView: View {
     var body: some View {
         TabView(selection: $tab) {
             if let stapledLocation = locationManager.stapledLocation {
-                QuiblaView(locationManager: locationManager, quiblaManager: quiblaManager, orientationManager: orientationManager, locationTitle: locationTitle(for: stapledLocation))
+                QiblaView(locationManager: locationManager, qiblaManager: qiblaManager, orientationManager: orientationManager, locationTitle: locationTitle(for: stapledLocation))
                     .tabItem {
-                        Label("Quibla", systemImage: "location.north.line")
+                        Label("Qibla", systemImage: "location.north.line")
                     }
-                    .tag(Tab.quibla)
+                    .tag(Tab.qibla)
                 
                 TimesView(calculationParameters: calculationParameters(for: stapledLocation), locationTitle: locationTitle(for: stapledLocation))
                     .environment(\.visiblePrayers, preferences.visiblePrayers)

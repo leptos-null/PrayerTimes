@@ -4,9 +4,9 @@
 
 ![Date Scrubber](1_date_scrub.png)
 
-![Quibla Compass](2_quibla_compass.png)
+![Qibla Compass](2_qibla_compass.png)
 
-![Quibla Map](2_quibla_map.png)
+![Qibla Map](2_qibla_map.png)
 
 ![Preferences](3_preferences.png)
 

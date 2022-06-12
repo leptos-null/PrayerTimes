@@ -37,7 +37,7 @@
 		FA4F368527E57FFA00A63988 /* PrayerTimesUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6988F27A1B3B5000585D9 /* PrayerTimesUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FA4F368B27E5851000A63988 /* TimesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4F368A27E5851000A63988 /* TimesView.swift */; };
 		FA5271F527E642ED00506D5A /* PrayerTimelineSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5271F427E642ED00506D5A /* PrayerTimelineSchedule.swift */; };
-		FA5271F727E68A0B00506D5A /* QuiblaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5271F627E68A0B00506D5A /* QuiblaView.swift */; };
+		FA5271F727E68A0B00506D5A /* QiblaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5271F627E68A0B00506D5A /* QiblaView.swift */; };
 		FA5271FA27EA1E2600506D5A /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5271F927EA1E2600506D5A /* PreferencesView.swift */; };
 		FA5271FC27EA1F1600506D5A /* PrayerNameSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5271FB27EA1F1600506D5A /* PrayerNameSelection.swift */; };
 		FA5271FE27EA9F5800506D5A /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5271FD27EA9F5800506D5A /* PreferencesView.swift */; };
@@ -53,13 +53,13 @@
 		FA6542A327BF71BD002C4777 /* OrientationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6542A227BF71BD002C4777 /* OrientationManager.swift */; };
 		FA6542A527BF7249002C4777 /* CLDeviceOrientation+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6542A427BF7249002C4777 /* CLDeviceOrientation+UIKit.swift */; };
 		FA6542A727BFFCBC002C4777 /* LocationsCourseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6542A627BFFCBC002C4777 /* LocationsCourseTest.swift */; };
-		FA6542AB27C1552F002C4777 /* QuiblaMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6542AA27C1552F002C4777 /* QuiblaMapView.swift */; };
+		FA6542AB27C1552F002C4777 /* QiblaMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6542AA27C1552F002C4777 /* QiblaMapView.swift */; };
 		FA7950B127BCB95600170000 /* LineUpCompass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7950B027BCB95600170000 /* LineUpCompass.swift */; };
 		FA7950B327BD56B900170000 /* SimpleCompass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7950B227BD56B900170000 /* SimpleCompass.swift */; };
 		FA7950B527BD618100170000 /* SolarPositionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7950B427BD618100170000 /* SolarPositionsView.swift */; };
-		FA7EB35D27C48D6600642F63 /* QuiblaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7EB35C27C48D6600642F63 /* QuiblaView.swift */; };
+		FA7EB35D27C48D6600642F63 /* QiblaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7EB35C27C48D6600642F63 /* QiblaView.swift */; };
 		FA7EB35F27C48F3800642F63 /* CompassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7EB35E27C48F3800642F63 /* CompassView.swift */; };
-		FA7EB36127C66B5200642F63 /* QuiblaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7EB36027C66B5200642F63 /* QuiblaManager.swift */; };
+		FA7EB36127C66B5200642F63 /* QiblaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7EB36027C66B5200642F63 /* QiblaManager.swift */; };
 		FA7EB36327C6747C00642F63 /* DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7EB36227C6747C00642F63 /* DayView.swift */; };
 		FA8060F127F612EE00E41B60 /* SolarPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8060F027F612EE00E41B60 /* SolarPosition.swift */; };
 		FA8A4D4E27AA460300D43455 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A4D4D27AA460300D43455 /* Preferences.swift */; };
@@ -243,7 +243,7 @@
 		FA4F368927E5803000A63988 /* PrayerTimesWKExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PrayerTimesWKExtension.entitlements; sourceTree = "<group>"; };
 		FA4F368A27E5851000A63988 /* TimesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimesView.swift; sourceTree = "<group>"; };
 		FA5271F427E642ED00506D5A /* PrayerTimelineSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerTimelineSchedule.swift; sourceTree = "<group>"; };
-		FA5271F627E68A0B00506D5A /* QuiblaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuiblaView.swift; sourceTree = "<group>"; };
+		FA5271F627E68A0B00506D5A /* QiblaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiblaView.swift; sourceTree = "<group>"; };
 		FA5271F927EA1E2600506D5A /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		FA5271FB27EA1F1600506D5A /* PrayerNameSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerNameSelection.swift; sourceTree = "<group>"; };
 		FA5271FD27EA9F5800506D5A /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
@@ -260,13 +260,13 @@
 		FA6542A227BF71BD002C4777 /* OrientationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationManager.swift; sourceTree = "<group>"; };
 		FA6542A427BF7249002C4777 /* CLDeviceOrientation+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLDeviceOrientation+UIKit.swift"; sourceTree = "<group>"; };
 		FA6542A627BFFCBC002C4777 /* LocationsCourseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsCourseTest.swift; sourceTree = "<group>"; };
-		FA6542AA27C1552F002C4777 /* QuiblaMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuiblaMapView.swift; sourceTree = "<group>"; };
+		FA6542AA27C1552F002C4777 /* QiblaMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiblaMapView.swift; sourceTree = "<group>"; };
 		FA7950B027BCB95600170000 /* LineUpCompass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineUpCompass.swift; sourceTree = "<group>"; };
 		FA7950B227BD56B900170000 /* SimpleCompass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCompass.swift; sourceTree = "<group>"; };
 		FA7950B427BD618100170000 /* SolarPositionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarPositionsView.swift; sourceTree = "<group>"; };
-		FA7EB35C27C48D6600642F63 /* QuiblaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuiblaView.swift; sourceTree = "<group>"; };
+		FA7EB35C27C48D6600642F63 /* QiblaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiblaView.swift; sourceTree = "<group>"; };
 		FA7EB35E27C48F3800642F63 /* CompassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompassView.swift; sourceTree = "<group>"; };
-		FA7EB36027C66B5200642F63 /* QuiblaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuiblaManager.swift; sourceTree = "<group>"; };
+		FA7EB36027C66B5200642F63 /* QiblaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiblaManager.swift; sourceTree = "<group>"; };
 		FA7EB36227C6747C00642F63 /* DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayView.swift; sourceTree = "<group>"; };
 		FA8060F027F612EE00E41B60 /* SolarPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarPosition.swift; sourceTree = "<group>"; };
 		FA8A4D4D27AA460300D43455 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
@@ -392,7 +392,7 @@
 			children = (
 				FA4F366B27E506DB00A63988 /* PrayerTimesApp.swift */,
 				FA4F366927E506DB00A63988 /* ContentView.swift */,
-				FA5271F627E68A0B00506D5A /* QuiblaView.swift */,
+				FA5271F627E68A0B00506D5A /* QiblaView.swift */,
 				FA4F368A27E5851000A63988 /* TimesView.swift */,
 				FA5271FD27EA9F5800506D5A /* PreferencesView.swift */,
 				FA4F366D27E506DB00A63988 /* ComplicationController.swift */,
@@ -415,7 +415,7 @@
 				FA9809D727D536C50048D0F7 /* StapledLocation.swift */,
 				FAA6988227A10D0B000585D9 /* LocationManager.swift */,
 				FA8A4D5527B0307000D43455 /* HeadingManager.swift */,
-				FA7EB36027C66B5200642F63 /* QuiblaManager.swift */,
+				FA7EB36027C66B5200642F63 /* QiblaManager.swift */,
 				FA57312F279DEE5100E5C9A6 /* CalculationParameters.swift */,
 				FA2B41BD27A5B6F40032C29A /* UserNotification.swift */,
 				FA8A4D4D27AA460300D43455 /* Preferences.swift */,
@@ -465,7 +465,7 @@
 				FA7950B227BD56B900170000 /* SimpleCompass.swift */,
 				FA7950B027BCB95600170000 /* LineUpCompass.swift */,
 				FA7950B427BD618100170000 /* SolarPositionsView.swift */,
-				FA6542AA27C1552F002C4777 /* QuiblaMapView.swift */,
+				FA6542AA27C1552F002C4777 /* QiblaMapView.swift */,
 				FAE603A42843B6F2009758CB /* VisiblePrayersEnvironmentKey.swift */,
 				FA0C286827CD454400C191C9 /* EveryDayTimelineSchedule.swift */,
 				FA5271F427E642ED00506D5A /* PrayerTimelineSchedule.swift */,
@@ -519,7 +519,7 @@
 				FA37EB3A27F36E6A0082FEB1 /* CoordinatePicker.swift */,
 				FA0C286227CA925400C191C9 /* LocationHeader.swift */,
 				FA8A858F2839548500B15180 /* TimesView */,
-				FA7EB35C27C48D6600642F63 /* QuiblaView.swift */,
+				FA7EB35C27C48D6600642F63 /* QiblaView.swift */,
 				FA7EB35E27C48F3800642F63 /* CompassView.swift */,
 				FA8A85942839985400B15180 /* PreferencesViewModel.swift */,
 				FA5271F927EA1E2600506D5A /* PreferencesView.swift */,
@@ -903,7 +903,7 @@
 				FA4F366C27E506DB00A63988 /* PrayerTimesApp.swift in Sources */,
 				FA4F366E27E506DB00A63988 /* ComplicationController.swift in Sources */,
 				FA4F368B27E5851000A63988 /* TimesView.swift in Sources */,
-				FA5271F727E68A0B00506D5A /* QuiblaView.swift in Sources */,
+				FA5271F727E68A0B00506D5A /* QiblaView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -921,7 +921,7 @@
 				FAA6989F27A2713F000585D9 /* PrayerIterator.swift in Sources */,
 				FAA6988327A10D0B000585D9 /* LocationManager.swift in Sources */,
 				FA57312C279D069100E5C9A6 /* Prayer.swift in Sources */,
-				FA7EB36127C66B5200642F63 /* QuiblaManager.swift in Sources */,
+				FA7EB36127C66B5200642F63 /* QiblaManager.swift in Sources */,
 				FA57312A279D066300E5C9A6 /* DailyPrayers.swift in Sources */,
 				FA8060F127F612EE00E41B60 /* SolarPosition.swift in Sources */,
 				FA8A4D4E27AA460300D43455 /* Preferences.swift in Sources */,
@@ -951,7 +951,7 @@
 				FA7950B327BD56B900170000 /* SimpleCompass.swift in Sources */,
 				FA7950B527BD618100170000 /* SolarPositionsView.swift in Sources */,
 				FA0C286927CD454400C191C9 /* EveryDayTimelineSchedule.swift in Sources */,
-				FA6542AB27C1552F002C4777 /* QuiblaMapView.swift in Sources */,
+				FA6542AB27C1552F002C4777 /* QiblaMapView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -960,7 +960,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAB8F8582797DF7400F21628 /* ViewController.swift in Sources */,
-				FA7EB35D27C48D6600642F63 /* QuiblaView.swift in Sources */,
+				FA7EB35D27C48D6600642F63 /* QiblaView.swift in Sources */,
 				FAB8F8542797DF7400F21628 /* AppDelegate.swift in Sources */,
 				FA5271FA27EA1E2600506D5A /* PreferencesView.swift in Sources */,
 				FA0C286327CA925400C191C9 /* LocationHeader.swift in Sources */,
@@ -1447,7 +1447,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1467,7 +1467,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1514,7 +1514,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1528,7 +1528,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
