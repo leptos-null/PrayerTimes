@@ -17,61 +17,109 @@ public struct LineUpCompass: View {
     }
     
     public var body: some View {
-        Canvas { graphicsContext, size in
-            let needleRatio = 0.15
-            
-            let rect = CGRect(origin: .zero, size: size)
-                .insetBy(dx: strokeWidth/2, dy: strokeWidth/2)
-            
-            let radius: CGFloat = min(
-                rect.width/(1 + 2 * needleRatio),
-                rect.height/2
-            )/2
-            
-            let middleX = rect.midX
-            let leftSide = middleX - needleRatio * radius
-            let rightSide = middleX + needleRatio * radius
-            
-            let compassY = rect.midY - radius
-            
-            var compass = Path()
-            compass.move   (to: CGPoint(x: middleX,   y: compassY + (2 + needleRatio) * radius))
-            compass.addLine(to: CGPoint(x: leftSide,  y: compassY + (2 + (2 * needleRatio)) * radius))
-            compass.addLine(to: CGPoint(x: leftSide,  y: compassY - needleRatio * radius))
-            compass.addLine(to: CGPoint(x: middleX,   y: compassY + (-2 * needleRatio) * radius))
-            compass.addLine(to: CGPoint(x: rightSide, y: compassY - needleRatio * radius))
-            compass.addLine(to: CGPoint(x: rightSide, y: compassY + (2 + (2 * needleRatio)) * radius))
-            compass.closeSubpath()
-            
-            let angle = acos(needleRatio)
-            let center = CGPoint(x: rect.midX, y: rect.midY)
-            compass.appendArc(center: center, radius: radius, startAngle: angle, endAngle: (.pi * 2 - angle), clockwise: true)
-            compass.appendArc(center: center, radius: radius, startAngle: (.pi + angle), endAngle: (.pi - angle), clockwise: true)
-            
-            let lineUpHeight = radius * 2.5
-            let lineUpY = rect.height/2
-            
-            var lineUp = Path()
-            lineUp.move   (to: CGPoint(x: rightSide, y: lineUpY + (1 + 2 * needleRatio) * radius))
-            lineUp.addLine(to: CGPoint(x: rightSide, y: lineUpY + lineUpHeight/4 * 3))
-            lineUp.addLine(to: CGPoint(x: middleX,   y: lineUpY + lineUpHeight/4 * 3 - needleRatio * radius))
-            lineUp.addLine(to: CGPoint(x: leftSide,  y: lineUpY + lineUpHeight/4 * 3))
-            lineUp.addLine(to: CGPoint(x: leftSide,  y: lineUpY + (1 + 2 * needleRatio) * radius))
-            
-            lineUp.move   (to: CGPoint(x: leftSide,  y: lineUpY - (1 + needleRatio) * radius))
-            lineUp.addLine(to: CGPoint(x: leftSide,  y: lineUpY - lineUpHeight/3 * 2))
-            lineUp.addLine(to: CGPoint(x: middleX,   y: lineUpY - lineUpHeight/3 * 2 - needleRatio * radius))
-            lineUp.addLine(to: CGPoint(x: rightSide, y: lineUpY - lineUpHeight/3 * 2))
-            lineUp.addLine(to: CGPoint(x: rightSide, y: lineUpY - (1 + needleRatio) * radius))
-            
-            let rotation: CGAffineTransform = .identity
-                .translatedBy(x: center.x, y: center.y)
-                .rotated(by: facing.radians)
-                .translatedBy(x: -center.x, y: -center.y)
-            
-            graphicsContext.stroke(lineUp, with: .foreground, lineWidth: strokeWidth)
-            graphicsContext.stroke(compass.applying(rotation), with: .foreground, lineWidth: strokeWidth)
+        ZStack {
+            LineUp(strokeWidth: strokeWidth)
+            Compass(strokeWidth: strokeWidth)
+                .rotation(facing)
         }
+    }
+}
+
+private struct DrawingDimensions {
+    let needleRatio: Double = 0.15
+    let strokeWidth: Double
+    
+    let drawRect: CGRect
+    let radius: CGFloat
+    let midX: CGFloat
+    let leftSide: CGFloat
+    let rightSide: CGFloat
+    
+    init(strokeWidth: Double, rect: CGRect) {
+        self.strokeWidth = strokeWidth
+        
+        self.drawRect = rect.insetBy(dx: strokeWidth/2, dy: strokeWidth/2)
+        
+        self.radius = min(
+            drawRect.width/(1 + 2 * needleRatio),
+            rect.height/2
+        )/2
+        
+        self.midX = drawRect.midX
+        self.leftSide = midX - needleRatio * radius
+        self.rightSide = midX + needleRatio * radius
+    }
+}
+
+private struct LineUp: Shape {
+    let strokeWidth: Double
+    
+    func path(in rect: CGRect) -> Path {
+        let dimensions = DrawingDimensions(strokeWidth: strokeWidth, rect: rect)
+        let needleRatio = dimensions.needleRatio
+        
+        let drawRect = dimensions.drawRect
+        
+        let radius: CGFloat = dimensions.radius
+        
+        let middleX = dimensions.midX
+        let leftSide = dimensions.leftSide
+        let rightSide = dimensions.rightSide
+        
+        let lineUpHeight = radius * 2.5
+        let lineUpY = drawRect.height/2
+        
+        var lineUp = Path()
+        lineUp.move   (to: CGPoint(x: rightSide, y: lineUpY + (1 + 2 * needleRatio) * radius))
+        lineUp.addLine(to: CGPoint(x: rightSide, y: lineUpY + lineUpHeight/4 * 3))
+        lineUp.addLine(to: CGPoint(x: middleX,   y: lineUpY + lineUpHeight/4 * 3 - needleRatio * radius))
+        lineUp.addLine(to: CGPoint(x: leftSide,  y: lineUpY + lineUpHeight/4 * 3))
+        lineUp.addLine(to: CGPoint(x: leftSide,  y: lineUpY + (1 + 2 * needleRatio) * radius))
+        
+        lineUp.move   (to: CGPoint(x: leftSide,  y: lineUpY - (1 + needleRatio) * radius))
+        lineUp.addLine(to: CGPoint(x: leftSide,  y: lineUpY - lineUpHeight/3 * 2))
+        lineUp.addLine(to: CGPoint(x: middleX,   y: lineUpY - lineUpHeight/3 * 2 - needleRatio * radius))
+        lineUp.addLine(to: CGPoint(x: rightSide, y: lineUpY - lineUpHeight/3 * 2))
+        lineUp.addLine(to: CGPoint(x: rightSide, y: lineUpY - (1 + needleRatio) * radius))
+        
+        let strokeStyle = StrokeStyle(lineWidth: strokeWidth, lineCap: .round, lineJoin: .round)
+        return lineUp.strokedPath(strokeStyle)
+    }
+}
+
+private struct Compass: Shape {
+    let strokeWidth: Double
+    
+    func path(in rect: CGRect) -> Path {
+        let dimensions = DrawingDimensions(strokeWidth: strokeWidth, rect: rect)
+        let needleRatio = dimensions.needleRatio
+        
+        let drawRect = dimensions.drawRect
+        
+        let radius: CGFloat = dimensions.radius
+        
+        let middleX = dimensions.midX
+        let leftSide = dimensions.leftSide
+        let rightSide = dimensions.rightSide
+        
+        let compassY = drawRect.midY - radius
+        
+        var compass = Path()
+        compass.move   (to: CGPoint(x: middleX,   y: compassY + (2 + needleRatio) * radius))
+        compass.addLine(to: CGPoint(x: leftSide,  y: compassY + (2 + (2 * needleRatio)) * radius))
+        compass.addLine(to: CGPoint(x: leftSide,  y: compassY - needleRatio * radius))
+        compass.addLine(to: CGPoint(x: middleX,   y: compassY + (-2 * needleRatio) * radius))
+        compass.addLine(to: CGPoint(x: rightSide, y: compassY - needleRatio * radius))
+        compass.addLine(to: CGPoint(x: rightSide, y: compassY + (2 + (2 * needleRatio)) * radius))
+        compass.closeSubpath()
+        
+        let angle = acos(needleRatio)
+        let center = CGPoint(x: drawRect.midX, y: drawRect.midY)
+        compass.appendArc(center: center, radius: radius, startAngle: angle, endAngle: (.pi * 2 - angle), clockwise: true)
+        compass.appendArc(center: center, radius: radius, startAngle: (.pi + angle), endAngle: (.pi - angle), clockwise: true)
+        
+        let strokeStyle = StrokeStyle(lineWidth: strokeWidth, lineCap: .round, lineJoin: .round)
+        return compass.strokedPath(strokeStyle)
     }
 }
 
