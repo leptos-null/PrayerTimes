@@ -16,28 +16,42 @@ extension CGPoint {
 }
 
 struct AppIcon {
-    let backgroundFillColor: UIColor?
-    let backgroundColor: UIColor
-    let foregroundColor: UIColor
+    // the background color for the whole image before the "face" is drawn
+    var backgroundFillColor: UIColor? = .black
+    var backgroundColor: UIColor = .white
+    var foregroundColor: UIColor = .black
     
-    let insetScaleFactor: CGFloat
+    // padding between the closest edge of the "background fill" and the "face"
+    // a value of 0 means no padding
+    // a value of 0.5 means half of the size is padding
+    var insetScaleFactor: CGFloat = 1/8.0
     
-    init(backgroundFillColor: UIColor? = .black,
-         backgroundColor: UIColor = .white, foregroundColor: UIColor = .black,
-         insetScaleFactor: CGFloat = 1/8.0) {
-        self.backgroundFillColor = backgroundFillColor
-        self.backgroundColor = backgroundColor
-        self.foregroundColor = foregroundColor
-        self.insetScaleFactor = insetScaleFactor
-    }
+    // the ratio of the "background fill" size to the requested size
+    var backgroundFillScaleFactor: CGFloat = 1
+    // the corner radius of the "background fill"
+    // a value of 0 means no corner radius
+    // a value of 0.5 means a near circle
+    var backgroundFillRadiusFactor: CGFloat = 0
     
     func draw(size: CGSize) {
-        let fullDimension = min(size.width, size.height)
-        let dimension = fullDimension * (1 - insetScaleFactor)
+        let fillSize = CGSize(
+            width: size.width * backgroundFillScaleFactor,
+            height: size.height * backgroundFillScaleFactor
+        )
+        let fillDimension = min(fillSize.width, fillSize.height)
+        let dimension = fillDimension * (1 - insetScaleFactor)
         
         if let backgroundFillColor = backgroundFillColor {
             backgroundFillColor.setFill()
-            UIBezierPath(rect: CGRect(origin: .zero, size: size)).fill()
+            
+            let fillOrigin = CGPoint(
+                x: (size.width - fillSize.width)/2,
+                y: (size.height - fillSize.height)/2
+            )
+            UIBezierPath(
+                roundedRect: CGRect(origin: fillOrigin, size: fillSize),
+                cornerRadius: fillDimension * backgroundFillRadiusFactor
+            ).fill()
         }
         
         backgroundColor.setFill()
@@ -134,9 +148,10 @@ struct AppIcon {
 
 private struct AppIconSetContents: Codable {
     struct Image: Codable {
+        let platform: String?
         let idiom: String?
         let role: String?
-        let scale: String
+        let scale: String?
         let size: String
         let subtype: String?
         var filename: String?
@@ -160,7 +175,9 @@ class ViewController: UIViewController {
         var iconSetContents = try jsonDecoder.decode(AppIconSetContents.self, from: parse)
         
         iconSetContents.images = try iconSetContents.images.map { image in
-            var imageScale = image.scale
+            let scaleSuffix = image.scale ?? "1x"
+            
+            var imageScale = scaleSuffix
             guard imageScale.popLast() == Character("x") else { fatalError("scale must end with 'x' character") }
             guard let scale = Double(imageScale) else { fatalError("scale.dropLast() must be numeric") }
             
@@ -170,10 +187,32 @@ class ViewController: UIViewController {
                   let height = Double(dimensions[1]) else { fatalError("failed parsing dimensions") }
             let size = CGSize(width: width, height: height)
             
-            let filename = "AppIcon\(image.size)@\(image.scale).png"
-            try appIcon
-                .pngData(size: size, opaque: true, scale: scale)
-                .write(to: iconSet.appendingPathComponent(filename))
+            let filenamePrefix: String
+            if let platform = image.platform, let idiom = image.idiom {
+                filenamePrefix = "\(platform)-\(idiom)"
+            } else if let platform = image.platform {
+                filenamePrefix = platform
+            } else if let idiom = image.idiom {
+                filenamePrefix = idiom
+            } else {
+                filenamePrefix = "icon"
+            }
+            
+            let filename = "\(filenamePrefix)\(image.size)@\(scaleSuffix).png"
+            
+            let iconData: Data
+            if image.idiom == "mac" {
+                var macIcon = appIcon
+                macIcon.insetScaleFactor = 0.136
+                macIcon.backgroundFillScaleFactor = 0.806
+                macIcon.backgroundFillRadiusFactor = 0.185
+                
+                iconData = macIcon.pngData(size: size, opaque: false, scale: scale)
+            } else {
+                iconData = appIcon.pngData(size: size, opaque: true, scale: scale)
+            }
+            
+            try iconData.write(to: iconSet.appendingPathComponent(filename))
             
             var imgCopy = image
             imgCopy.filename = filename
