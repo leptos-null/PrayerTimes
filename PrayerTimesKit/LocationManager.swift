@@ -317,6 +317,7 @@ extension CLError.Code: CustomStringConvertible {
         case .rangingUnavailable: return "Ranging Unavailable"
         case .rangingFailure: return "Ranging Failure"
         case .promptDeclined: return "Prompt Declined"
+        case .historicalLocationError: return "Historical Location Error"
         @unknown default: return "@unknown (\(rawValue))"
         }
     }
