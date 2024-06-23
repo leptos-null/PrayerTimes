@@ -5,6 +5,8 @@
 //  Created by Leptos on 2/21/22.
 //
 
+#if os(iOS)
+
 import SwiftUI
 import CoreLocation
 import PrayerTimesUI
@@ -44,3 +46,5 @@ struct CompassView: View {
         }
     }
 }
+
+#endif

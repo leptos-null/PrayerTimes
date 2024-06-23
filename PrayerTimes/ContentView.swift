@@ -22,13 +22,17 @@ struct ContentView: View {
     
     @State var tab: Tab = .times
     
+#if os(iOS)
     let qiblaManager: QiblaManager
     let orientationManager = OrientationManager(device: .current)
-    
+#endif
+
     init(locationManager: LocationManager = .shared, preferences: Preferences = .shared, userNotificationManager: UserNotification.Manager = .current) {
         self.locationManager = locationManager
         self.preferences = preferences
+#if os(iOS)
         self.qiblaManager = QiblaManager(locationManager: locationManager, headingManager: HeadingManager())
+#endif
         self.userNotificationManager = userNotificationManager
     }
     
@@ -47,11 +51,17 @@ struct ContentView: View {
     var body: some View {
         TabView(selection: $tab) {
             if let stapledLocation = locationManager.stapledLocation {
-                QiblaView(locationManager: locationManager, qiblaManager: qiblaManager, orientationManager: orientationManager, locationTitle: locationTitle(for: stapledLocation))
-                    .tabItem {
-                        Label("Qibla", systemImage: "location.north.line")
-                    }
-                    .tag(Tab.qibla)
+                Group {
+#if os(iOS)
+                    QiblaView(locationManager: locationManager, qiblaManager: qiblaManager, orientationManager: orientationManager, locationTitle: locationTitle(for: stapledLocation))
+#else
+                    QiblaView(locationManager: locationManager)
+#endif
+                }
+                .tabItem {
+                    Label("Qibla", systemImage: "location.north.line")
+                }
+                .tag(Tab.qibla)
                 
                 TimesView(calculationParameters: calculationParameters(for: stapledLocation), locationTitle: locationTitle(for: stapledLocation))
                     .environment(\.visiblePrayers, preferences.visiblePrayers)

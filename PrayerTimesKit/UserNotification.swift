@@ -163,7 +163,7 @@ public extension UserNotification {
     }
 }
 
-#if os(iOS) || os(macOS)
+#if os(iOS) || os(macOS) || os(visionOS)
 
 public extension UserNotification {
     final class Manager: ObservableObject {

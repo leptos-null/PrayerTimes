@@ -94,10 +94,11 @@ private struct DateScrubber: View {
                         // dateInterval is inclusive- remove the last second that may bump into the next year
                         let endDate = yearInterval.end.addingTimeInterval(-1)
                         date = max(yearInterval.start, min(propose, endDate))
-                        
+#if os(iOS)
                         if !calendar.isDate(date, inSameDayAs: previousDate), rateLimiter.permitted() {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         }
+#endif
                     }
             }
         }

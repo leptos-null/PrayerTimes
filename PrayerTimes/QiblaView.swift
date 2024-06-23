@@ -10,6 +10,8 @@ import CoreLocation
 import PrayerTimesKit
 import PrayerTimesUI
 
+#if os(iOS)
+
 struct QiblaView: View {
     enum Mode: Hashable {
         case compass
@@ -66,3 +68,18 @@ struct QiblaView: View {
         }
     }
 }
+
+#else
+
+struct QiblaView: View {
+    @ObservedObject var locationManager: LocationManager
+    
+    var body: some View {
+        if let location = locationManager.location {
+            QiblaMapView(sourceCoordinate: location.coordinate)
+                .ignoresSafeArea(.all, edges: .top)
+        }
+    }
+}
+
+#endif

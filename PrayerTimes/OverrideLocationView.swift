@@ -8,7 +8,9 @@
 import SwiftUI
 import CoreLocation
 import PrayerTimesKit
+#if canImport(CoreLocationUI)
 import CoreLocationUI
+#endif
 
 struct OverrideLocationView: View {
     @ObservedObject var locationManager: LocationManager
@@ -33,17 +35,23 @@ struct OverrideLocationView: View {
             .hoverEffect()
             .disabled(isCoordinateOriginal || (coordinate == nil))
             
-            CoordinatePicker(coordinate: $coordinate)
-                .overlay(alignment: .topTrailing) {
-                    LocationButton(action: locationManager.startUpdatingLocation)
-                        .symbolVariant(.fill)
-                        .labelStyle(.iconOnly)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                        .scenePadding()
-                }
-                .cornerRadius(8)
-                .padding()
+            Group {
+#if canImport(CoreLocationUI)
+                CoordinatePicker(coordinate: $coordinate)
+                    .overlay(alignment: .topTrailing) {
+                        LocationButton(action: locationManager.startUpdatingLocation)
+                            .symbolVariant(.fill)
+                            .labelStyle(.iconOnly)
+                            .foregroundColor(.white)
+                            .cornerRadius(8)
+                            .scenePadding()
+                    }
+#else
+                CoordinatePicker(coordinate: $coordinate)
+#endif
+            }
+            .cornerRadius(8)
+            .padding()
         }
         .onReceive(locationManager.$location) { location in
             guard let location = location else { return }

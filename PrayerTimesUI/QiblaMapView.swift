@@ -9,7 +9,7 @@ import SwiftUI
 import MapKit
 import PrayerTimesKit
 
-#if os(iOS) || os(macOS) || os(tvOS)
+#if (canImport(UIKit) || canImport(AppKit)) && !os(watchOS)
 
 public struct QiblaMapView: View {
     public let sourceCoordinate: CLLocationCoordinate2D
@@ -98,7 +98,7 @@ private struct CourseMapView {
     }
 }
 
-#if os(iOS) || os(tvOS)
+#if canImport(UIKit)
 extension CourseMapView: UIViewRepresentable {
     func makeUIView(context: Context) -> MKMapView {
         makeView(context: context)
@@ -108,7 +108,7 @@ extension CourseMapView: UIViewRepresentable {
         updateView(view, context: context)
     }
 }
-#elseif os(macOS)
+#elseif canImport(AppKit)
 extension CourseMapView: NSViewRepresentable {
     func makeNSView(context: Context) -> MKMapView {
         makeView(context: context)

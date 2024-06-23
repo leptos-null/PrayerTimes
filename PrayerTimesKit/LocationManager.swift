@@ -190,7 +190,7 @@ public final class LocationManager: ObservableObject {
     public func requestLocation() {
         locationManager.requestLocation()
     }
-#if os(iOS) || os(macOS) || os(watchOS)
+#if os(iOS) || os(macOS) || os(watchOS) || os(visionOS)
     public func startUpdatingLocation() {
         locationManager.startUpdatingLocation()
     }

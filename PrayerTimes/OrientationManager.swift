@@ -5,6 +5,8 @@
 //  Created by Leptos on 2/17/22.
 //
 
+#if os(iOS)
+
 import Combine
 import UIKit
 
@@ -35,3 +37,5 @@ final class OrientationManager: ObservableObject {
         device.endGeneratingDeviceOrientationNotifications()
     }
 }
+
+#endif
