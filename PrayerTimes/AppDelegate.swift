@@ -8,7 +8,6 @@
 import UIKit
 import PrayerTimesKit
 
-@main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let systemRegistrar = SystemRegistrar()

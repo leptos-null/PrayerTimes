@@ -72,6 +72,7 @@
 		FA8A858E2839540C00B15180 /* DateSubtitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A858D2839540C00B15180 /* DateSubtitle.swift */; };
 		FA8A85952839985400B15180 /* PreferencesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A85942839985400B15180 /* PreferencesViewModel.swift */; };
 		FA9809D827D536C50048D0F7 /* StapledLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9809D727D536C50048D0F7 /* StapledLocation.swift */; };
+		FAA06EF22C2BCC4B00421065 /* PrayerTimesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA06EF12C2BCC4B00421065 /* PrayerTimesApp.swift */; };
 		FAA6988327A10D0B000585D9 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6988227A10D0B000585D9 /* LocationManager.swift */; };
 		FAA6988527A110C9000585D9 /* PrayerTimesKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA573112279CE54100E5C9A6 /* PrayerTimesKit.framework */; };
 		FAA6988627A110C9000585D9 /* PrayerTimesKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA573112279CE54100E5C9A6 /* PrayerTimesKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -80,11 +81,7 @@
 		FAA6989627A1B3B5000585D9 /* PrayerTimesUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6988F27A1B3B5000585D9 /* PrayerTimesUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FAA6989F27A2713F000585D9 /* PrayerIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6989E27A2713F000585D9 /* PrayerIterator.swift */; };
 		FAB8F8542797DF7400F21628 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB8F8532797DF7400F21628 /* AppDelegate.swift */; };
-		FAB8F8562797DF7400F21628 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB8F8552797DF7400F21628 /* SceneDelegate.swift */; };
-		FAB8F8582797DF7400F21628 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB8F8572797DF7400F21628 /* ViewController.swift */; };
-		FAB8F85B2797DF7400F21628 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAB8F8592797DF7400F21628 /* Main.storyboard */; };
 		FAB8F85D2797DF7500F21628 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAB8F85C2797DF7500F21628 /* Assets.xcassets */; };
-		FAB8F8602797DF7500F21628 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAB8F85E2797DF7500F21628 /* LaunchScreen.storyboard */; };
 		FAE3EDED280CC19D00A5F9D7 /* GatherScreenshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE3EDEC280CC19D00A5F9D7 /* GatherScreenshots.swift */; };
 		FAE603A52843B6F2009758CB /* VisiblePrayersEnvironmentKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE603A42843B6F2009758CB /* VisiblePrayersEnvironmentKey.swift */; };
 		FAF6BF1528079CC900C8D474 /* GatherScreenshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF6BF1428079CC900C8D474 /* GatherScreenshots.swift */; };
@@ -278,6 +275,7 @@
 		FA8A858D2839540C00B15180 /* DateSubtitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSubtitle.swift; sourceTree = "<group>"; };
 		FA8A85942839985400B15180 /* PreferencesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewModel.swift; sourceTree = "<group>"; };
 		FA9809D727D536C50048D0F7 /* StapledLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StapledLocation.swift; sourceTree = "<group>"; };
+		FAA06EF12C2BCC4B00421065 /* PrayerTimesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerTimesApp.swift; sourceTree = "<group>"; };
 		FAA6988227A10D0B000585D9 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		FAA6988F27A1B3B5000585D9 /* PrayerTimesUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PrayerTimesUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAA6989127A1B3B5000585D9 /* PrayerTimesUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrayerTimesUI.h; sourceTree = "<group>"; };
@@ -285,11 +283,7 @@
 		FAA6989E27A2713F000585D9 /* PrayerIterator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerIterator.swift; sourceTree = "<group>"; };
 		FAB8F8502797DF7400F21628 /* PrayerTimes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrayerTimes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAB8F8532797DF7400F21628 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		FAB8F8552797DF7400F21628 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		FAB8F8572797DF7400F21628 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		FAB8F85A2797DF7400F21628 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FAB8F85C2797DF7500F21628 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		FAB8F85F2797DF7500F21628 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FAB8F8612797DF7500F21628 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FAB8F8672797E00E00F21628 /* PrayerTimes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PrayerTimes.entitlements; sourceTree = "<group>"; };
 		FAE3EDE1280CC16F00A5F9D7 /* PrayerTimesWatchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PrayerTimesWatchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -511,8 +505,7 @@
 			isa = PBXGroup;
 			children = (
 				FAB8F8532797DF7400F21628 /* AppDelegate.swift */,
-				FAB8F8552797DF7400F21628 /* SceneDelegate.swift */,
-				FAB8F8572797DF7400F21628 /* ViewController.swift */,
+				FAA06EF12C2BCC4B00421065 /* PrayerTimesApp.swift */,
 				FA573127279D01DA00E5C9A6 /* ContentView.swift */,
 				FA37EB3827F36DA80082FEB1 /* LocationPrompt.swift */,
 				FA37EB3C27F381600082FEB1 /* OverrideLocationView.swift */,
@@ -525,9 +518,7 @@
 				FA5271F927EA1E2600506D5A /* PreferencesView.swift */,
 				FA6542A227BF71BD002C4777 /* OrientationManager.swift */,
 				FA6542A427BF7249002C4777 /* CLDeviceOrientation+UIKit.swift */,
-				FAB8F8592797DF7400F21628 /* Main.storyboard */,
 				FAB8F85C2797DF7500F21628 /* Assets.xcassets */,
-				FAB8F85E2797DF7500F21628 /* LaunchScreen.storyboard */,
 				FAB8F8672797E00E00F21628 /* PrayerTimes.entitlements */,
 				FAB8F8612797DF7500F21628 /* Info.plist */,
 			);
@@ -861,9 +852,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAB8F8602797DF7500F21628 /* LaunchScreen.storyboard in Resources */,
 				FAB8F85D2797DF7500F21628 /* Assets.xcassets in Resources */,
-				FAB8F85B2797DF7400F21628 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -959,11 +948,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAB8F8582797DF7400F21628 /* ViewController.swift in Sources */,
 				FA7EB35D27C48D6600642F63 /* QiblaView.swift in Sources */,
 				FAB8F8542797DF7400F21628 /* AppDelegate.swift in Sources */,
 				FA5271FA27EA1E2600506D5A /* PreferencesView.swift in Sources */,
 				FA0C286327CA925400C191C9 /* LocationHeader.swift in Sources */,
+				FAA06EF22C2BCC4B00421065 /* PrayerTimesApp.swift in Sources */,
 				FA6542A527BF7249002C4777 /* CLDeviceOrientation+UIKit.swift in Sources */,
 				FA573128279D01DA00E5C9A6 /* ContentView.swift in Sources */,
 				FA8A858A28388BAD00B15180 /* DailyPrayersView.swift in Sources */,
@@ -978,7 +967,6 @@
 				FA8A858E2839540C00B15180 /* DateSubtitle.swift in Sources */,
 				FA7EB36327C6747C00642F63 /* DayView.swift in Sources */,
 				FA0C286527CC146D00C191C9 /* TimesView.swift in Sources */,
-				FAB8F8562797DF7400F21628 /* SceneDelegate.swift in Sources */,
 				FA8A85852832920600B15180 /* ScrubDayView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1068,22 +1056,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				FA2B41EB27A6727F0032C29A /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		FAB8F8592797DF7400F21628 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FAB8F85A2797DF7400F21628 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		FAB8F85E2797DF7500F21628 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FAB8F85F2797DF7500F21628 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -1572,9 +1544,9 @@
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Your location is used to show local prayer times. Always access allows notifications to stay up-to-date for your current location.";
 				INFOPLIST_KEY_NSLocationUsageDescription = "Your location is used to show local prayer times.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is used to show local prayer times.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1608,9 +1580,9 @@
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Your location is used to show local prayer times. Always access allows notifications to stay up-to-date for your current location.";
 				INFOPLIST_KEY_NSLocationUsageDescription = "Your location is used to show local prayer times.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is used to show local prayer times.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
