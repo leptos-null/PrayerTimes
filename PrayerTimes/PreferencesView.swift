@@ -37,51 +37,119 @@ struct PreferencesView: View {
         }
     }
     
+    private func notificationCategoryBinding(_ category: UserNotification.Category) -> Binding<Set<Prayer.Name>> {
+        Binding {
+            preferences.userNotifications.categories[category] ?? Set()
+        } set: {
+            preferences.userNotifications.categories[category] = $0
+        }
+    }
+    
     var body: some View {
-        NavigationView {
-            List {
-                if shouldShowLocationSection {
-                    Section {
-                        NavigationLink("Select Location", tag: .selectLocation, selection: $viewModel.navigationSelection) {
-                            OverrideLocationView(locationManager: locationManager)
-                                .navigationTitle("Select Location")
+        Group {
+            if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+                NavigationSplitView {
+                    List(selection: $viewModel.navigationSelection) {
+                        if shouldShowLocationSection {
+                            Section {
+                                NavigationLink("Select Location", value: NavigationSelection.selectLocation)
+                            } header: {
+                                Label("Location", systemImage: "location")
+                                    .symbolRenderingMode(.multicolor)
+                            }
                         }
-                    } header: {
-                        Label("Location", systemImage: "location")
-                            .symbolRenderingMode(.multicolor)
+                        
+                        Section {
+                            NavigationLink("Visibility", value: NavigationSelection.visibility)
+                        } header: {
+                            Label("Configuration", systemImage: "gear")
+                                .symbolRenderingMode(.multicolor)
+                        }
+                        
+                        Section {
+                            ForEach(UserNotification.Category.allCases) { category in
+                                NavigationLink(category.localizedTitle, value: PreferencesView.NavigationSelection.notification(category))
+                            }
+                        } header: {
+                            Label("Notifications", systemImage: "bell")
+                                .symbolRenderingMode(.multicolor)
+                        }
                     }
-                }
-                
-                Section {
-                    NavigationLink("Visibility", tag: .visibility, selection: $viewModel.navigationSelection) {
+                    .navigationTitle("Preferences")
+                    .listStyle(listStyle)
+                } detail: {
+                    switch viewModel.navigationSelection {
+                    case .none:
+                        Text("No selection")
+                            .font(.callout)
+                            .foregroundColor(.secondary)
+                            .padding(.bottom, 64)
+                    case .selectLocation:
+                        OverrideLocationView(locationManager: locationManager)
+                            .navigationTitle("Select Location")
+                    case .visibility:
                         VisiblePrayersView(visiblePrayers: $preferences.visiblePrayers)
                             .navigationTitle("Visibility")
-                    }
-                    NavigationLink("Calculation Method", tag: .calculationMethod, selection: $viewModel.navigationSelection) {
+                    case .calculationMethod:
                         CalculationMethodView(calculationMethod: $preferences.calculationMethod)
                             .navigationTitle("Calculation Method")
+                    case .notification(let category):
+                        UserNotificationSelectionView(category: category, selection: notificationCategoryBinding(category))
+                            .navigationTitle(category.localizedTitle)
                     }
-                } header: {
-                    Label("Configuration", systemImage: "gear")
-                        .symbolRenderingMode(.multicolor)
                 }
-                
-                Section {
-                    UserNotificationPreferencesView(preferences: $preferences.userNotifications, navigationSelection: $viewModel.navigationSelection)
-                } header: {
-                    Label("Notifications", systemImage: "bell")
-                        .symbolRenderingMode(.multicolor)
+            } else {
+                NavigationView {
+                    List {
+                        if shouldShowLocationSection {
+                            Section {
+                                NavigationLink("Select Location", tag: .selectLocation, selection: $viewModel.navigationSelection) {
+                                    OverrideLocationView(locationManager: locationManager)
+                                        .navigationTitle("Select Location")
+                                }
+                            } header: {
+                                Label("Location", systemImage: "location")
+                                    .symbolRenderingMode(.multicolor)
+                            }
+                        }
+                        
+                        Section {
+                            NavigationLink("Visibility", tag: .visibility, selection: $viewModel.navigationSelection) {
+                                VisiblePrayersView(visiblePrayers: $preferences.visiblePrayers)
+                                    .navigationTitle("Visibility")
+                            }
+                            NavigationLink("Calculation Method", tag: .calculationMethod, selection: $viewModel.navigationSelection) {
+                                CalculationMethodView(calculationMethod: $preferences.calculationMethod)
+                                    .navigationTitle("Calculation Method")
+                            }
+                        } header: {
+                            Label("Configuration", systemImage: "gear")
+                                .symbolRenderingMode(.multicolor)
+                        }
+                        
+                        Section {
+                            ForEach(UserNotification.Category.allCases) { category in
+                                NavigationLink(category.localizedTitle, tag: .notification(category), selection: $viewModel.navigationSelection) {
+                                    UserNotificationSelectionView(category: category, selection: notificationCategoryBinding(category))
+                                        .navigationTitle(category.localizedTitle)
+                                }
+                            }
+                        } header: {
+                            Label("Notifications", systemImage: "bell")
+                                .symbolRenderingMode(.multicolor)
+                        }
+                    }
+                    .navigationTitle("Preferences")
+                    .listStyle(listStyle)
+                    
+                    Text("No selection")
+                        .font(.callout)
+                        .foregroundColor(.secondary)
+                        .padding(.bottom, 64)
                 }
             }
-            .navigationTitle("Preferences")
-            .listStyle(listStyle)
-            
-            Text("No selection")
-                .font(.callout)
-                .foregroundColor(.secondary)
-                .padding(.bottom, 64)
         }
-        .onChange(of: shouldShowLocationSection) { shouldShowLocationSection in
+        .onChangeOf(shouldShowLocationSection) { shouldShowLocationSection in
             if !shouldShowLocationSection && viewModel.navigationSelection == .selectLocation {
                 viewModel.navigationSelection = .none
             }
@@ -195,28 +263,6 @@ struct FloatingRangeSelection<Value: BinaryFloatingPoint>: View {
     }
 }
 
-struct UserNotificationPreferencesView: View {
-    @Binding var preferences: UserNotification.Preferences
-    @Binding var navigationSelection: PreferencesView.NavigationSelection?
-    
-    private func categoryBinding(_ category: UserNotification.Category) -> Binding<Set<Prayer.Name>> {
-        Binding {
-            preferences.categories[category] ?? Set()
-        } set: {
-            preferences.categories[category] = $0
-        }
-    }
-    
-    var body: some View {
-        ForEach(UserNotification.Category.allCases) { category in
-            NavigationLink(category.localizedTitle, tag: .notification(category), selection: $navigationSelection) {
-                UserNotificationSelectionView(category: category, selection: categoryBinding(category))
-                    .navigationTitle(category.localizedTitle)
-            }
-        }
-    }
-}
-
 struct UserNotificationSelectionView: View {
     let category: UserNotification.Category
     
@@ -269,6 +315,19 @@ extension CalculationMethod: Identifiable {
 
 extension UserNotification.Category: Identifiable {
     public var id: Self { self }
+}
+
+private extension View {
+    @ViewBuilder
+    func onChangeOf<T: Equatable>(_ value: T, perform block: @escaping (T) -> Void) -> some View {
+        if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
+            onChange(of: value) { oldValue, newValue in
+                block(newValue)
+            }
+        } else {
+            onChange(of: value, perform: block)
+        }
+    }
 }
 
 struct PreferencesView_Previews: PreviewProvider {
