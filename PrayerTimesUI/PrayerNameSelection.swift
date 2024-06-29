@@ -8,6 +8,8 @@
 import SwiftUI
 import PrayerTimesKit
 
+#if !os(tvOS)
+
 public struct PrayerNameSelection: View {
     @Binding public var selection: Set<Prayer.Name>
     public let prayerNames: [Prayer.Name]
@@ -72,3 +74,5 @@ struct PrayerNameSelection_Previews: PreviewProvider {
         Client(selection: [ .fajr, .maghrib ])
     }
 }
+
+#endif
