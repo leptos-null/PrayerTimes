@@ -33,13 +33,20 @@ struct AppIcon {
     // a value of 0.5 means a near circle
     var backgroundFillRadiusFactor: CGFloat = 0
     
-    func draw(size: CGSize) {
-        let fillSize = CGSize(
+    private func fillSize(for size: CGSize) -> CGSize {
+        CGSize(
             width: size.width * backgroundFillScaleFactor,
             height: size.height * backgroundFillScaleFactor
         )
-        let fillDimension = min(fillSize.width, fillSize.height)
-        let dimension = fillDimension * (1 - insetScaleFactor)
+    }
+    
+    private func dimension(for size: CGSize) -> CGFloat {
+        min(size.width, size.height)
+    }
+    
+    func drawBackground(size: CGSize) {
+        let fillSize = fillSize(for: size)
+        let fillDimension = dimension(for: fillSize)
         
         if let backgroundFillColor = backgroundFillColor {
             backgroundFillColor.setFill()
@@ -53,14 +60,31 @@ struct AppIcon {
                 cornerRadius: fillDimension * backgroundFillRadiusFactor
             ).fill()
         }
+    }
+    
+    func drawFace(size: CGSize) {
+        let fillSize = fillSize(for: size)
+        let fillDimension = dimension(for: fillSize)
+        let dimension = fillDimension * (1 - insetScaleFactor)
         
         backgroundColor.setFill()
-        foregroundColor.setStroke()
-        
         UIBezierPath(ovalIn: CGRect(
             x: (size.width - dimension)/2, y: (size.height - dimension)/2,
             width: dimension, height: dimension
         )).fill()
+        
+        let center = CGPoint(x: size.width/2, y: size.height/2)
+        let shadow = shadowPath(center: center, dimension: dimension)
+        foregroundColor.setFill()
+        shadow.fill()
+    }
+    
+    func drawForeground(size: CGSize) {
+        let fillSize = fillSize(for: size)
+        let fillDimension = dimension(for: fillSize)
+        let dimension = fillDimension * (1 - insetScaleFactor)
+        
+        foregroundColor.setStroke()
         
         let ticks = UIBezierPath()
         ticks.lineWidth = dimension/58
@@ -94,6 +118,15 @@ struct AppIcon {
         
         hand.stroke()
         
+        let shadow = shadowPath(center: center, dimension: dimension)
+        backgroundColor.setStroke()
+        
+        shadow.addClip()
+        ticks.stroke()
+        hand.stroke()
+    }
+    
+    private func shadowPath(center: CGPoint, dimension: CGFloat) -> UIBezierPath {
         let shadow = UIBezierPath()
         shadow.addArc(withCenter: center,
                       radius: dimension * 0.47,
@@ -101,15 +134,13 @@ struct AppIcon {
         shadow.addArc(withCenter: CGPoint(x: center.x + dimension * 0.151, y: center.y - dimension * 0.101),
                       radius: dimension * 0.45,
                       startAngle: (30 * .pi / 24.0), endAngle: (9 * .pi / 24.0), clockwise: false)
-        
-        foregroundColor.setFill()
-        backgroundColor.setStroke()
-        
-        shadow.fill()
-        
-        shadow.addClip()
-        ticks.stroke()
-        hand.stroke()
+        return shadow
+    }
+    
+    func draw(size: CGSize) {
+        drawBackground(size: size)
+        drawFace(size: size)
+        drawForeground(size: size)
     }
     
     func image(size: CGSize, opaque: Bool = false, scale: CGFloat? = nil) -> UIImage {
@@ -153,6 +184,36 @@ private struct AppIconSetContents: Codable {
         let role: String?
         let scale: String?
         let size: String
+        let subtype: String?
+        var filename: String?
+    }
+    struct Info: Codable {
+        var author: String
+        var version: Int
+    }
+    var images: [Image]
+    var info: Info
+}
+
+private struct SolidImageStackContents: Codable {
+    struct Layer: Codable {
+        var filename: String?
+    }
+    struct Info: Codable {
+        var author: String
+        var version: Int
+    }
+    var layers: [Layer]
+    var info: Info
+}
+
+private struct ImageSetContents: Codable {
+    struct Image: Codable {
+        let platform: String?
+        let idiom: String?
+        let role: String?
+        let scale: String?
+        let size: String?
         let subtype: String?
         var filename: String?
     }
@@ -225,6 +286,93 @@ class ViewController: UIViewController {
         try serialized.write(to: manifest)
     }
     
+    private func writeImage(for imageSet: URL, drawBlock: (CGSize) -> Void) throws {
+        let manifest = imageSet.appendingPathComponent("Contents.json")
+        let parse = try Data(contentsOf: manifest)
+        let jsonDecoder = JSONDecoder()
+        var imageSetContents = try jsonDecoder.decode(ImageSetContents.self, from: parse)
+        
+        imageSetContents.images = try imageSetContents.images.map { image in
+            let size: CGSize
+            let scale: CGFloat
+            let opaque: Bool
+            
+            guard image.idiom == "vision" else {
+                fatalError("Currently this function only supports visionOS app icon image stacks")
+            }
+            // Xcode requests 512 @ 2x, but for some reason this breaks the ImageStack preview -
+            // 1024 @ 1x seems to work fine though, so use this
+            size = CGSize(width: 1024, height: 1024)
+            scale = 1
+            opaque = false
+            
+            let format = UIGraphicsImageRendererFormat()
+            format.opaque = opaque
+            format.scale = scale
+            
+            let iconData = UIGraphicsImageRenderer(size: size, format: format)
+                .pngData { context in
+                    drawBlock(size)
+                }
+            
+            let filename = "icon.png"
+            
+            try iconData.write(to: imageSet.appendingPathComponent(filename))
+            
+            var imgCopy = image
+            imgCopy.filename = filename
+            return imgCopy
+        }
+        
+        let jsonEncoder = JSONEncoder()
+        jsonEncoder.outputFormatting = [ .prettyPrinted, .sortedKeys ]
+        let serialized = try jsonEncoder.encode(imageSetContents)
+        try serialized.write(to: manifest)
+    }
+    
+    private func writeSolidImageStack(for imageStack: URL, appIcon: AppIcon = AppIcon()) throws {
+        let manifest = imageStack.appendingPathComponent("Contents.json")
+        let parse = try Data(contentsOf: manifest)
+        let jsonDecoder = JSONDecoder()
+        let imageStackContents = try jsonDecoder.decode(SolidImageStackContents.self, from: parse)
+        
+        let layerImageSets = imageStackContents.layers.map { layer in
+            guard let filename = layer.filename else {
+                fatalError("Layer must have a filename")
+            }
+            return imageStack
+                .appendingPathComponent(filename)
+                .appendingPathComponent("Content.imageset")
+        }
+        
+        switch layerImageSets.count {
+        case 1:
+            try writeImage(for: layerImageSets[0]) { size in
+                appIcon.draw(size: size)
+            }
+        case 2:
+            try writeImage(for: layerImageSets[1]) { size in
+                appIcon.drawBackground(size: size)
+                appIcon.drawFace(size: size)
+            }
+            try writeImage(for: layerImageSets[0]) { size in
+                appIcon.drawForeground(size: size)
+            }
+        case 3:
+            try writeImage(for: layerImageSets[2]) { size in
+                appIcon.drawBackground(size: size)
+            }
+            try writeImage(for: layerImageSets[1]) { size in
+                appIcon.drawFace(size: size)
+            }
+            try writeImage(for: layerImageSets[0]) { size in
+                appIcon.drawForeground(size: size)
+            }
+        default:
+            fatalError("Image stack currently only supports 1, 2, or 3 layers")
+        }
+    }
+    
     private func writeGitHubPreview(to url: URL, scale: CGFloat) throws {
         let size = CGSize(width: 1280/scale, height: 640/scale)
         try AppIcon()
@@ -243,6 +391,9 @@ class ViewController: UIViewController {
         
         let nanoIconSet = URL(fileURLWithPath: "PrayerTimesWatch/Assets.xcassets/AppIcon.appiconset", isDirectory: true, relativeTo: project)
         try! writeIconAssets(for: nanoIconSet, appIcon: AppIcon(insetScaleFactor: 0))
+        
+        let visionImageStack = URL(fileURLWithPath: "PrayerTimes/Assets.xcassets/AppIcon.solidimagestack", relativeTo: project)
+        try! writeSolidImageStack(for: visionImageStack, appIcon: AppIcon(insetScaleFactor: 1/5.0))
         
         let banner = URL(fileURLWithPath: "docs/banner.png", isDirectory: true, relativeTo: project)
         try! writeGitHubPreview(to: banner, scale: 1)
