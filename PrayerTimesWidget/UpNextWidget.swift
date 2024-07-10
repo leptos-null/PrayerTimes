@@ -170,8 +170,10 @@ struct UpNextWidget: Widget {
     }
 }
 
-struct EntryView_Previews: PreviewProvider {
+struct UpNextWidget_Previews: PreviewProvider {
     static var previews: some View {
         EntryView(entry: .init(date: .now, prayerIterator: nil, stapledLocation: nil))
+            .widgetBackground()
+            .previewContext(WidgetPreviewContext(family: .systemMedium))
     }
 }
