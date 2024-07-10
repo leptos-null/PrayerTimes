@@ -1,5 +1,5 @@
 //
-//  PrayerTimesWidget.swift
+//  UpNextWidget.swift
 //  PrayerTimesWidget
 //
 //  Created by Leptos on 7/8/24.
@@ -157,8 +157,8 @@ private extension View {
     }
 }
 
-struct PrayerTimesWidget: Widget {
-    static let kind: String = "PrayerTimesWidget"
+struct UpNextWidget: Widget {
+    static let kind: String = "UpNextWidget"
     
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: Self.kind, provider: Provider()) { entry in

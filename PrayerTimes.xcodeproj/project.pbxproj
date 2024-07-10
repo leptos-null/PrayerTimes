@@ -55,7 +55,7 @@
 		FA6542A727BFFCBC002C4777 /* LocationsCourseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6542A627BFFCBC002C4777 /* LocationsCourseTest.swift */; };
 		FA6542AB27C1552F002C4777 /* QiblaMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6542AA27C1552F002C4777 /* QiblaMapView.swift */; };
 		FA78A99C2C3C15BC0002F4A8 /* PrayerTimesWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA78A99B2C3C15BC0002F4A8 /* PrayerTimesWidgetBundle.swift */; };
-		FA78A9A02C3C15BC0002F4A8 /* PrayerTimesWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA78A99F2C3C15BC0002F4A8 /* PrayerTimesWidget.swift */; };
+		FA78A9A02C3C15BC0002F4A8 /* UpNextWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA78A99F2C3C15BC0002F4A8 /* UpNextWidget.swift */; };
 		FA78A9A42C3C15BE0002F4A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA78A9A32C3C15BE0002F4A8 /* Assets.xcassets */; };
 		FA78A9A82C3C15BE0002F4A8 /* PrayerTimesWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FA78A9952C3C15BC0002F4A8 /* PrayerTimesWidgetExtension.appex */; platformFilters = (ios, maccatalyst, ); settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FA7950B127BCB95600170000 /* LineUpCompass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7950B027BCB95600170000 /* LineUpCompass.swift */; };
@@ -291,7 +291,7 @@
 		FA78A9962C3C15BC0002F4A8 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		FA78A9982C3C15BC0002F4A8 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		FA78A99B2C3C15BC0002F4A8 /* PrayerTimesWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerTimesWidgetBundle.swift; sourceTree = "<group>"; };
-		FA78A99F2C3C15BC0002F4A8 /* PrayerTimesWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerTimesWidget.swift; sourceTree = "<group>"; };
+		FA78A99F2C3C15BC0002F4A8 /* UpNextWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpNextWidget.swift; sourceTree = "<group>"; };
 		FA78A9A32C3C15BE0002F4A8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA78A9A52C3C15BE0002F4A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA78A9A92C3C15BE0002F4A8 /* PrayerTimesWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PrayerTimesWidgetExtension.entitlements; sourceTree = "<group>"; };
@@ -478,7 +478,7 @@
 			isa = PBXGroup;
 			children = (
 				FA78A99B2C3C15BC0002F4A8 /* PrayerTimesWidgetBundle.swift */,
-				FA78A99F2C3C15BC0002F4A8 /* PrayerTimesWidget.swift */,
+				FA78A99F2C3C15BC0002F4A8 /* UpNextWidget.swift */,
 				FA78A9A32C3C15BE0002F4A8 /* Assets.xcassets */,
 				FA78A9A92C3C15BE0002F4A8 /* PrayerTimesWidgetExtension.entitlements */,
 				FA78A9A52C3C15BE0002F4A8 /* Info.plist */,
@@ -1025,7 +1025,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA78A99C2C3C15BC0002F4A8 /* PrayerTimesWidgetBundle.swift in Sources */,
-				FA78A9A02C3C15BC0002F4A8 /* PrayerTimesWidget.swift in Sources */,
+				FA78A9A02C3C15BC0002F4A8 /* UpNextWidget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
