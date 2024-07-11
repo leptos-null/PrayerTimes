@@ -100,6 +100,8 @@ private struct PrayerEntry: TimelineEntry {
 private struct EntryView: View {
     var entry: Provider.Entry
     
+    @Environment(\.widgetFamily) private var widgetFamily
+    
     private var locationText: String {
         guard let stapledLocation = entry.stapledLocation else {
             return "Placeholder"
@@ -108,41 +110,88 @@ private struct EntryView: View {
     }
     
     private func upNext(prayerIterator: PrayerIterator) -> [Prayer] {
-        Array(prayerIterator.dropFirst(1).prefix(3))
+        let size = switch widgetFamily {
+        case .systemSmall: 1
+        case .systemMedium: 3
+        case .systemLarge: 5
+        default: 1
+        }
+        return Array(prayerIterator.dropFirst(1).prefix(size))
     }
     
+    private func next(prayerIterator: PrayerIterator) -> Prayer? {
+        var copy = prayerIterator
+        _ = copy.next() // drop
+        return copy.next()
+    }
+
     var body: some View {
         Group {
             if let prayerIterator = entry.prayerIterator {
                 VStack {
                     Text(locationText)
-                    
-                    ForEach(upNext(prayerIterator: prayerIterator), id: \.start) { prayer in
-                        Spacer()
-                        HStack {
-                            Text(prayer.name.localized)
-                                .bold()
+
+                    switch widgetFamily {
+                    case .systemSmall:
+                        if let prayer = next(prayerIterator: prayerIterator) {
+                            VStack(alignment: .leading) {
+                                HStack(alignment: .firstTextBaseline) {
+                                    Text("next:")
+                                        .foregroundStyle(.secondary)
+                                    Text(prayer.name.localized)
+                                        .bold()
+                                }
+                                HStack(alignment: .firstTextBaseline) {
+                                    Text("at")
+                                        .foregroundStyle(.secondary)
+                                    Text(prayer.start, style: .time)
+                                        .bold()
+                                }
+                                HStack(alignment: .firstTextBaseline) {
+                                    Text("in")
+                                        .foregroundStyle(.secondary)
+                                    Text(prayer.start, style: .relative)
+                                }
+                            }
+                            .padding(.top, 2)
+                        }
+                    default:
+                        ForEach(upNext(prayerIterator: prayerIterator), id: \.start) { prayer in
                             Spacer()
-                            Text(prayer.start, style: .time)
-                            Spacer()
-                            Text(prayer.start, style: .timer)
-                                .foregroundStyle(.secondary)
+                            HStack {
+                                Text(prayer.name.localized)
+                                    .bold()
+                                Text("at")
+                                    .foregroundStyle(.secondary)
+                                Text(prayer.start, style: .time)
+                                    .bold()
+                                Text("in")
+                                    .foregroundStyle(.secondary)
+                                Text(prayer.start, style: .relative)
+                            }
                         }
                     }
                 }
                 .environment(\.timeZone, prayerIterator.calculationParameters.timeZone)
             } else {
                 VStack {
-                    Text("No location configured")
-                        .font(.headline)
-                        .padding()
-                    
-                    Text("Please tap to configure location in the app")
-                        .font(.callout)
+                    switch widgetFamily {
+                    case .systemSmall:
+                        Text("No location configured")
+                            .font(.headline)
+                            .padding()
+                        Text("Tap to configure in the app")
+                            .font(.callout)
+                    default:
+                        Text("No location configured")
+                            .font(.headline)
+                            .padding()
+                        Text("Please tap to configure location in the app")
+                            .font(.callout)
+                    }
                 }
             }
         }
-        .padding(4)
     }
 }
 
@@ -165,14 +214,34 @@ struct UpNextWidget: Widget {
             EntryView(entry: entry)
                 .widgetBackground()
         }
+        .configurationDisplayName("Up Next")
         .containerBackgroundRemovable()
-        .supportedFamilies([.systemMedium])
+        .supportedFamilies([.systemSmall, .systemMedium])
     }
 }
 
 struct UpNextWidget_Previews: PreviewProvider {
+    private static let placeholderEntry: PrayerEntry = {
+        let timeZone = TimeZone(identifier: "America/Los_Angeles")!
+        
+        // Apple Park
+        let calculationParameters = CalculationParameters(
+            timeZone: timeZone,
+            location: CLLocation(latitude: 37.334900, longitude: -122.009020),
+            configuration: CalculationMethod.isna.calculationConfiguration
+        )
+        
+        let iterator = PrayerIterator(start: .now, calculationParameters: calculationParameters)
+        let entry = PrayerEntry(prayerIterator: iterator, stapledLocation: nil)
+        return entry!
+    }()
+
     static var previews: some View {
         EntryView(entry: .init(date: .now, prayerIterator: nil, stapledLocation: nil))
+            .widgetBackground()
+            .previewContext(WidgetPreviewContext(family: .systemMedium))
+
+        EntryView(entry: placeholderEntry)
             .widgetBackground()
             .previewContext(WidgetPreviewContext(family: .systemMedium))
     }
