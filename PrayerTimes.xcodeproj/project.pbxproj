@@ -58,6 +58,7 @@
 		FA78A9A02C3C15BC0002F4A8 /* UpNextWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA78A99F2C3C15BC0002F4A8 /* UpNextWidget.swift */; };
 		FA78A9A42C3C15BE0002F4A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA78A9A32C3C15BE0002F4A8 /* Assets.xcassets */; };
 		FA78A9A82C3C15BE0002F4A8 /* PrayerTimesWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FA78A9952C3C15BC0002F4A8 /* PrayerTimesWidgetExtension.appex */; platformFilters = (ios, maccatalyst, ); settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		FA78A9B32C4307290002F4A8 /* WidgetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA78A9B22C4307290002F4A8 /* WidgetManager.swift */; };
 		FA7950B127BCB95600170000 /* LineUpCompass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7950B027BCB95600170000 /* LineUpCompass.swift */; };
 		FA7950B327BD56B900170000 /* SimpleCompass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7950B227BD56B900170000 /* SimpleCompass.swift */; };
 		FA7950B527BD618100170000 /* SolarPositionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7950B427BD618100170000 /* SolarPositionsView.swift */; };
@@ -295,6 +296,7 @@
 		FA78A9A32C3C15BE0002F4A8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA78A9A52C3C15BE0002F4A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA78A9A92C3C15BE0002F4A8 /* PrayerTimesWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PrayerTimesWidgetExtension.entitlements; sourceTree = "<group>"; };
+		FA78A9B22C4307290002F4A8 /* WidgetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetManager.swift; sourceTree = "<group>"; };
 		FA7950B027BCB95600170000 /* LineUpCompass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineUpCompass.swift; sourceTree = "<group>"; };
 		FA7950B227BD56B900170000 /* SimpleCompass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCompass.swift; sourceTree = "<group>"; };
 		FA7950B427BD618100170000 /* SolarPositionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarPositionsView.swift; sourceTree = "<group>"; };
@@ -461,6 +463,7 @@
 				FA8A4D5127ABA48200D43455 /* KeyValueObserver.swift */,
 				FA8A8582283291B600B15180 /* RealTimeRateLimit.swift */,
 				FA0C286027C9ACB000C191C9 /* SystemRegistrar.swift */,
+				FA78A9B22C4307290002F4A8 /* WidgetManager.swift */,
 			);
 			path = PrayerTimesKit;
 			sourceTree = "<group>";
@@ -993,6 +996,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA8A8583283291B600B15180 /* RealTimeRateLimit.swift in Sources */,
+				FA78A9B32C4307290002F4A8 /* WidgetManager.swift in Sources */,
 				FA8A4D5227ABA48200D43455 /* KeyValueObserver.swift in Sources */,
 				FA9809D827D536C50048D0F7 /* StapledLocation.swift in Sources */,
 				FA0C286127C9ACB000C191C9 /* SystemRegistrar.swift in Sources */,
