@@ -7,9 +7,16 @@
 
 import WidgetKit
 import SwiftUI
+import PrayerTimesKit
 
 @main
 struct PrayerTimesWidgetBundle: WidgetBundle {
+    let widgetManager = WidgetManager()
+    
+    init() {
+        widgetManager.startMonitoring()
+    }
+    
     var body: some Widget {
         UpNextWidget()
     }
