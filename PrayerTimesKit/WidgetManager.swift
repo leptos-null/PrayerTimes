@@ -20,6 +20,16 @@ public final class WidgetManager {
     
     private var cancellables: Set<AnyCancellable> = []
     
+    private static func dhuhrFor(date: Date, stapledLocation: StapledLocation, calculationMethod: CalculationMethod) -> Date {
+        let parameters = CalculationParameters(
+            timeZone: stapledLocation.placemark?.timeZone ?? .current,
+            location: stapledLocation.location,
+            configuration: calculationMethod.calculationConfiguration
+        )
+        let dailyPrayers = DailyPrayers(day: date, calculationParameters: parameters)
+        return dailyPrayers.dhuhr.start
+    }
+    
     public init() {
         
     }
@@ -31,9 +41,60 @@ public final class WidgetManager {
     //   reload the widget if needed.
     // in another example, the widget may not have location permission and the app still has "while running"
     //   permissions. in this case, the app can reload the widget if needed while the app is open.
-    public func startMonitoring(locationManager: LocationManager = .shared) {
+    public func startMonitoring(locationManager: LocationManager = .shared, preferences: Preferences = .shared) {
         guard cancellables.isEmpty else { return }
-        // location manager already has logic to minimize the amount that `stapledLocation` changes
+        
+        NotificationCenter.default.publisher(for: .NSSystemTimeZoneDidChange)
+            .sink { [unowned self] notification in
+                guard let userDefaults else {
+                    logger.error("userDefaults == nil")
+                    return
+                }
+                let lastReloadLocation: StapledLocation?
+                do {
+                    lastReloadLocation = try userDefaults.decodedValue(forKey: lastReloadLocationUserDefaultsKey)
+                } catch {
+                    logger.error("decodedValue(forKey: \(self.lastReloadLocationUserDefaultsKey)): \(error as NSError)")
+                    return
+                }
+                
+                if let lastReloadLocation,
+                   lastReloadLocation.placemark?.timeZone == nil {
+                    // if the last reload location did not have a time zone, then reload
+                    logger.notice("reloadAllTimelines (becuase of NSSystemTimeZoneDidChange)")
+                    WidgetCenter.shared.reloadAllTimelines()
+                }
+            }
+            .store(in: &cancellables)
+        
+        preferences.$calculationMethod
+            .removeDuplicates()
+            .dropFirst() // ignore the event that occurs when we first subscribe
+            .sink { [unowned self] calculationMethod in
+                // if the calculationMethod changes at all, reload.
+                logger.notice("reloadAllTimelines (becuase of calculationMethod change)")
+                // run on the next event loop to make sure
+                //   the value has been written to user defaults
+                DispatchQueue.main.async {
+                    WidgetCenter.shared.reloadAllTimelines()
+                }
+            }
+            .store(in: &cancellables)
+        
+        preferences.$visiblePrayers
+            .removeDuplicates()
+            .dropFirst() // ignore the event that occurs when we first subscribe
+            .sink { [unowned self] visiblePrayers in
+                // if the visiblePrayers changes at all, reload.
+                logger.notice("reloadAllTimelines (becuase of visiblePrayers change)")
+                // run on the next event loop to make sure
+                //   the value has been written to user defaults
+                DispatchQueue.main.async {
+                    WidgetCenter.shared.reloadAllTimelines()
+                }
+            }
+            .store(in: &cancellables)
+        
         locationManager.$stapledLocation
             .compactMap { $0 }
             .sink { [unowned self] stapledLocation in
@@ -47,12 +108,20 @@ public final class WidgetManager {
                         //     and widget try to process the same change.
                         //     there's a chance of a race here; if there is a race,
                         //     it's not that bad, because we just call reload twice.
-                        
-                        // use the same check that location manager uses
-                        if let lastReloadLocation,
-                           stapledLocation.location.timestamp.timeIntervalSince(lastReloadLocation.location.timestamp) <= 0 {
-                            logger.notice("Skipping stapledLocation update because it matches last reload")
-                            return
+                        if let lastReloadLocation {
+                            let date: Date = .now
+                            let last = Self.dhuhrFor(date: date, stapledLocation: lastReloadLocation, calculationMethod: preferences.calculationMethod)
+                            let proposed = Self.dhuhrFor(date: date, stapledLocation: stapledLocation, calculationMethod: preferences.calculationMethod)
+                            
+                            // if dhuhr is less than 30 seconds apart
+                            // *and* the location titles are the same
+                            //   (ignoring the case where both are nil because then the user doesn't care that much)
+                            // then it is safe to skip
+                            if last.timeIntervalSince(proposed).magnitude < 30,
+                               lastReloadLocation.placemark?.locationTitle == stapledLocation.placemark?.locationTitle {
+                                logger.notice("Skipping stapledLocation update because it matches last reload")
+                                return
+                            }
                         }
                     } catch {
                         logger.error("decodedValue(forKey: \(self.lastReloadLocationUserDefaultsKey)): \(error as NSError)")
@@ -81,5 +150,6 @@ public final class WidgetManager {
         cancellables.removeAll()
     }
 }
+
 #endif /* iOS */
 #endif /* WidgetKit */
