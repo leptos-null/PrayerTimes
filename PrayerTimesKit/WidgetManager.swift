@@ -6,12 +6,13 @@
 //
 
 #if canImport(WidgetKit)
-#if os(iOS) // right now only for iOS because we currently only provide widgets on iOS
 
 import WidgetKit
 import Combine
 import os
 
+@available(iOS 14.0, macOS 11.0, watchOS 9.0, *)
+@available(tvOS, unavailable)
 public final class WidgetManager {
     private let logger = Logger(subsystem: "null.leptos.PrayerTimesKit", category: "WidgetManager")
     
@@ -151,5 +152,4 @@ public final class WidgetManager {
     }
 }
 
-#endif /* iOS */
 #endif /* WidgetKit */
