@@ -54,6 +54,7 @@
 		FA6542A527BF7249002C4777 /* CLDeviceOrientation+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6542A427BF7249002C4777 /* CLDeviceOrientation+UIKit.swift */; };
 		FA6542A727BFFCBC002C4777 /* LocationsCourseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6542A627BFFCBC002C4777 /* LocationsCourseTest.swift */; };
 		FA6542AB27C1552F002C4777 /* QiblaMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6542AA27C1552F002C4777 /* QiblaMapView.swift */; };
+		FA6E6D372C45797F00F63AC2 /* PrayerTimesWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FA78A9952C3C15BC0002F4A8 /* PrayerTimesWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FA78A99C2C3C15BC0002F4A8 /* PrayerTimesWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA78A99B2C3C15BC0002F4A8 /* PrayerTimesWidgetBundle.swift */; };
 		FA78A9A02C3C15BC0002F4A8 /* UpNextWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA78A99F2C3C15BC0002F4A8 /* UpNextWidget.swift */; };
 		FA78A9A42C3C15BE0002F4A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA78A9A32C3C15BE0002F4A8 /* Assets.xcassets */; };
@@ -135,6 +136,13 @@
 			remoteGlobalIDString = FA573111279CE54100E5C9A6;
 			remoteInfo = PrayerTimesKit;
 		};
+		FA6E6D382C45797F00F63AC2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAB8F8482797DF7400F21628 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FA78A9942C3C15BC0002F4A8;
+			remoteInfo = PrayerTimesWidgetExtension;
+		};
 		FA78A9A62C3C15BE0002F4A8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FAB8F8482797DF7400F21628 /* Project object */;
@@ -212,6 +220,17 @@
 				FA4F368127E57FFA00A63988 /* PrayerTimesKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA6E6D3A2C45797F00F63AC2 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				FA6E6D372C45797F00F63AC2 /* PrayerTimesWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		FA78A9AA2C3C15BE0002F4A8 /* Embed Foundation Extensions */ = {
@@ -669,12 +688,14 @@
 				FA4F366127E506DB00A63988 /* Frameworks */,
 				FA4F366227E506DB00A63988 /* Resources */,
 				FA4F368827E57FFA00A63988 /* Embed Frameworks */,
+				FA6E6D3A2C45797F00F63AC2 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				FA4F368327E57FFA00A63988 /* PBXTargetDependency */,
 				FA4F368727E57FFA00A63988 /* PBXTargetDependency */,
+				FA6E6D392C45797F00F63AC2 /* PBXTargetDependency */,
 			);
 			name = PrayerTimesWKExtension;
 			productName = "PrayerTimesWatch WatchKit Extension";
@@ -1126,6 +1147,11 @@
 			target = FA573111279CE54100E5C9A6 /* PrayerTimesKit */;
 			targetProxy = FA57311B279CE54100E5C9A6 /* PBXContainerItemProxy */;
 		};
+		FA6E6D392C45797F00F63AC2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FA78A9942C3C15BC0002F4A8 /* PrayerTimesWidgetExtension */;
+			targetProxy = FA6E6D382C45797F00F63AC2 /* PBXContainerItemProxy */;
+		};
 		FA78A9A72C3C15BE0002F4A8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			platformFilters = (
@@ -1450,6 +1476,7 @@
 		FA78A9AB2C3C15BE0002F4A8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
@@ -1467,20 +1494,24 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = null.leptos.prayertimes.widgetextension;
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=watchos*]" = null.leptos.prayertimes.watchkitapp.watchkitextension.widgetextension;
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=watchsimulator*]" = null.leptos.prayertimes.watchkitapp.watchkitextension.widgetextension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator watchos watchsimulator";
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,4";
+				WATCHOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Debug;
 		};
 		FA78A9AC2C3C15BE0002F4A8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
@@ -1498,14 +1529,17 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = null.leptos.prayertimes.widgetextension;
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=watchos*]" = null.leptos.prayertimes.watchkitapp.watchkitextension.widgetextension;
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=watchsimulator*]" = null.leptos.prayertimes.watchkitapp.watchkitextension.widgetextension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator watchos watchsimulator";
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,4";
+				WATCHOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Release;
 		};

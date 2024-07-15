@@ -192,6 +192,13 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         return descriptors
     }
     
+    // MARK: - Widget Migration
+    
+    @available(watchOSApplicationExtension 9.0, *)
+    var widgetMigrator: any CLKComplicationWidgetMigrator {
+        return self
+    }
+    
     // MARK: - Timeline Configuration
     
     func timelineEndDate(for complication: CLKComplication) async -> Date? {
@@ -289,6 +296,16 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             Self.logger.error("timelineEntryFor(complication: \(complication)): \(String(describing: error))")
             return nil
         }
+    }
+}
+
+@available(watchOSApplicationExtension 9.0, *)
+extension ComplicationController: CLKComplicationWidgetMigrator {
+    func widgetConfiguration(from complicationDescriptor: CLKComplicationDescriptor) async -> CLKComplicationWidgetMigrationConfiguration? {
+        CLKComplicationStaticWidgetMigrationConfiguration(
+            kind: "UpNextWidget",
+            extensionBundleIdentifier: "null.leptos.prayertimes.watchkitapp.watchkitextension.widgetextension"
+        )
     }
 }
 
