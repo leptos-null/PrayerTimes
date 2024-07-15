@@ -124,65 +124,126 @@ private struct EntryView: View {
         _ = copy.next() // drop
         return copy.next()
     }
-
+    
     var body: some View {
         Group {
             if let prayerIterator = entry.prayerIterator {
-                VStack {
-                    Text(locationText)
-
+                Group {
                     switch widgetFamily {
-                    case .systemSmall:
-                        if let prayer = next(prayerIterator: prayerIterator) {
+                    case .accessoryCorner:
+                        if #available(iOS 17.0, watchOS 10.0, *), let prayer = next(prayerIterator: prayerIterator) {
+                            Text(prayer.start, style: .time)
+                                .widgetCurvesContent()
+                                .widgetLabel(prayer.name.localized)
+                        }
+                    case .accessoryCircular:
+                        if #available(iOS 16.0, watchOS 9.0, *), let prayer = next(prayerIterator: prayerIterator) {
+                            ZStack {
+                                AccessoryWidgetBackground()
+                                VStack {
+                                    Text(prayer.name.localized)
+                                        .widgetAccentable()
+                                    Text(prayer.start, style: .time)
+                                }
+                            }
+                        }
+                    case .accessoryInline:
+                        if #available(iOS 16.0, watchOS 9.0, *), let prayer = next(prayerIterator: prayerIterator) {
+                            ViewThatFits(in: .horizontal) {
+                                Text("\(prayer.start, style: .relative) · \(prayer.name.localized) · \(prayer.start, style: .time)")
+                                    .lineLimit(1)
+                                Text("\(prayer.name.localized)  \(prayer.start, style: .time)")
+                                    .lineLimit(1)
+                            }
+                        }
+                    case .accessoryRectangular:
+                        if #available(iOS 16.0, watchOS 9.0, *), let prayer = next(prayerIterator: prayerIterator) {
                             VStack(alignment: .leading) {
-                                HStack(alignment: .firstTextBaseline) {
-                                    Text("next:")
-                                        .foregroundStyle(.secondary)
+                                Text(prayer.name.localized)
+                                    .font(.headline)
+                                    .widgetAccentable()
+                                Text(prayer.start, style: .time)
+                                Text(prayer.start, style: .relative)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                    case .systemSmall:
+                        VStack {
+                            Text(locationText)
+                            
+                            if let prayer = next(prayerIterator: prayerIterator) {
+                                VStack(alignment: .leading) {
+                                    HStack(alignment: .firstTextBaseline) {
+                                        Text("next:")
+                                            .foregroundStyle(.secondary)
+                                        Text(prayer.name.localized)
+                                            .bold()
+                                    }
+                                    HStack(alignment: .firstTextBaseline) {
+                                        Text("at")
+                                            .foregroundStyle(.secondary)
+                                        Text(prayer.start, style: .time)
+                                            .bold()
+                                    }
+                                    HStack(alignment: .firstTextBaseline) {
+                                        Text("in")
+                                            .foregroundStyle(.secondary)
+                                        Text(prayer.start, style: .relative)
+                                    }
+                                }
+                                .padding(.top, 2)
+                            }
+                        }
+                    default:
+                        VStack {
+                            Text(locationText)
+                            
+                            ForEach(upNext(prayerIterator: prayerIterator), id: \.start) { prayer in
+                                Spacer()
+                                HStack {
                                     Text(prayer.name.localized)
                                         .bold()
-                                }
-                                HStack(alignment: .firstTextBaseline) {
                                     Text("at")
                                         .foregroundStyle(.secondary)
                                     Text(prayer.start, style: .time)
                                         .bold()
-                                }
-                                HStack(alignment: .firstTextBaseline) {
                                     Text("in")
                                         .foregroundStyle(.secondary)
                                     Text(prayer.start, style: .relative)
                                 }
-                            }
-                            .padding(.top, 2)
-                        }
-                    default:
-                        ForEach(upNext(prayerIterator: prayerIterator), id: \.start) { prayer in
-                            Spacer()
-                            HStack {
-                                Text(prayer.name.localized)
-                                    .bold()
-                                Text("at")
-                                    .foregroundStyle(.secondary)
-                                Text(prayer.start, style: .time)
-                                    .bold()
-                                Text("in")
-                                    .foregroundStyle(.secondary)
-                                Text(prayer.start, style: .relative)
                             }
                         }
                     }
                 }
                 .environment(\.timeZone, prayerIterator.calculationParameters.timeZone)
             } else {
-                VStack {
-                    switch widgetFamily {
-                    case .systemSmall:
+                switch widgetFamily {
+                case .accessoryCircular, .accessoryCorner:
+                    Image(systemName: "location.slash")
+                case .accessoryInline:
+                    HStack {
+                        Image(systemName: "location.slash")
+                        Text("No location")
+                    }
+                case .accessoryRectangular:
+                    if #available(iOS 16.0, watchOS 9.0, *) {
+                        VStack {
+                            ViewThatFits(in: .horizontal) {
+                                Text("Location unavailable")
+                                Text("No location")
+                            }
+                        }
+                    }
+                case .systemSmall:
+                    VStack {
                         Text("No location configured")
                             .font(.headline)
                             .padding()
                         Text("Tap to configure in the app")
                             .font(.callout)
-                    default:
+                    }
+                default:
+                    VStack {
                         Text("No location configured")
                             .font(.headline)
                             .padding()
@@ -209,6 +270,29 @@ private extension View {
 struct UpNextWidget: Widget {
     static let kind: String = "UpNextWidget"
     
+    private var supportedFamilies: [WidgetFamily] {
+        var supported: [WidgetFamily] = []
+#if os(watchOS)
+        if #available(iOS 17.0, watchOS 10.0, *) {
+            supported.append(.accessoryCorner)
+        }
+#endif
+        if #available(iOS 16.0, watchOS 9.0, *) {
+            supported.append(contentsOf: [
+                .accessoryCircular,
+                .accessoryInline,
+                .accessoryRectangular
+            ])
+        }
+#if os(iOS)
+        supported.append(contentsOf: [
+            .systemSmall,
+            .systemMedium
+        ])
+#endif
+        return supported
+    }
+    
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: Self.kind, provider: Provider()) { entry in
             EntryView(entry: entry)
@@ -216,7 +300,7 @@ struct UpNextWidget: Widget {
         }
         .configurationDisplayName("Up Next")
         .containerBackgroundRemovable()
-        .supportedFamilies([.systemSmall, .systemMedium])
+        .supportedFamilies(supportedFamilies)
     }
 }
 
@@ -235,14 +319,22 @@ struct UpNextWidget_Previews: PreviewProvider {
         let entry = PrayerEntry(prayerIterator: iterator, stapledLocation: nil)
         return entry!
     }()
-
+    
+    private static var defaultFamily: WidgetFamily {
+#if os(watchOS)
+        return .accessoryRectangular
+#else
+        return .systemMedium
+#endif
+    }
+    
     static var previews: some View {
         EntryView(entry: .init(date: .now, prayerIterator: nil, stapledLocation: nil))
             .widgetBackground()
-            .previewContext(WidgetPreviewContext(family: .systemMedium))
-
+            .previewContext(WidgetPreviewContext(family: defaultFamily))
+        
         EntryView(entry: placeholderEntry)
             .widgetBackground()
-            .previewContext(WidgetPreviewContext(family: .systemMedium))
+            .previewContext(WidgetPreviewContext(family: defaultFamily))
     }
 }
