@@ -11,9 +11,13 @@ import PrayerTimesKit
 @main
 struct PrayerTimesApp: App {
     let systemRegistrar = SystemRegistrar()
+    let widgetManager = WidgetManager()
     
     init() {
         systemRegistrar.startRegistering()
+        if #available(watchOS 9.0, *) {
+            widgetManager.startMonitoring()
+        }
     }
     
     var body: some Scene {
