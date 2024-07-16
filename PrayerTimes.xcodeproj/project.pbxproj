@@ -1725,7 +1725,6 @@
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Your location is used to show local prayer times. Always access allows notifications to stay up-to-date for your current location.";
 				INFOPLIST_KEY_NSLocationUsageDescription = "Your location is used to show local prayer times.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is used to show local prayer times.";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1761,7 +1760,6 @@
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Your location is used to show local prayer times. Always access allows notifications to stay up-to-date for your current location.";
 				INFOPLIST_KEY_NSLocationUsageDescription = "Your location is used to show local prayer times.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is used to show local prayer times.";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
