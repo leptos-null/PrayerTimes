@@ -11,13 +11,17 @@ import PrayerTimesKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let systemRegistrar = SystemRegistrar()
+#if canImport(WidgetKit)
     let widgetManager = WidgetManager()
+#endif
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         UserNotification.Manager.current.configure()
 #if !SCREENSHOT_MODE
         systemRegistrar.startRegistering()
+#if canImport(WidgetKit)
         widgetManager.startMonitoring()
+#endif
 #endif
         return true
     }
