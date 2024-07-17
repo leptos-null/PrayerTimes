@@ -127,24 +127,50 @@ xcrun simctl status_bar \(deviceUDID) override \
         let window: XCUIElement = app
 #endif
         
+        // I'm not sure if this changed in iOS 16 or 17
+        let timeTabView: XCUIElement = if #available(iOS 17.0, *) {
+            window.collectionViews.firstMatch
+        } else {
+            window.scrollViews.firstMatch
+        }
+        
         write(screenshot: window.screenshot(), name: "0_today", description: "Today")
-        window.scrollViews.firstMatch.swipeLeft()
+        timeTabView.swipeLeft()
         // skip tomorrow view, it has similar aspects to today and date scrubber
-        window.scrollViews.firstMatch.swipeLeft()
+        timeTabView.swipeLeft()
         write(screenshot: window.screenshot(), name: "1_date_scrub", description: "Date Scrubber")
         
+#if os(visionOS)
+        // on visionOS, the "tab bar" is in another window that doesn't have an identifier
+        let tabBar = window
+#else
         let tabBar = window.tabBars.firstMatch
+#endif
         
+#if os(visionOS)
+        // on visionOS, you get a hierachy that looks like:
+        //
+        //   Button, {{17.5, 16.5}, {187.0, 44.0}}, label: 'Qibla' /* label */
+        //     Button, {{33.0, 27.0}, {13.5, 23.5}}, label: 'orient to north' /* label icon */
+        //     Button, {{65.5, 27.0}, {46.0, 23.0}}, label: 'Qibla' /* label title */
+        //
+        tabBar.buttons["Qibla"].firstMatch.tap()
+#else
         tabBar.buttons["Qibla"].tap()
-#if !targetEnvironment(macCatalyst)
+#endif
+#if !(targetEnvironment(macCatalyst) || os(visionOS)) /* platforms without compass heading support */
         write(screenshot: window.screenshot(), name: "2_qibla_compass", description: "Qibla Compass")
         
         window.buttons["Map"].tap()
 #endif
         sleep(2) // give the map time to load
         write(screenshot: window.screenshot(), name: "2_qibla_map", description: "Qibla Map")
-        
+#if os(visionOS)
+        // see tabBar usage above
+        tabBar.buttons["Preferences"].firstMatch.tap()
+#else
         tabBar.buttons["Preferences"].tap()
+#endif
         
         write(screenshot: window.screenshot(), name: "3_preferences", description: "Preferences")
     }
