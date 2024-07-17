@@ -74,7 +74,11 @@ public final class LocationManager: ObservableObject {
         locationManager.distanceFilter = 500
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
 #if SCREENSHOT_MODE
+#if os(visionOS)
+        authorizationStatus = .authorizedWhenInUse
+#else
         authorizationStatus = .authorizedAlways // our desired state is what should show up in screenshots
+#endif
 #else
         authorizationStatus = locationManager.authorizationStatus
 #endif
