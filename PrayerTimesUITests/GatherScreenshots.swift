@@ -92,7 +92,7 @@ class GatherScreenshots: XCTestCase {
      run the following for the device you'll be gathering screenshots on:
      
      xcrun simctl status_bar <device> override \
-     --time "2021-09-14T16:41:00Z" \
+     --time "2023-09-12T16:41:30.000Z" \
      --dataNetwork "wifi" --wifiMode "active" --wifiBars 3 \
      --cellularMode active --cellularBars 4 --operatorName " " \
      --batteryState charged --batteryLevel 100
@@ -105,7 +105,7 @@ class GatherScreenshots: XCTestCase {
         return
 """
 xcrun simctl status_bar \(deviceUDID) override \
---time "2021-09-14T16:41:00Z" \
+--time "2023-09-12T16:41:30.000Z" \
 --dataNetwork "wifi" --wifiMode "active" --wifiBars 3 \
 --cellularMode active --cellularBars 4 --operatorName " " \
 --batteryState charged --batteryLevel 100

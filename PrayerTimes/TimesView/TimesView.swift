@@ -62,7 +62,8 @@ struct TimesView: View {
 
 #if SCREENSHOT_MODE
 extension Date {
-    static let statusBarDate = try! Date.ISO8601FormatStyle.iso8601.parse("2021-09-14T16:41:00Z")
+    // based on iOS 17 marketing material
+    static let statusBarDate = try! Date.ISO8601FormatStyle.iso8601.parse("2023-09-12T16:41:30Z")
 }
 #endif
 
