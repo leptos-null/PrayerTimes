@@ -127,8 +127,7 @@ xcrun simctl status_bar \(deviceUDID) override \
         let window: XCUIElement = app
 #endif
         
-        // I'm not sure if this changed in iOS 16 or 17
-        let timeTabView: XCUIElement = if #available(iOS 17.0, *) {
+        let timeTabView: XCUIElement = if #available(iOS 16.0, *) {
             window.collectionViews.firstMatch
         } else {
             window.scrollViews.firstMatch
