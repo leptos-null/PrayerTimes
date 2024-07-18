@@ -1,4 +1,4 @@
-## iPhone 13 Pro Max 15.4
+## iPhone 13 Pro Max 17.4
 
 ![Today](0_today.png)
 

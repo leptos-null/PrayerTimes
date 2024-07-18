@@ -1,4 +1,4 @@
-## iPhone 8 Plus 15.4
+## iPhone 8 Plus 16.4
 
 ![Today](0_today.png)
 
