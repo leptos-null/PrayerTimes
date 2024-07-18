@@ -91,9 +91,13 @@ class GatherScreenshots: XCTestCase {
         sleep(1)
         write(screenshot: app.screenshot(), name: "0_today", description: "Today")
         
-        // at the time of writing this (watchOS 8.5), swipes don't work on watchOS
-        // https://developer.apple.com/forums/thread/680118
+        let tabView = app.collectionViews.firstMatch
         
-        // for now, collect screenshots manually
+        tabView.swipeRight()
+        write(screenshot: app.screenshot(), name: "1_qibla_compass", description: "Qibla Compass")
+        
+        tabView.swipeLeft()
+        tabView.swipeLeft()
+        write(screenshot: app.screenshot(), name: "2_preferences", description: "Preferences")
     }
 }
