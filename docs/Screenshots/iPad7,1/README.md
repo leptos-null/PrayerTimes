@@ -1,4 +1,4 @@
-## iPad Pro (12.9-inch) (2nd generation) 15.4
+## iPad Pro (12.9-inch) (2nd generation) 17.4
 
 ![Today](0_today.png)
 
