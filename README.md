@@ -55,6 +55,6 @@ the compass.
 
 ![iPhone Preferences](docs/Screenshots/iPhone14%2C3/3_preferences.png)
 
-![Watch Times](docs/Screenshots/Watch6%2C2/0_today.png)
+![Watch Times](docs/Screenshots/Watch7%2C4/0_today.png)
 
 See [Screenshots](docs/Screenshots/) for more devices.
