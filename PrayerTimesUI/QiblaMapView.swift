@@ -128,10 +128,46 @@ extension MKGeodesicPolyline {
     }
 }
 
-struct QiblaMapView_Previews: PreviewProvider {
-    static var previews: some View {
-        QiblaMapView(sourceCoordinate: CLLocationCoordinate2D(latitude: 41.01180, longitude: 28.97543))
+#else
+
+@available(iOS 17.0, macOS 14.0, watchOS 10.0, tvOS 17.0, *)
+public struct QiblaMapView: View {
+    public let sourceCoordinate: CLLocationCoordinate2D
+    
+    public init(sourceCoordinate: CLLocationCoordinate2D) {
+        self.sourceCoordinate = sourceCoordinate
+    }
+    
+    private var initialRegion: MKCoordinateRegion {
+        .init(center: sourceCoordinate, latitudinalMeters: 8e6, longitudinalMeters: 8e6)
+    }
+    
+    public var body: some View {
+        Map(initialPosition: .region(initialRegion)) {
+            Marker("Current Location", systemImage: "mappin", coordinate: sourceCoordinate)
+            Marker("Kaaba", systemImage: "mappin", coordinate: .kaaba)
+            
+            MapPolyline(coordinates: [ sourceCoordinate, .kaaba ], contourStyle: .geodesic)
+                .mapOverlayLevel(level: .aboveRoads)
+                .stroke(Color.orange.opacity(0.7), lineWidth: 6)
+        }
+        .mapStyle(.imagery(elevation: .realistic))
+        .mapControls {
+            // no controls - hide compass.
+            // we may want to add other controls later,
+            // so using this instead of `mapControlVisibility`
+        }
     }
 }
 
 #endif
+
+struct QiblaMapView_Previews: PreviewProvider {
+    static var previews: some View {
+        if #available(watchOS 10.0, *) {
+            QiblaMapView(sourceCoordinate: CLLocationCoordinate2D(latitude: 41.01180, longitude: 28.97543))
+        } else {
+            Text("Unsupported platform")
+        }
+    }
+}
