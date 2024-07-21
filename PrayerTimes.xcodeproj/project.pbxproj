@@ -69,6 +69,7 @@
 		FA7EB36127C66B5200642F63 /* QiblaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7EB36027C66B5200642F63 /* QiblaManager.swift */; };
 		FA7EB36327C6747C00642F63 /* DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7EB36227C6747C00642F63 /* DayView.swift */; };
 		FA8060F127F612EE00E41B60 /* SolarPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8060F027F612EE00E41B60 /* SolarPosition.swift */; };
+		FA810E9E2C4B5337006DD43B /* YearChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA810E9D2C4B5337006DD43B /* YearChart.swift */; };
 		FA8A4D4E27AA460300D43455 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A4D4D27AA460300D43455 /* Preferences.swift */; };
 		FA8A4D5227ABA48200D43455 /* KeyValueObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A4D5127ABA48200D43455 /* KeyValueObserver.swift */; };
 		FA8A4D5627B0307000D43455 /* HeadingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A4D5527B0307000D43455 /* HeadingManager.swift */; };
@@ -309,6 +310,7 @@
 		FA7EB36027C66B5200642F63 /* QiblaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiblaManager.swift; sourceTree = "<group>"; };
 		FA7EB36227C6747C00642F63 /* DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayView.swift; sourceTree = "<group>"; };
 		FA8060F027F612EE00E41B60 /* SolarPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarPosition.swift; sourceTree = "<group>"; };
+		FA810E9D2C4B5337006DD43B /* YearChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearChart.swift; sourceTree = "<group>"; };
 		FA8A4D4D27AA460300D43455 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		FA8A4D5127ABA48200D43455 /* KeyValueObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueObserver.swift; sourceTree = "<group>"; };
 		FA8A4D5527B0307000D43455 /* HeadingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingManager.swift; sourceTree = "<group>"; };
@@ -585,6 +587,7 @@
 				FA7EB35E27C48F3800642F63 /* CompassView.swift */,
 				FA8A85942839985400B15180 /* PreferencesViewModel.swift */,
 				FA5271F927EA1E2600506D5A /* PreferencesView.swift */,
+				FA810E9D2C4B5337006DD43B /* YearChart.swift */,
 				FA6542A227BF71BD002C4777 /* OrientationManager.swift */,
 				FA6542A427BF7249002C4777 /* CLDeviceOrientation+UIKit.swift */,
 				FAB8F85C2797DF7500F21628 /* Assets.xcassets */,
@@ -1067,6 +1070,7 @@
 				FA0C286327CA925400C191C9 /* LocationHeader.swift in Sources */,
 				FAA06EF22C2BCC4B00421065 /* PrayerTimesApp.swift in Sources */,
 				FA6542A527BF7249002C4777 /* CLDeviceOrientation+UIKit.swift in Sources */,
+				FA810E9E2C4B5337006DD43B /* YearChart.swift in Sources */,
 				FA573128279D01DA00E5C9A6 /* ContentView.swift in Sources */,
 				FA8A858A28388BAD00B15180 /* DailyPrayersView.swift in Sources */,
 				FA37EB3B27F36E6A0082FEB1 /* CoordinatePicker.swift in Sources */,
