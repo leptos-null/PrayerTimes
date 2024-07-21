@@ -10,12 +10,15 @@ import PrayerTimesKit
 
 struct ScrubDayView: View {
     let calculationParameters: CalculationParameters
+    let locationTitle: String
     
 #if SCREENSHOT_MODE
     @State private var date: Date = .statusBarDate
 #else
     @State private var date: Date = .now
 #endif
+    
+    @State private var showChart: Bool = false
     
     @Environment(\.calendar) private var calendar
     
@@ -57,6 +60,23 @@ struct ScrubDayView: View {
         .frame(maxWidth: .infinity, alignment: .center) // use the full available width so the scrubber is on the apparent trailing edge
         .overlay(alignment: .trailing) {
             DateScrubber(date: $date)
+        }
+        .overlay(alignment: .topLeading) {
+            if #available(iOS 16.0, *) {
+                Button {
+                    showChart = true
+                } label: {
+                    Label("Chart", systemImage: "chart.xyaxis.line")
+                }
+                .buttonStyle(.bordered)
+                .hoverEffect()
+                .scenePadding(.leading)
+            }
+        }
+        .sheet(isPresented: $showChart) {
+            if #available(iOS 16.0, *) {
+                YearChartSheet(date: date, calculationParameters: calculationParameters, locationTitle: locationTitle)
+            }
         }
     }
 }

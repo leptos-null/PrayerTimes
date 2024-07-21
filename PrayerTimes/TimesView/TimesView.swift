@@ -52,7 +52,7 @@ struct TimesView: View {
                         DayView(dailyPrayers: dailyPrayers(for: nextDay))
                     }
                 }
-                ScrubDayView(calculationParameters: calculationParameters)
+                ScrubDayView(calculationParameters: calculationParameters, locationTitle: locationTitle)
             }
             .tabViewStyle(.page(indexDisplayMode: .always))
             .indexViewStyle(.page(backgroundDisplayMode: .always))
