@@ -54,6 +54,7 @@
 		FA6542A527BF7249002C4777 /* CLDeviceOrientation+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6542A427BF7249002C4777 /* CLDeviceOrientation+UIKit.swift */; };
 		FA6542A727BFFCBC002C4777 /* LocationsCourseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6542A627BFFCBC002C4777 /* LocationsCourseTest.swift */; };
 		FA6542AB27C1552F002C4777 /* QiblaMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6542AA27C1552F002C4777 /* QiblaMapView.swift */; };
+		FA69D51B2C4CB296005BAF1C /* YearStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69D51A2C4CB296005BAF1C /* YearStatistics.swift */; };
 		FA78A99C2C3C15BC0002F4A8 /* PrayerTimesWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA78A99B2C3C15BC0002F4A8 /* PrayerTimesWidgetBundle.swift */; };
 		FA78A9A02C3C15BC0002F4A8 /* UpNextWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA78A99F2C3C15BC0002F4A8 /* UpNextWidget.swift */; };
 		FA78A9A42C3C15BE0002F4A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA78A9A32C3C15BE0002F4A8 /* Assets.xcassets */; };
@@ -288,6 +289,7 @@
 		FA6542A427BF7249002C4777 /* CLDeviceOrientation+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLDeviceOrientation+UIKit.swift"; sourceTree = "<group>"; };
 		FA6542A627BFFCBC002C4777 /* LocationsCourseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsCourseTest.swift; sourceTree = "<group>"; };
 		FA6542AA27C1552F002C4777 /* QiblaMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiblaMapView.swift; sourceTree = "<group>"; };
+		FA69D51A2C4CB296005BAF1C /* YearStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearStatistics.swift; sourceTree = "<group>"; };
 		FA78A9952C3C15BC0002F4A8 /* PrayerTimesWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PrayerTimesWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA78A9962C3C15BC0002F4A8 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		FA78A9982C3C15BC0002F4A8 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -464,6 +466,7 @@
 				FA8A8582283291B600B15180 /* RealTimeRateLimit.swift */,
 				FA0C286027C9ACB000C191C9 /* SystemRegistrar.swift */,
 				FA78A9B22C4307290002F4A8 /* WidgetManager.swift */,
+				FA69D51A2C4CB296005BAF1C /* YearStatistics.swift */,
 			);
 			path = PrayerTimesKit;
 			sourceTree = "<group>";
@@ -1010,6 +1013,7 @@
 				FA57312A279D066300E5C9A6 /* DailyPrayers.swift in Sources */,
 				FA8060F127F612EE00E41B60 /* SolarPosition.swift in Sources */,
 				FA8A4D4E27AA460300D43455 /* Preferences.swift in Sources */,
+				FA69D51B2C4CB296005BAF1C /* YearStatistics.swift in Sources */,
 				FA8A4D5627B0307000D43455 /* HeadingManager.swift in Sources */,
 				FA2B41BE27A5B6F40032C29A /* UserNotification.swift in Sources */,
 			);
