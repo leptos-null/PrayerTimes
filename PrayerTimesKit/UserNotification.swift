@@ -135,7 +135,7 @@ extension UserNotification.Preferences: Codable {
 public extension UserNotification {
     // This enum is involved in serialization.
     // For this reason, in has certain stability requirements.
-    //  - case names may not be renamed or remove
+    //  - case names may not be renamed or removed
     //  - this type may not conform to RawRepresentable
     enum Category: Hashable, Codable, CaseIterable {
         case start, reminder
