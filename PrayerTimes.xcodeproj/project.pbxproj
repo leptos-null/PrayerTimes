@@ -56,6 +56,7 @@
 		FA6542AB27C1552F002C4777 /* QiblaMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6542AA27C1552F002C4777 /* QiblaMapView.swift */; };
 		FA69D51B2C4CB296005BAF1C /* YearStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69D51A2C4CB296005BAF1C /* YearStatistics.swift */; };
 		FA69D51F2C4DA611005BAF1C /* YearChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69D51E2C4DA611005BAF1C /* YearChartData.swift */; };
+		FA69D5212C4DB234005BAF1C /* YearChartSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69D5202C4DB234005BAF1C /* YearChartSheet.swift */; };
 		FA78A99C2C3C15BC0002F4A8 /* PrayerTimesWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA78A99B2C3C15BC0002F4A8 /* PrayerTimesWidgetBundle.swift */; };
 		FA78A9A02C3C15BC0002F4A8 /* UpNextWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA78A99F2C3C15BC0002F4A8 /* UpNextWidget.swift */; };
 		FA78A9A42C3C15BE0002F4A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA78A9A32C3C15BE0002F4A8 /* Assets.xcassets */; };
@@ -293,6 +294,7 @@
 		FA6542AA27C1552F002C4777 /* QiblaMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiblaMapView.swift; sourceTree = "<group>"; };
 		FA69D51A2C4CB296005BAF1C /* YearStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearStatistics.swift; sourceTree = "<group>"; };
 		FA69D51E2C4DA611005BAF1C /* YearChartData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YearChartData.swift; sourceTree = "<group>"; };
+		FA69D5202C4DB234005BAF1C /* YearChartSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearChartSheet.swift; sourceTree = "<group>"; };
 		FA78A9952C3C15BC0002F4A8 /* PrayerTimesWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PrayerTimesWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA78A9962C3C15BC0002F4A8 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		FA78A9982C3C15BC0002F4A8 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -588,6 +590,7 @@
 				FA8A85942839985400B15180 /* PreferencesViewModel.swift */,
 				FA5271F927EA1E2600506D5A /* PreferencesView.swift */,
 				FA810E9D2C4B5337006DD43B /* YearChart.swift */,
+				FA69D5202C4DB234005BAF1C /* YearChartSheet.swift */,
 				FA6542A227BF71BD002C4777 /* OrientationManager.swift */,
 				FA6542A427BF7249002C4777 /* CLDeviceOrientation+UIKit.swift */,
 				FAB8F85C2797DF7500F21628 /* Assets.xcassets */,
@@ -1069,6 +1072,7 @@
 				FA5271FA27EA1E2600506D5A /* PreferencesView.swift in Sources */,
 				FA0C286327CA925400C191C9 /* LocationHeader.swift in Sources */,
 				FAA06EF22C2BCC4B00421065 /* PrayerTimesApp.swift in Sources */,
+				FA69D5212C4DB234005BAF1C /* YearChartSheet.swift in Sources */,
 				FA6542A527BF7249002C4777 /* CLDeviceOrientation+UIKit.swift in Sources */,
 				FA810E9E2C4B5337006DD43B /* YearChart.swift in Sources */,
 				FA573128279D01DA00E5C9A6 /* ContentView.swift in Sources */,
