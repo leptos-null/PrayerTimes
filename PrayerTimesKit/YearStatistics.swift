@@ -47,11 +47,18 @@ public struct YearStatistics {
 }
 
 public extension YearStatistics {
-    func longestDay(from startName: Prayer.Name = .fajr, to endName: Prayer.Name = .maghrib) -> DailyPrayers {
-        let longest = daysPrayers.max { lhs, rhs in
+    private static func timeIntervalComparison(from startName: Prayer.Name, to endName: Prayer.Name) -> (DailyPrayers, DailyPrayers) -> Bool {
+        return { lhs, rhs in
             lhs.timeInterval(from: startName, to: endName) < rhs.timeInterval(from: startName, to: endName)
         }
-        return longest!
+    }
+    
+    func longestDay(from startName: Prayer.Name = .fajr, to endName: Prayer.Name = .maghrib) -> DailyPrayers {
+        daysPrayers.max(by: Self.timeIntervalComparison(from: startName, to: endName))!
+    }
+    
+    func shortestDay(from startName: Prayer.Name = .fajr, to endName: Prayer.Name = .maghrib) -> DailyPrayers {
+        daysPrayers.min(by: Self.timeIntervalComparison(from: startName, to: endName))!
     }
 }
 
