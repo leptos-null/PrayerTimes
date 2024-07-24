@@ -168,7 +168,7 @@ struct YearChart: View {
                 if let pairs = data.seriesMap[prayerName] {
                     ForEach(pairs) { pair in
                         LineMark(
-                            x: .value("Day", pair.date, unit: .day),
+                            x: .value("Day", pair.date, unit: .day, calendar: calendar),
                             y: .value("Time", pair.offset)
                         )
                     }
@@ -182,7 +182,7 @@ struct YearChart: View {
                     // set to the tint color for some reason.
                     // The tint color is blue, which is one of the line colors as well.
                     // Use gray to more closely match the label colors in the legend.
-                    RuleMark(x: .value("Day", lollipop, unit: .day))
+                    RuleMark(x: .value("Day", lollipop, unit: .day, calendar: calendar))
                         .foregroundStyle(.gray)
                 }
             }
