@@ -177,8 +177,13 @@ struct YearChart: View {
                 }
                 
                 if let lollipop {
-                    RectangleMark(x: .value("Day", lollipop, unit: .day))
-                        .foregroundStyle(.primary)
+                    // ideally I would like to use a hierarchical style,
+                    // but the foregroundStyle for the chart is already
+                    // set to the tint color for some reason.
+                    // The tint color is blue, which is one of the line colors as well.
+                    // Use gray to more closely match the label colors in the legend.
+                    RuleMark(x: .value("Day", lollipop, unit: .day))
+                        .foregroundStyle(.gray)
                 }
             }
             .aspectRatio(1.5, contentMode: .fit)
