@@ -70,6 +70,7 @@ struct ScrubDayView: View {
                 }
                 .buttonStyle(.bordered)
                 .hoverEffect()
+                .padding(.top, 4)
                 .scenePadding(.leading)
             }
         }
