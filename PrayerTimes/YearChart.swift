@@ -55,7 +55,14 @@ struct YearChart: View {
     }
     
     private func dateForInteraction(at point: CGPoint, chartProxy: ChartProxy, geometryProxy: GeometryProxy, allowOutOfBounds: Bool) -> Date? {
-        let space = geometryProxy[chartProxy.plotAreaFrame]
+        let plotFrame: Anchor<CGRect>
+        if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
+            guard let frameAnchor = chartProxy.plotFrame else { return nil }
+            plotFrame = frameAnchor
+        } else {
+            plotFrame = chartProxy.plotAreaFrame
+        }
+        let space = geometryProxy[plotFrame]
         let xCoordinate = point.x - space.origin.x
         let bounds = 0..<space.width
         guard allowOutOfBounds || bounds.contains(xCoordinate) else {
