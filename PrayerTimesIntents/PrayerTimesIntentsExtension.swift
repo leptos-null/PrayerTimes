@@ -29,7 +29,9 @@ struct PrayerTimesShortcutsProvider: AppShortcutsProvider {
                 "According to \(.applicationName), when is \(\.$targetPrayer)?",
                 "According to \(.applicationName), what time is \(\.$targetPrayer) today?",
                 "According to \(.applicationName), when is \(\.$targetPrayer) today?",
-            ]
+            ],
+            shortTitle: "Prayer Time",
+            systemImageName: "clock"
         )
     }
 }
