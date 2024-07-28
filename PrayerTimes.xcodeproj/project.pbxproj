@@ -15,7 +15,7 @@
 		FA0C286D27CD465800C191C9 /* NowDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0C286C27CD465800C191C9 /* NowDayView.swift */; };
 		FA11D8732C1F807C004BEF88 /* PrayerTimesIntentsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA11D8722C1F807C004BEF88 /* PrayerTimesIntentsExtension.swift */; };
 		FA11D8752C1F807C004BEF88 /* PrayerTimeIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA11D8742C1F807C004BEF88 /* PrayerTimeIntent.swift */; };
-		FA11D87E2C1F80FA004BEF88 /* PrayerTimesIntents.appex in CopyFiles */ = {isa = PBXBuildFile; fileRef = FA11D8702C1F807C004BEF88 /* PrayerTimesIntents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		FA11D87E2C1F80FA004BEF88 /* PrayerTimesIntents.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = FA11D8702C1F807C004BEF88 /* PrayerTimesIntents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FA11D87F2C1F820C004BEF88 /* PrayerTimesKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA573112279CE54100E5C9A6 /* PrayerTimesKit.framework */; };
 		FA2B41BE27A5B6F40032C29A /* UserNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2B41BD27A5B6F40032C29A /* UserNotification.swift */; };
 		FA2B41E027A6727E0032C29A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2B41DF27A6727E0032C29A /* AppDelegate.swift */; };
@@ -203,14 +203,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		FA11D87D2C1F80CD004BEF88 /* CopyFiles */ = {
+		FA11D87D2C1F80CD004BEF88 /* Embed ExtensionKit Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "$(EXTENSIONS_FOLDER_PATH)";
 			dstSubfolderSpec = 16;
 			files = (
-				FA11D87E2C1F80FA004BEF88 /* PrayerTimesIntents.appex in CopyFiles */,
+				FA11D87E2C1F80FA004BEF88 /* PrayerTimesIntents.appex in Embed ExtensionKit Extensions */,
 			);
+			name = "Embed ExtensionKit Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		FA4F367827E506DB00A63988 /* Embed Watch Content */ = {
@@ -859,7 +860,7 @@
 				FAA6988927A110C9000585D9 /* Embed Frameworks */,
 				FA4F367827E506DB00A63988 /* Embed Watch Content */,
 				FA78A9AA2C3C15BE0002F4A8 /* Embed Foundation Extensions */,
-				FA11D87D2C1F80CD004BEF88 /* CopyFiles */,
+				FA11D87D2C1F80CD004BEF88 /* Embed ExtensionKit Extensions */,
 			);
 			buildRules = (
 			);
