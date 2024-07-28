@@ -16,15 +16,14 @@ struct PrayerTimesShortcutsProvider: AppShortcutsProvider {
         AppShortcut(
             intent: PrayerTimeIntent(),
             phrases: [
-                // a phrase _must_ have `.applicationName` to be recognized.
+                // A phrase _must_ have `.applicationName` to be recognized.
                 //
-                // my understanding is that each phrase essentially must be able
-                // to be statically matched. in other words, variables that
-                // cannot be enumerated quickly cannot be recognized.
-                // for example, CLPlacemark cannot be part of the phrase because
-                // all of the strings to represent all of the placemarks cannot
-                // be reasonably enumerated.
-                // in my testing, Int and Date also are not matchable.
+                // See the following WWDC video for more information
+                //   on phrase requirements and abilities:
+                // https://developer.apple.com/wwdc22/10170?time=903
+                //   > Parameters are not meant for open-ended values.
+                //   > For example, it's not possible to gather an arbitrary string
+                //   > from the user in the initial utterance.
                 "According to \(.applicationName), what time is \(\.$targetPrayer)?",
                 "According to \(.applicationName), when is \(\.$targetPrayer)?",
                 "According to \(.applicationName), what time is \(\.$targetPrayer) today?",
