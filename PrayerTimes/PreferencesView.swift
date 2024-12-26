@@ -61,6 +61,7 @@ struct PreferencesView: View {
                         
                         Section {
                             NavigationLink("Visibility", value: NavigationSelection.visibility)
+                            NavigationLink("Calculation Method", value: NavigationSelection.calculationMethod)
                         } header: {
                             Label("Configuration", systemImage: "gear")
                                 .symbolRenderingMode(.multicolor)
