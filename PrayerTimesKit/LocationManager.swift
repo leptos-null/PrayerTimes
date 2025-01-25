@@ -34,7 +34,7 @@ public final class LocationManager: ObservableObject {
                 guard let self = self else { return }
                 if let stapledLocation = try await self.stapledLocation(for: location),
                    stapledLocation != self.stapledLocation {
-                    DispatchQueue.main.async { [weak self] in
+                    await MainActor.run { [weak self] in
                         self?.stapledLocation = stapledLocation
                     }
                 }
