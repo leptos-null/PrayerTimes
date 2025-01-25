@@ -55,7 +55,7 @@ public struct PrayerNameSelection: View {
     }
 }
 
-extension Prayer.Name: Identifiable {
+extension Prayer.Name: @retroactive Identifiable {
     public var id: Self { self }
 }
 

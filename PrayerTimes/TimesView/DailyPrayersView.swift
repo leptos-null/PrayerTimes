@@ -97,7 +97,7 @@ extension DailyPrayersView {
     }
 }
 
-extension Prayer: Identifiable {
+extension Prayer: @retroactive Identifiable {
     public var id: Prayer { self }
 }
 

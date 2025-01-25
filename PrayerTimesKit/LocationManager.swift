@@ -286,7 +286,7 @@ extension CLLocation {
     }
 }
 
-extension CLAuthorizationStatus: CustomStringConvertible {
+extension CLAuthorizationStatus: @retroactive CustomStringConvertible {
     public var description: String {
         switch self {
         case .notDetermined: return "Not Determined"
@@ -299,7 +299,7 @@ extension CLAuthorizationStatus: CustomStringConvertible {
     }
 }
 
-extension CLError.Code: CustomStringConvertible {
+extension CLError.Code: @retroactive CustomStringConvertible {
     public var description: String {
         switch self {
         case .locationUnknown: return "Location Unknown"
