@@ -65,7 +65,7 @@ private struct DateScrubber: View {
     @Binding var date: Date
     @Environment(\.calendar) private var calendar
     
-    @StateObject private var rateLimiter = RealTimeRateLimit(interval: .microseconds(62500)) // 0.0625 seconds, i.e. 1/16th of a second
+    @State private var rateLimiter = RealTimeRateLimit(interval: .microseconds(62500)) // 0.0625 seconds, i.e. 1/16th of a second
     
     private var era: Int {
         calendar.component(.era, from: date)
@@ -154,10 +154,6 @@ private struct Month: Hashable {
 
 extension Month: Identifiable {
     var id: Self { self }
-}
-
-extension RealTimeRateLimit: ObservableObject {
-    
 }
 
 extension View {
