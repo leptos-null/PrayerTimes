@@ -255,7 +255,7 @@ struct YearChart: View {
 }
 
 @available(iOS 16.0, *)
-extension Prayer.Name: Plottable {
+extension Prayer.Name: @retroactive Plottable {
     // these are category names, so they should be localized
     public var primitivePlottable: String {
         localized

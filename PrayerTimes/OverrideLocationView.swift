@@ -64,7 +64,7 @@ struct OverrideLocationView: View {
     }
 }
 
-extension CLLocationCoordinate2D: Equatable {
+extension CLLocationCoordinate2D: @retroactive Equatable {
     public static func == (lhs: CLLocationCoordinate2D, rhs: CLLocationCoordinate2D) -> Bool {
         let epsilon: CLLocationDegrees = 1e-8
         let latitudeDiff = lhs.latitude.distance(to: rhs.latitude).magnitude

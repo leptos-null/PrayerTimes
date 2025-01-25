@@ -224,11 +224,11 @@ extension CalculationMethod {
     }
 }
 
-extension CalculationMethod: Identifiable {
+extension CalculationMethod: @retroactive Identifiable {
     public var id: Self { self }
 }
 
-extension UserNotification.Category: Identifiable {
+extension UserNotification.Category: @retroactive Identifiable {
     public var id: Self { self }
 }
 
