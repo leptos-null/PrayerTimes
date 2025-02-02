@@ -58,6 +58,7 @@ struct ContentView: View {
                     QiblaView(locationManager: locationManager)
 #endif
                 }
+                .tabBarBackgroundIfAvailable(.visible)
                 .tabItem {
                     Label("Qibla", systemImage: "location.north.line")
                 }
@@ -65,12 +66,14 @@ struct ContentView: View {
                 
                 TimesView(calculationParameters: calculationParameters(for: stapledLocation), locationTitle: locationTitle(for: stapledLocation))
                     .environment(\.visiblePrayers, preferences.visiblePrayers)
+                    .tabBarBackgroundIfAvailable(.visible)
                     .tabItem {
                         Label("Times", systemImage: "clock")
                     }
                     .tag(Tab.times)
             } else {
                 LocationPrompt(locationManager: locationManager)
+                    .tabBarBackgroundIfAvailable(.visible)
                     .tabItem {
                         Label("Location", systemImage: "location")
                     }
@@ -78,6 +81,7 @@ struct ContentView: View {
             }
             
             PreferencesView(locationManager: locationManager, preferences: preferences, viewModel: preferencesViewModel)
+                .tabBarBackgroundIfAvailable(.visible)
                 .tabItem {
                     Label("Preferences", systemImage: "gear")
                 }
@@ -112,6 +116,18 @@ struct ContentView: View {
                 break
             }
 #endif
+        }
+    }
+}
+
+private extension View {
+    @ViewBuilder
+    func tabBarBackgroundIfAvailable(_ visibility: Visibility) -> some View {
+        if #available(iOS 16.0, *) {
+            self
+                .toolbarBackground(.visible, for: .tabBar)
+        } else {
+            self
         }
     }
 }
