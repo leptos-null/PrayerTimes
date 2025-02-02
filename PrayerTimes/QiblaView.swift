@@ -39,7 +39,7 @@ struct QiblaView: View {
             case .map:
                 if let location = locationManager.location {
                     QiblaMapView(sourceCoordinate: location.coordinate)
-                        .ignoresSafeArea(.all, edges: .top)
+                        .ignoresSafeArea(.all)
                 }
             }
         }
