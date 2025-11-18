@@ -195,6 +195,7 @@ struct CalculationMethodView: View {
             .isna,
             .egypt,
             .karachi,
+            .indonesia,
             .custom(calculationMethod.calculationConfiguration)
         ]
     }
@@ -305,6 +306,7 @@ extension CalculationMethod {
         case .isna: return "Islamic Society of North America (ISNA)"
         case .egypt: return "Egyptian General Authority of Survey"
         case .karachi: return "University of Islamic Sciences, Karachi"
+        case .indonesia: return "Ministry of Religion Indonesia (KEMENAG)"
         case .custom: return "Custom"
         }
     }
