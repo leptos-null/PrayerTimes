@@ -1,0 +1,56 @@
+### Xcode ###
+# User settings
+xcuserdata/
+*.xccheckout
+*.moved-aside
+*.xcuserstate
+*.xcscmblueprint
+
+# Build products
+build/
+DerivedData/
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Xcode logs
+*.xcactivitylog
+*.xcdebugger
+*.xccrashpoint
+
+### Swift / SwiftPM ###
+.swiftpm/
+.build/
+Package.resolved
+
+### CocoaPods ###
+Pods/
+# If using workspace
+*.xcworkspace
+
+### Carthage ###
+Carthage/Build/
+
+### Fastlane ###
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output/
+
+### General ###
+.DS_Store
+*.orig
+*.lock
+.idea/
+*.iml
+
+### SPM / Tools ###
+.xcodeproj/project.xcworkspace/xcuserdata/
+.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/
+
+### Optional (remove if you need to track them) ###
+# Xcode project files (if using `.xcodeproj` without a workspace, you may want to KEEP these)
+# *.pbxuser
+# *.mode1v3
+# *.mode2v3
