@@ -270,7 +270,90 @@ class DailyPrayersTests: XCTestCase {
         
         mayExpected.validateDay(dateComponents: dateComponents, calculationParameters: calculationParameters)
     }
-    
+
+    func testKemenagJakarta() {
+        // Test KEMENAG (Kementrian Agama Indonesia) calculation method
+        // Jakarta, Indonesia coordinates
+        let timeZone = TimeZone(identifier: "Asia/Jakarta")!
+        let calculationParameters = CalculationParameters(
+            timeZone: timeZone,
+            location: CLLocation(latitude: -6.200000, longitude: 106.816666),
+            configuration: CalculationMethod.indonesia.calculationConfiguration
+        )
+
+        var gregorianCalendar = Calendar(identifier: .gregorian)
+        gregorianCalendar.timeZone = timeZone
+
+        var dateComponents = DateComponents(calendar: gregorianCalendar, timeZone: timeZone)
+        dateComponents.year = 2024
+        dateComponents.month = 1
+        dateComponents.day = 15
+
+        let daily = DailyPrayers(day: dateComponents.date!, calculationParameters: calculationParameters)
+
+        // Verify KEMENAG configuration is correctly applied (Fajr: 20°, Isha: 18°)
+        let config = CalculationMethod.indonesia.calculationConfiguration
+        XCTAssertEqual(config.fajrAngle, 20)
+        XCTAssertEqual(config.ishaAngle, 18)
+        XCTAssertEqual(config.asrFactor, 1)
+
+        // Verify prayer times are in correct chronological order
+        XCTAssert(daily.isha.start.timeIntervalSince(daily.maghrib.start) > 0)
+        XCTAssert(daily.maghrib.start.timeIntervalSince(daily.asr.start) > 0)
+        XCTAssert(daily.asr.start.timeIntervalSince(daily.dhuhr.start) > 0)
+        XCTAssert(daily.dhuhr.start.timeIntervalSince(daily.sunrise.start) > 0)
+        XCTAssert(daily.sunrise.start.timeIntervalSince(daily.fajr.start) > 0)
+        XCTAssert(daily.fajr.start.timeIntervalSince(daily.qiyam.start) > 0)
+
+        // Verify prayer times are reasonable for Jakarta (equatorial location)
+        // Fajr should be between 4:00 and 5:30
+        let fajrComponents = gregorianCalendar.dateComponents([.hour, .minute], from: daily.fajr.start)
+        XCTAssert(fajrComponents.hour! >= 4 && fajrComponents.hour! <= 5, "Fajr hour should be between 4 and 5")
+
+        // Dhuhr should be around noon (11:00 - 13:00)
+        let dhuhrComponents = gregorianCalendar.dateComponents([.hour], from: daily.dhuhr.start)
+        XCTAssert(dhuhrComponents.hour! >= 11 && dhuhrComponents.hour! <= 13, "Dhuhr should be around noon")
+
+        // Isha should be in the evening (18:00 - 20:00)
+        let ishaComponents = gregorianCalendar.dateComponents([.hour], from: daily.isha.start)
+        XCTAssert(ishaComponents.hour! >= 18 && ishaComponents.hour! <= 20, "Isha should be in the evening")
+    }
+
+    func testKemenagSurabaya() {
+        // Test KEMENAG calculation for Surabaya, Indonesia
+        let timeZone = TimeZone(identifier: "Asia/Jakarta")!
+        let calculationParameters = CalculationParameters(
+            timeZone: timeZone,
+            location: CLLocation(latitude: -7.249222, longitude: 112.750833),
+            configuration: CalculationMethod.indonesia.calculationConfiguration
+        )
+
+        var gregorianCalendar = Calendar(identifier: .gregorian)
+        gregorianCalendar.timeZone = timeZone
+
+        var dateComponents = DateComponents(calendar: gregorianCalendar, timeZone: timeZone)
+        dateComponents.year = 2024
+        dateComponents.month = 6
+        dateComponents.day = 15
+
+        let daily = DailyPrayers(day: dateComponents.date!, calculationParameters: calculationParameters)
+
+        // Verify prayer times are in correct chronological order
+        XCTAssert(daily.isha.start.timeIntervalSince(daily.maghrib.start) > 0)
+        XCTAssert(daily.maghrib.start.timeIntervalSince(daily.asr.start) > 0)
+        XCTAssert(daily.asr.start.timeIntervalSince(daily.dhuhr.start) > 0)
+        XCTAssert(daily.dhuhr.start.timeIntervalSince(daily.sunrise.start) > 0)
+        XCTAssert(daily.sunrise.start.timeIntervalSince(daily.fajr.start) > 0)
+        XCTAssert(daily.fajr.start.timeIntervalSince(daily.qiyam.start) > 0)
+
+        // Verify reasonable times for Surabaya (slightly south of equator)
+        let fajrComponents = gregorianCalendar.dateComponents([.hour], from: daily.fajr.start)
+        XCTAssert(fajrComponents.hour! >= 3 && fajrComponents.hour! <= 5, "Fajr hour should be between 3 and 5")
+
+        let dhuhrComponents = gregorianCalendar.dateComponents([.hour], from: daily.dhuhr.start)
+        XCTAssert(dhuhrComponents.hour! >= 11 && dhuhrComponents.hour! <= 13, "Dhuhr should be around noon")
+    }
+
 }
 
 private extension Date {

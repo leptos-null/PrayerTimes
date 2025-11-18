@@ -92,7 +92,8 @@ public enum CalculationMethod: Hashable, Codable {
     case isna
     case egypt
     case karachi
-    
+    case indonesia
+
     case custom(CalculationParameters.Configuration)
     
     public var calculationConfiguration: CalculationParameters.Configuration {
@@ -105,6 +106,8 @@ public enum CalculationMethod: Hashable, Codable {
             return .init(asrFactor: 1, fajrAngle: 19.5, ishaAngle: 17.5)
         case .karachi:
             return .init(asrFactor: 1, fajrAngle: 18, ishaAngle: 18)
+        case .indonesia:
+            return .init(asrFactor: 1, fajrAngle: 20, ishaAngle: 18)
         case .custom(let calculationConfiguration):
             return calculationConfiguration
         }
