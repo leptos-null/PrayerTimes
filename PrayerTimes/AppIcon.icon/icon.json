@@ -1,0 +1,43 @@
+{
+  "fill" : "system-dark",
+  "groups" : [
+    {
+      "layers" : [
+        {
+          "image-name" : "hands.png",
+          "name" : "hands"
+        },
+        {
+          "image-name" : "ticks_clipped.png",
+          "name" : "ticks_clipped"
+        },
+        {
+          "image-name" : "shadow.png",
+          "name" : "shadow"
+        },
+        {
+          "image-name" : "ticks.png",
+          "name" : "ticks"
+        },
+        {
+          "image-name" : "face.png",
+          "name" : "face"
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
+  }
+}
