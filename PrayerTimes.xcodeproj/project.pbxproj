@@ -65,7 +65,7 @@
 		FA78A99C2C3C15BC0002F4A8 /* PrayerTimesWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA78A99B2C3C15BC0002F4A8 /* PrayerTimesWidgetBundle.swift */; };
 		FA78A9A02C3C15BC0002F4A8 /* UpNextWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA78A99F2C3C15BC0002F4A8 /* UpNextWidget.swift */; };
 		FA78A9A42C3C15BE0002F4A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA78A9A32C3C15BE0002F4A8 /* Assets.xcassets */; };
-		FA78A9A82C3C15BE0002F4A8 /* PrayerTimesWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FA78A9952C3C15BC0002F4A8 /* PrayerTimesWidgetExtension.appex */; platformFilters = (ios, maccatalyst, ); settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		FA78A9A82C3C15BE0002F4A8 /* PrayerTimesWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FA78A9952C3C15BC0002F4A8 /* PrayerTimesWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FA78A9B32C4307290002F4A8 /* WidgetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA78A9B22C4307290002F4A8 /* WidgetManager.swift */; };
 		FA7950B127BCB95600170000 /* LineUpCompass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7950B027BCB95600170000 /* LineUpCompass.swift */; };
 		FA7950B327BD56B900170000 /* SimpleCompass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7950B227BD56B900170000 /* SimpleCompass.swift */; };
@@ -1265,10 +1265,6 @@
 		};
 		FA78A9A72C3C15BE0002F4A8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			platformFilters = (
-				ios,
-				maccatalyst,
-			);
 			target = FA78A9942C3C15BC0002F4A8 /* PrayerTimesWidgetExtension */;
 			targetProxy = FA78A9A62C3C15BE0002F4A8 /* PBXContainerItemProxy */;
 		};
