@@ -28,6 +28,7 @@
 		FA37EB3927F36DA80082FEB1 /* LocationPrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA37EB3827F36DA80082FEB1 /* LocationPrompt.swift */; };
 		FA37EB3B27F36E6A0082FEB1 /* CoordinatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA37EB3A27F36E6A0082FEB1 /* CoordinatePicker.swift */; };
 		FA37EB3D27F381600082FEB1 /* OverrideLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA37EB3C27F381600082FEB1 /* OverrideLocationView.swift */; };
+		FA48C7372FEB9AAB00B3EC61 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = FA48C7352FEB991000B3EC61 /* AppIcon.icon */; };
 		FA4F365F27E506DA00A63988 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA4F365E27E506DA00A63988 /* Assets.xcassets */; };
 		FA4F366527E506DB00A63988 /* PrayerTimesWKExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FA4F366427E506DB00A63988 /* PrayerTimesWKExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FA4F366A27E506DB00A63988 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4F366927E506DB00A63988 /* ContentView.swift */; };
@@ -298,6 +299,7 @@
 		FA37EB3A27F36E6A0082FEB1 /* CoordinatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatePicker.swift; sourceTree = "<group>"; };
 		FA37EB3C27F381600082FEB1 /* OverrideLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideLocationView.swift; sourceTree = "<group>"; };
 		FA4735912807AEC400A0F315 /* PrayerTimesUITests.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PrayerTimesUITests.entitlements; sourceTree = "<group>"; };
+		FA48C7352FEB991000B3EC61 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		FA4F365C27E506DA00A63988 /* PrayerTimesWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrayerTimesWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA4F365E27E506DA00A63988 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA4F366427E506DB00A63988 /* PrayerTimesWKExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PrayerTimesWKExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -652,6 +654,7 @@
 				FA6542A227BF71BD002C4777 /* OrientationManager.swift */,
 				FA6542A427BF7249002C4777 /* CLDeviceOrientation+UIKit.swift */,
 				FAB8F85C2797DF7500F21628 /* Assets.xcassets */,
+				FA48C7352FEB991000B3EC61 /* AppIcon.icon */,
 				FAB8F8672797E00E00F21628 /* PrayerTimes.entitlements */,
 				FAB8F8612797DF7500F21628 /* Info.plist */,
 			);
@@ -1057,6 +1060,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAB8F85D2797DF7500F21628 /* Assets.xcassets in Resources */,
+				FA48C7372FEB9AAB00B3EC61 /* AppIcon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
