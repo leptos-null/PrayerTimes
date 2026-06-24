@@ -40,7 +40,7 @@ public final class WidgetManager {
     //   reload the widget if needed.
     // in another example, the widget may not have location permission and the app still has "while running"
     //   permissions. in this case, the app can reload the widget if needed while the app is open.
-    @available(iOS 14.0, macOS 11.0, watchOS 9.0, *)
+    @available(iOS 14.0, macOS 11.0, watchOS 9.0, visionOS 26.0, *)
     @available(tvOS, unavailable)
     public func startMonitoring(locationManager: LocationManager = .shared, preferences: Preferences = .shared) {
         guard cancellables.isEmpty else { return }

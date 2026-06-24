@@ -20,7 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if !SCREENSHOT_MODE
         systemRegistrar.startRegistering()
 #if canImport(WidgetKit)
-        widgetManager.startMonitoring()
+        if #available(iOS 14.0, macOS 11.0, watchOS 9.0, visionOS 26.0, *) {
+            widgetManager.startMonitoring()
+        }
 #endif
 #endif
         return true
