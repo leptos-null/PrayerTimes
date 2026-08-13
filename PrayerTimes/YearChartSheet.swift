@@ -33,11 +33,17 @@ struct YearChartSheet: View {
                 .ignoresSafeArea(.container, edges: .top)
                 .toolbar {
                     ToolbarItem(placement: .primaryAction) {
-                        Button("Done", role: .cancel) {
-                            dismiss()
+                        if #available(iOS 26.0, *) {
+                            Button(role: .close) {
+                                dismiss()
+                            }
+                        } else {
+                            Button("Done", role: .cancel) {
+                                dismiss()
+                            }
+                            .keyboardShortcut(.cancelAction)
+                            .font(.headline)
                         }
-                        .keyboardShortcut(.cancelAction)
-                        .font(.headline)
                     }
                 }
         }
