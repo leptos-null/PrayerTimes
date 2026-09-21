@@ -95,11 +95,13 @@ struct YearChart: View {
                         Circle()
                             .fill(Self.color(for: prayerName))
                             .frame(width: 12, height: 12)
+                            .accessibilityHidden(true)
                         
                         VStack(alignment: .leading) {
                             Text(prayerName.localized)
                             Text(dailyPrayers.prayer(named: prayerName).start, style: .time)
                                 .opacity(lollipop != nil ? 1 : 0)
+                                .accessibilityHidden(lollipop == nil)
                         }
                         
                         Spacer()
@@ -119,6 +121,7 @@ struct YearChart: View {
                             Circle()
                                 .fill(Self.color(for: prayerName))
                                 .frame(width: 12, height: 12)
+                                .accessibilityHidden(true)
                             
                             Text(prayerName.localized)
                         }
@@ -166,21 +169,24 @@ struct YearChart: View {
                     Text(lollipop ?? .now, style: .date)
                         .font(.callout)
                         .opacity(lollipop != nil ? 1 : 0)
+                        .accessibilityHidden(lollipop == nil)
                 }
                 Spacer()
             }
             .padding()
             
-            Chart(Prayer.Name.allCases) { (prayerName: Prayer.Name) in
-                if let pairs = data.seriesMap[prayerName] {
-                    ForEach(pairs) { pair in
-                        LineMark(
-                            x: .value("Day", pair.date, unit: .day, calendar: calendar),
-                            y: .value("Time", pair.offset)
-                        )
+            Chart {
+                ForEach(Prayer.Name.allCases) { prayerName in
+                    if let pairs = data.seriesMap[prayerName] {
+                        ForEach(pairs) { pair in
+                            LineMark(
+                                x: .value("Day", pair.date, unit: .day, calendar: calendar),
+                                y: .value("Time", pair.offset)
+                            )
+                        }
+                        .foregroundStyle(by: .value("Prayer", prayerName))
+                        .interpolationMethod(.catmullRom)
                     }
-                    .foregroundStyle(by: .value("Prayer", prayerName))
-                    .interpolationMethod(.catmullRom)
                 }
                 
                 if let lollipop {
