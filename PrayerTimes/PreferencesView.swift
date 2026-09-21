@@ -46,108 +46,55 @@ struct PreferencesView: View {
     }
     
     var body: some View {
-        Group {
-            if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
-                NavigationSplitView {
-                    List(selection: $viewModel.navigationSelection) {
-                        if shouldShowLocationSection {
-                            Section {
-                                NavigationLink("Select Location", value: NavigationSelection.selectLocation)
-                            } header: {
-                                Label("Location", systemImage: "location")
-                                    .symbolRenderingMode(.multicolor)
-                            }
-                        }
-                        
-                        Section {
-                            NavigationLink("Visibility", value: NavigationSelection.visibility)
-                            NavigationLink("Calculation Method", value: NavigationSelection.calculationMethod)
-                        } header: {
-                            Label("Configuration", systemImage: "gear")
-                                .symbolRenderingMode(.multicolor)
-                        }
-                        
-                        Section {
-                            ForEach(UserNotification.Category.allCases) { category in
-                                NavigationLink(category.localizedTitle, value: PreferencesView.NavigationSelection.notification(category))
-                            }
-                        } header: {
-                            Label("Notifications", systemImage: "bell")
-                                .symbolRenderingMode(.multicolor)
-                        }
-                    }
-                    .navigationTitle("Preferences")
-                    .listStyle(listStyle)
-                } detail: {
-                    switch viewModel.navigationSelection {
-                    case .none:
-                        Text("No selection")
-                            .font(.callout)
-                            .foregroundColor(.secondary)
-                            .padding(.bottom, 64)
-                    case .selectLocation:
-                        OverrideLocationView(locationManager: locationManager)
-                            .navigationTitle("Select Location")
-                    case .visibility:
-                        VisiblePrayersView(visiblePrayers: $preferences.visiblePrayers)
-                            .navigationTitle("Visibility")
-                    case .calculationMethod:
-                        CalculationMethodView(calculationMethod: $preferences.calculationMethod)
-                            .navigationTitle("Calculation Method")
-                    case .notification(let category):
-                        UserNotificationSelectionView(category: category, selection: notificationCategoryBinding(category))
-                            .navigationTitle(category.localizedTitle)
+        NavigationSplitView {
+            List(selection: $viewModel.navigationSelection) {
+                if shouldShowLocationSection {
+                    Section {
+                        NavigationLink("Select Location", value: NavigationSelection.selectLocation)
+                    } header: {
+                        Label("Location", systemImage: "location")
+                            .symbolRenderingMode(.multicolor)
                     }
                 }
-            } else {
-                NavigationView {
-                    List {
-                        if shouldShowLocationSection {
-                            Section {
-                                NavigationLink("Select Location", tag: .selectLocation, selection: $viewModel.navigationSelection) {
-                                    OverrideLocationView(locationManager: locationManager)
-                                        .navigationTitle("Select Location")
-                                }
-                            } header: {
-                                Label("Location", systemImage: "location")
-                                    .symbolRenderingMode(.multicolor)
-                            }
-                        }
-                        
-                        Section {
-                            NavigationLink("Visibility", tag: .visibility, selection: $viewModel.navigationSelection) {
-                                VisiblePrayersView(visiblePrayers: $preferences.visiblePrayers)
-                                    .navigationTitle("Visibility")
-                            }
-                            NavigationLink("Calculation Method", tag: .calculationMethod, selection: $viewModel.navigationSelection) {
-                                CalculationMethodView(calculationMethod: $preferences.calculationMethod)
-                                    .navigationTitle("Calculation Method")
-                            }
-                        } header: {
-                            Label("Configuration", systemImage: "gear")
-                                .symbolRenderingMode(.multicolor)
-                        }
-                        
-                        Section {
-                            ForEach(UserNotification.Category.allCases) { category in
-                                NavigationLink(category.localizedTitle, tag: .notification(category), selection: $viewModel.navigationSelection) {
-                                    UserNotificationSelectionView(category: category, selection: notificationCategoryBinding(category))
-                                        .navigationTitle(category.localizedTitle)
-                                }
-                            }
-                        } header: {
-                            Label("Notifications", systemImage: "bell")
-                                .symbolRenderingMode(.multicolor)
-                        }
-                    }
-                    .navigationTitle("Preferences")
-                    .listStyle(listStyle)
-                    
-                    Text("No selection")
-                        .font(.callout)
-                        .foregroundColor(.secondary)
-                        .padding(.bottom, 64)
+                
+                Section {
+                    NavigationLink("Visibility", value: NavigationSelection.visibility)
+                    NavigationLink("Calculation Method", value: NavigationSelection.calculationMethod)
+                } header: {
+                    Label("Configuration", systemImage: "gear")
+                        .symbolRenderingMode(.multicolor)
                 }
+                
+                Section {
+                    ForEach(UserNotification.Category.allCases) { category in
+                        NavigationLink(category.localizedTitle, value: PreferencesView.NavigationSelection.notification(category))
+                    }
+                } header: {
+                    Label("Notifications", systemImage: "bell")
+                        .symbolRenderingMode(.multicolor)
+                }
+            }
+            .navigationTitle("Preferences")
+            .listStyle(listStyle)
+        } detail: {
+            switch viewModel.navigationSelection {
+            case .none:
+                Text("No selection")
+                    .font(.callout)
+                    .foregroundColor(.secondary)
+                    .padding(.bottom, 64)
+            case .selectLocation:
+                OverrideLocationView(locationManager: locationManager)
+                    .navigationTitle("Select Location")
+            case .visibility:
+                VisiblePrayersView(visiblePrayers: $preferences.visiblePrayers)
+                    .navigationTitle("Visibility")
+            case .calculationMethod:
+                CalculationMethodView(calculationMethod: $preferences.calculationMethod)
+                    .navigationTitle("Calculation Method")
+            case .notification(let category):
+                UserNotificationSelectionView(category: category, selection: notificationCategoryBinding(category))
+                    .navigationTitle(category.localizedTitle)
             }
         }
         .onChangeOf(shouldShowLocationSection) { shouldShowLocationSection in
