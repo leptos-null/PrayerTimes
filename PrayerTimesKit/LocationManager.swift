@@ -30,13 +30,20 @@ public final class LocationManager: ObservableObject {
                 logger.log("location set to nil")
                 return
             }
-            Task(priority: .utility) { [weak self] in
+            Task<Void, Never>(priority: .utility) { [weak self] in
                 guard let self = self else { return }
-                if let stapledLocation = try await self.stapledLocation(for: location),
-                   stapledLocation != self.stapledLocation {
-                    await MainActor.run { [weak self] in
-                        self?.stapledLocation = stapledLocation
-                    }
+                let stapledLocation: StapledLocation?
+                do {
+                    stapledLocation = try await self.stapledLocation(for: location)
+                } catch {
+                    self.logger.error("stapledLocation(for: \(location)): \(error as NSError)")
+                    return
+                }
+                guard let stapledLocation, stapledLocation != self.stapledLocation else {
+                    return // no need to update if it's the same
+                }
+                await MainActor.run { [weak self] in
+                    self?.stapledLocation = stapledLocation
                 }
             }
             // TODO: avoid writing location to UserDefaults if the value in UserDefaults is the same

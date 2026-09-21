@@ -55,8 +55,12 @@ public final class SystemRegistrar {
                     location: stapledLocation.location,
                     configuration: calculationMethod.calculationConfiguration
                 )
-                Task {
-                    try await UserNotification.registerFor(calculationParameters: calculationParameters, preferences: userNotificationPreferences, bodyText: locationText)
+                Task<Void, Never> {
+                    do {
+                        try await UserNotification.registerFor(calculationParameters: calculationParameters, preferences: userNotificationPreferences, bodyText: locationText)
+                    } catch {
+                        Self.logger.error("UserNotification.register: \(error as NSError)")
+                    }
                 }
             }
             .store(in: &cancellables)
