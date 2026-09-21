@@ -37,6 +37,7 @@ struct CompassView: View {
                     .accessibilityAddTraits(.updatesFrequently)
             case .failure(let error):
                 Text(error.localizedDescription)
+                    .frame(maxHeight: .infinity)
             }
         }
         .onAppear(perform: qiblaManager.headingManager.startUpdatingHeading)

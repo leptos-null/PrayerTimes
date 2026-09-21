@@ -35,6 +35,7 @@ struct QiblaView: View {
                     Spacer()
                     CompassView(qiblaManager: qiblaManager, orientationManager: orientationManager)
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .scenePadding()
             case .map:
                 if let location = locationManager.location {
