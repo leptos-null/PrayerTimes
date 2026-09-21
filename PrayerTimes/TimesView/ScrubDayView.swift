@@ -52,8 +52,8 @@ struct ScrubDayView: View {
             DatePicker("Day", selection: $date, in: datePickerRange ?? (date...date), displayedComponents: .date)
                 .labelsHidden()
                 .datePickerStyle(.compact)
+                .fixedSize(horizontal: true, vertical: false)
 #if !targetEnvironment(macCatalyst)
-                .id(date) // causes DatePicker to re-layout for each date, otherwise the width stays the same as it was for the initial date
                 .padding(.top, -8) // remove top padding in an attempt to align first baseline with DateTitle
 #endif
         }
@@ -104,7 +104,6 @@ private struct DateScrubber: View {
             HStack {
                 Spacer()
                 ScaledMonthStack(calendar: calendar, era: era, year: year, height: height)
-                    .equatable()
                     .padding(.trailing, 4)
                     .contentShape(.interaction, Rectangle())
                     .onDragGesture(minimumDistance: 0) { dragValue in
