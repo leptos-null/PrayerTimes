@@ -66,9 +66,11 @@ struct ScrubDayView: View {
                 Button {
                     showChart = true
                 } label: {
-                    Label("Chart", systemImage: "chart.xyaxis.line")
+                    Label("Year Chart", systemImage: "chart.xyaxis.line")
                 }
                 .buttonStyle(.bordered)
+                .labelStyle(.iconOnly)
+                .help("Year Chart")
                 .hoverEffect()
                 .padding(.top, 4)
                 .scenePadding(.leading)
