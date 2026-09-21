@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1530"
+   LastUpgradeVersion = "2700"
    version = "2.0">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -61,7 +61,6 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FA4F365B27E506DA00A63988"
             BuildableName = "PrayerTimesWatch.app"
-            BlueprintName = "PrayerTimesWatch"
             ReferencedContainer = "container:PrayerTimes.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -79,7 +78,6 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FA4F365B27E506DA00A63988"
             BuildableName = "PrayerTimesWatch.app"
-            BlueprintName = "PrayerTimesWatch"
             ReferencedContainer = "container:PrayerTimes.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
