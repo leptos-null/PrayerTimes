@@ -33,7 +33,9 @@ public enum UserNotification {
             .drop { date.timeIntervalSince($0.time) > 0 } // drop any notifications that are in the past
             .prefix(64) // testing on iOS 15 indicates that only 64 notifications can be registered at a time
             .map { notificationDescriptor in
-                let dateComponents = gregorianCalendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: notificationDescriptor.time)
+                var dateComponents = gregorianCalendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: notificationDescriptor.time)
+                // the `timeZone` property is `nil`, just like all of the other properties that we don't include in the call on the line above
+                dateComponents.timeZone = calculationParameters.timeZone
                 
                 let notificationContent = UNMutableNotificationContent()
                 notificationContent.title = notificationDescriptor.title
