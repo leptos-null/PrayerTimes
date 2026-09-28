@@ -36,8 +36,10 @@ public struct DailyPrayers {
         let latitude = Arithmetic.radians(from: coordinate.latitude)
         
         // http://praytimes.org/calculation
-        let solarNoonTime: TimeInterval = (TimeInterval.day/2 - coordinate.longitude/Arithmetic.degreesInCircle * TimeInterval.day - equationOfTime)
-            .constrict(to: TimeInterval.day) + TimeInterval(timeZone.secondsFromGMT(for: dayStart))
+        let longitudeOffset: TimeInterval = coordinate.longitude/Arithmetic.degreesInCircle * TimeInterval.day
+        let timeZoneOffset: TimeInterval = .init(timeZone.secondsFromGMT(for: dayStart))
+        let solarNoonTime: TimeInterval = (TimeInterval.day/2 - longitudeOffset - equationOfTime + timeZoneOffset)
+            .constrict(to: TimeInterval.day)
         
         let solarPosition = SolarPosition(latitude: latitude, declination: declination)
         

@@ -271,6 +271,51 @@ class DailyPrayersTests: XCTestCase {
         mayExpected.validateDay(dateComponents: dateComponents, calculationParameters: calculationParameters)
     }
     
+    func testDateLine() {
+        // unusual time zone: +13 hours from UTC for a longitude that's negative
+        let timeZone = TimeZone(identifier: "Pacific/Apia")!
+        let calculationParameters = CalculationParameters(
+            timeZone: timeZone,
+            location: CLLocation(latitude: -13.847813, longitude: -171.741875),
+            configuration: CalculationParameters.Configuration(asrFactor: 1, fajrAngle: 18, ishaAngle: 17)
+        )
+        
+        var gregorianCalendar = Calendar(identifier: .gregorian)
+        gregorianCalendar.timeZone = timeZone
+        
+        var dateComponents = DateComponents(calendar: gregorianCalendar, timeZone: timeZone)
+        dateComponents.year = 2022
+        dateComponents.month = 1
+        dateComponents.day = 23
+        
+        let janExpected = ExpectedValues(
+            solarNoon: (12, 38, 48),
+            sunrise: (06, 15),
+            sunset:  (19, 02),
+            fajr: (04, 57, 25),
+            asr:  (15, 57, 17),
+            isha: (20, 14, 47)
+        )
+        
+        janExpected.validateDay(dateComponents: dateComponents, calculationParameters: calculationParameters)
+        
+        // randomly selected date
+        dateComponents.year = 2022
+        dateComponents.month = 11
+        dateComponents.day = 2
+        
+        let novExpected = ExpectedValues(
+            solarNoon: (12, 10, 29),
+            sunrise: (05, 52),
+            sunset:  (18, 29),
+            fajr: (04, 38, 21),
+            asr:  (15, 17, 29),
+            isha: (19, 38, 22)
+        )
+        
+        novExpected.validateDay(dateComponents: dateComponents, calculationParameters: calculationParameters)
+    }
+    
 }
 
 private extension Date {
