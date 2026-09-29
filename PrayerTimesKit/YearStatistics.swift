@@ -8,8 +8,6 @@
 import Foundation
 
 public struct YearStatistics {
-    public let era: Int
-    public let year: Int
     public let calendar: Calendar
     public let calculationParameters: CalculationParameters
     
@@ -18,28 +16,27 @@ public struct YearStatistics {
     public let daysPrayers: [DailyPrayers]
     
     public init(date: Date, calendar: Calendar, calculationParameters: CalculationParameters) {
-        let era = calendar.component(.era, from: date)
-        let year = calendar.component(.year, from: date)
-        self.init(era: era, year: year, calendar: calendar, calculationParameters: calculationParameters)
-    }
-    
-    public init(era: Int, year: Int, calendar: Calendar, calculationParameters: CalculationParameters) {
-        self.era = era
-        self.year = year
         self.calendar = calendar
         self.calculationParameters = calculationParameters
         
-        let date = calendar.date(from: .init(era: era, year: year))!
-        dateInterval = calendar.dateInterval(of: .year, for: date)!
+        // A year may span 2 eras. For example, in the Japanese calendar:
+        //   - 4/1/H31 (era: 235, year: 31, month: 4, day: 1)
+        //   - 5/1/R1  (era: 236, year: 1, month: 5, day: 1)
+        // in this case, (era: 236, year: 1, month: 4) does not exist in the calendar;
+        // making a query with those components resolves to (era: 235, year: 31, month: 4).
+        //
+        // For this reason, to find each day in a year, the code below adds a day
+        // to the start of the year until the date is no longer in the year.
+        
+        let dateInterval = calendar.dateInterval(of: .year, for: date)!
+        self.dateInterval = dateInterval
         
         daysPrayers = (0...)
             .lazy
             .compactMap { day in
-                let dateComponents = DateComponents(year: year, day: day)
-                return calendar.date(from: dateComponents)
+                calendar.date(byAdding: .day, value: day, to: dateInterval.start)
             }
-            .drop { calendar.component(.year, from: $0) != year }
-            .prefix { calendar.component(.year, from: $0) == year }
+            .prefix { $0 < dateInterval.end }
             .map { date in
                 DailyPrayers(day: date, calculationParameters: calculationParameters)
             }
