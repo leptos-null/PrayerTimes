@@ -89,6 +89,9 @@ private struct DateScrubber: View {
     @Environment(\.calendar) private var calendar
     
     @State private var rateLimiter = RealTimeRateLimit(interval: .microseconds(62500)) // 0.0625 seconds, i.e. 1/16th of a second
+#if os(iOS)
+    @State private var feedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+#endif
     
     var body: some View {
         GeometryReader { geometryProxy in
@@ -111,8 +114,16 @@ private struct DateScrubber: View {
                         date = max(yearInterval.start, min(propose, endDate))
 #if os(iOS)
                         if !calendar.isDate(date, inSameDayAs: previousDate), rateLimiter.permitted() {
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            feedbackGenerator.impactOccurred()
                         }
+                        // per the documentation:
+                        // > After feedback is triggered, the Taptic Engine returns to its idle state.
+                        // > If you might trigger additional feedback within the next few seconds,
+                        // > immediately call `prepare()` to keep the Taptic Engine in the prepared state.
+                        //
+                        // whether we just triggered feedback or not (above), the user is most likely to
+                        // continue interacting and therefore trigger further feedback
+                        feedbackGenerator.prepare()
 #endif
                     }
             }
