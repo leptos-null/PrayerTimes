@@ -90,25 +90,18 @@ private struct DateScrubber: View {
     
     @State private var rateLimiter = RealTimeRateLimit(interval: .microseconds(62500)) // 0.0625 seconds, i.e. 1/16th of a second
     
-    private var era: Int {
-        calendar.component(.era, from: date)
-    }
-    
-    private var year: Int {
-        calendar.component(.year, from: date)
-    }
-    
     var body: some View {
         GeometryReader { geometryProxy in
             let height = geometryProxy.size.height * 0.6
+            let yearInterval = calendar.dateInterval(of: .year, for: date)
             HStack {
                 Spacer()
-                ScaledMonthStack(calendar: calendar, era: era, year: year, height: height)
+                ScaledMonthStack(calendar: calendar, yearInterval: yearInterval, height: height)
                     .padding(.trailing, 4)
                     .contentShape(.interaction, Rectangle())
                     .onDragGesture(minimumDistance: 0) { dragValue in
+                        guard let yearInterval else { return }
                         let previousDate = date
-                        guard let yearInterval = calendar.dateInterval(of: .year, for: previousDate) else { return }
                         
                         let fraction = dragValue.location.y / height
                         let propose = yearInterval.start.addingTimeInterval(yearInterval.duration * fraction)
@@ -129,15 +122,12 @@ private struct DateScrubber: View {
 
 private struct ScaledMonthStack: View, Equatable {
     let calendar: Calendar
-    // these are the two component with higher precedence than `month`
-    let era: Int
-    let year: Int
+    let yearInterval: DateInterval?
     
     let height: CGFloat
     
     private var months: [Month] {
-        guard let yearStart = calendar.date(from: DateComponents(era: era, year: year)),
-              let yearInterval = calendar.dateInterval(of: .year, for: yearStart) else { return [] }
+        guard let yearInterval else { return [] }
         
         return sequence(first: yearInterval.start) { calendar.date(byAdding: .month, value: 1, to: $0) }
             .prefix { $0 < yearInterval.end }
