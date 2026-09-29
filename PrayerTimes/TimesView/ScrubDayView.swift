@@ -136,30 +136,34 @@ private struct ScaledMonthStack: View, Equatable {
     let height: CGFloat
     
     private var months: [Month] {
-        let monthIntervals: [DateInterval] = (0...)
-            .lazy
-            .compactMap { month in
-                let dateComponents = DateComponents(era: era, year: year, month: month)
-                return calendar.date(from: dateComponents)
-            }
-            .drop { calendar.component(.year, from: $0) != year }
-            .prefix { calendar.component(.year, from: $0) == year }
-            .compactMap { calendar.dateInterval(of: .month, for: $0) }
+        guard let yearStart = calendar.date(from: DateComponents(era: era, year: year)),
+              let yearInterval = calendar.dateInterval(of: .year, for: yearStart) else { return [] }
         
-        let shortStandaloneMonthSymbols = calendar.shortStandaloneMonthSymbols
-        return zip(shortStandaloneMonthSymbols, monthIntervals)
-            .map { shortStandaloneSymbol, dateInterval in
-                Month(shortStandaloneSymbol: shortStandaloneSymbol, dateInterval: dateInterval)
+        return sequence(first: yearInterval.start) { calendar.date(byAdding: .month, value: 1, to: $0) }
+            .prefix { $0 < yearInterval.end }
+            .compactMap { calendar.dateInterval(of: .month, for: $0) }
+            .map { dateInterval in
+                Month(dateInterval: dateInterval)
             }
     }
     
     var body: some View {
         let months = months
+        // format each month instead of indexing into `shortStandaloneMonthSymbols`,
+        // since some calendars (e.g. `.hebrew`) do not have the same months every year.
+        // use `VerbatimFormatStyle` since `Date.FormatStyle.month(.abbreviated)`
+        //   produces numeric months in some locales (e.g. `lt`, `bg`)
+        let monthFormatStyle = Date.VerbatimFormatStyle(
+            format: "\(standaloneMonth: .abbreviated)",
+            timeZone: calendar.timeZone,
+            calendar: calendar
+        )
+        
         if let firstMonth = months.first, let lastMonth = months.last {
             let yearDuration = lastMonth.dateInterval.end.timeIntervalSince(firstMonth.dateInterval.start)
             VStack(alignment: .trailing, spacing: 0) {
                 ForEach(months) { month in
-                    Text(month.shortStandaloneSymbol)
+                    Text(month.dateInterval.start, format: monthFormatStyle)
                         .font(.callout.monospaced().smallCaps())
                         .foregroundColor(.accentColor)
                         .frame(height: month.dateInterval.duration / yearDuration * height, alignment: .top)
@@ -170,7 +174,6 @@ private struct ScaledMonthStack: View, Equatable {
 }
 
 private struct Month: Hashable {
-    let shortStandaloneSymbol: String
     let dateInterval: DateInterval
 }
 
