@@ -1,4 +1,4 @@
-## iPad Pro (12.9-inch) (6th generation) 17.4
+## iPad Pro 13-inch (M5) 27.0
 
 ![Today](0_today.png)
 

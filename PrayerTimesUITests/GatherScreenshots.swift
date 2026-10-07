@@ -127,50 +127,98 @@ xcrun simctl status_bar \(deviceUDID) override \
         let window: XCUIElement = app
 #endif
         
+        let screenshotProvider: XCUIScreenshotProviding
+#if os(iOS) && !targetEnvironment(macCatalyst)
+        // observed on iPadOS 27.0, an app element's screenshot isn't rotated to match the display orientation
+        screenshotProvider = XCUIScreen.main
+#else
+        screenshotProvider = window
+#endif
+        
+        let tabBar: XCUIElement
+#if os(visionOS)
+        // on visionOS, the "tab bar" is in another window that doesn't have an identifier
+        tabBar = window
+#else
+        // observed on iPadOS 27.0, there aren't any `tabBars` (on iOS 27.0, a tab bar is present)
+        tabBar = if window.tabBars.count > 0 {
+            window.tabBars.firstMatch
+        } else if window.radioGroups.count > 0 {
+            // observed on Mac Catalyst, the tabs are in the only match for `radioGroups`
+            window.radioGroups.firstMatch
+        } else {
+            window
+        }
+#endif
+        
+        func selectTab(_ key: String) {
+#if os(visionOS)
+            // in my testing on visionOS, the hierarchy for "Qibla" looks like:
+            //
+            //   Button, {{17.5, 16.5}, {187.0, 44.0}}, label: 'Qibla' /* label */
+            //     Button, {{33.0, 27.0}, {13.5, 23.5}}, label: 'orient to north' /* label icon */
+            //     Button, {{65.5, 27.0}, {46.0, 23.0}}, label: 'Qibla' /* label title */
+            //
+            tabBar.buttons[key].firstMatch.tap()
+#else
+            // in my testing on iPadOS 27.0, the hierarchy for "Qibla" looks like:
+            //
+            //   Button, {{548.8, 36.0}, {72.5, 36.0}}, identifier: 'location.north.line', label: 'Qibla'
+            //     Button, {{548.8, 36.0}, {72.5, 36.0}}, identifier: 'location.north.line', label: 'Qibla'
+            //
+            let itemButton = tabBar.buttons[key]
+            if itemButton.isHittable {
+                itemButton.tap()
+            } else if itemButton.exists {
+                itemButton.firstMatch.tap()
+            } else {
+                // for macCatalyst
+                tabBar.radioButtons[key].tap()
+            }
+#endif
+        }
+        
         let timeTabView: XCUIElement = if #available(iOS 16.0, *) {
             window.collectionViews.firstMatch
         } else {
             window.scrollViews.firstMatch
         }
         
-        write(screenshot: window.screenshot(), name: "0_today", description: "Today")
+        // since the cursor (on macOS) is left hovering over the tab that was just selected,
+        // the tabs appear "highlighted" in all the other screenshots.
+        // for consistency, select the first tab too.
+        selectTab("Times")
+        
+        write(screenshot: screenshotProvider.screenshot(), name: "0_today", description: "Today")
         timeTabView.swipeLeft()
         // skip tomorrow view, it has similar aspects to today and date scrubber
         timeTabView.swipeLeft()
-        write(screenshot: window.screenshot(), name: "1_date_scrub", description: "Date Scrubber")
         
-#if os(visionOS)
-        // on visionOS, the "tab bar" is in another window that doesn't have an identifier
-        let tabBar = window
-#else
-        let tabBar = window.tabBars.firstMatch
-#endif
+        // for some reason, in my testing on iOS (and iPadOS) 27, the date picker on the scrub view
+        // shows in the numerical format until we interact with the tab bar (then it switches to words).
+        // flip the tabs back and forth to show it in the word format, which looks better, in my opinion.
+        selectTab("Qibla")
+        selectTab("Times")
         
-#if os(visionOS)
-        // on visionOS, you get a hierachy that looks like:
-        //
-        //   Button, {{17.5, 16.5}, {187.0, 44.0}}, label: 'Qibla' /* label */
-        //     Button, {{33.0, 27.0}, {13.5, 23.5}}, label: 'orient to north' /* label icon */
-        //     Button, {{65.5, 27.0}, {46.0, 23.0}}, label: 'Qibla' /* label title */
-        //
-        tabBar.buttons["Qibla"].firstMatch.tap()
-#else
-        tabBar.buttons["Qibla"].tap()
-#endif
+        write(screenshot: screenshotProvider.screenshot(), name: "1_date_scrub", description: "Date Scrubber")
+        
+        selectTab("Qibla")
+        
 #if !(targetEnvironment(macCatalyst) || os(visionOS)) /* platforms without compass heading support */
-        write(screenshot: window.screenshot(), name: "2_qibla_compass", description: "Qibla Compass")
+        write(screenshot: screenshotProvider.screenshot(), name: "2_qibla_compass", description: "Qibla Compass")
         
         window.buttons["Map"].tap()
 #endif
         sleep(2) // give the map time to load
-        write(screenshot: window.screenshot(), name: "2_qibla_map", description: "Qibla Map")
-#if os(visionOS)
-        // see tabBar usage above
-        tabBar.buttons["Preferences"].firstMatch.tap()
-#else
-        tabBar.buttons["Preferences"].tap()
-#endif
+        write(screenshot: screenshotProvider.screenshot(), name: "2_qibla_map", description: "Qibla Map")
         
-        write(screenshot: window.screenshot(), name: "3_preferences", description: "Preferences")
+        selectTab("Preferences")
+        // since the Preferences tab has a sidebar (in some interface configurations),
+        // the tabs may move. on devices with a pointer, the pointer may happen to be
+        // hovering over another tab after the tabs move. select the Preferences
+        // tab again so the tab highlight appears consistent with the other screenshots.
+        selectTab("Preferences")
+        
+        write(screenshot: screenshotProvider.screenshot(), name: "3_preferences", description: "Preferences")
     }
 }

@@ -47,9 +47,9 @@ the compass.
 
 ### Screenshots
 
-<img width="49%" src="docs/Screenshots/iPhone14%2C3/0_today.png" alt="iPhone app today view"><img hspace="1%"><img width="49%" src="docs/Screenshots/iPhone14%2C3/2_qibla_compass.png" alt="iPhone app qibla compass">
+<img width="49%" src="docs/Screenshots/iPhone18%2C4/0_today.png" alt="iPhone app today view"><img hspace="1%"><img width="49%" src="docs/Screenshots/iPhone18%2C4/2_qibla_compass.png" alt="iPhone app qibla compass">
 
-<img width="49%" src="docs/Screenshots/iPhone14%2C3/2_qibla_map.png" alt="iPhone app qibla map"><img hspace="1%"><img width="49%" src="docs/Screenshots/iPhone14%2C3/3_preferences.png" alt="iPhone app preferences">
+<img width="49%" src="docs/Screenshots/iPhone18%2C4/2_qibla_map.png" alt="iPhone app qibla map"><img hspace="1%"><img width="49%" src="docs/Screenshots/iPhone18%2C4/3_preferences.png" alt="iPhone app preferences">
 
 <img src="docs/Screenshots/Watch7%2C4/0_today.png" alt="Apple Watch app today view">
 
