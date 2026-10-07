@@ -171,7 +171,7 @@ struct YearChart: View {
                         .opacity(lollipop != nil ? 1 : 0)
                         .accessibilityHidden(lollipop == nil)
                 }
-                Spacer()
+                Spacer(minLength: 48) // sufficient space and padding for the close button
             }
             .padding()
             
@@ -257,6 +257,7 @@ struct YearChart: View {
         }
         .environment(\.timeZone, data.statistics.calculationParameters.timeZone)
         .scenePadding()
+        .toolbarBackground(.hidden, for: .navigationBar)
     }
 }
 
