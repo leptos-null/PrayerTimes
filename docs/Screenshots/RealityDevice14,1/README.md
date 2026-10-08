@@ -1,4 +1,4 @@
-## Apple Vision Pro 1.1
+## Apple Vision Pro 27.0
 
 ![Today](0_today.png)
 
