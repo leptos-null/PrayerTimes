@@ -14,10 +14,17 @@ struct PrayerTimesApp: App {
     var body: some Scene {
 #if SCREENSHOT_MODE && targetEnvironment(macCatalyst)
         if #available(macCatalyst 17.0, *) {
+            let windowBarHeight: CGFloat = if #available(macCatalyst 26.0, *) {
+                52
+            } else {
+                28
+            }
             return WindowGroup {
                 ContentView()
             }
-            .defaultSize(width: 1280, height: 800 - 28) // menu bar height
+            // size per
+            // <https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications>
+            .defaultSize(width: 1280, height: 800 - windowBarHeight)
         } else {
             fatalError("defaultSize requires macCatalyst 17.0")
         }

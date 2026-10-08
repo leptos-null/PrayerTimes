@@ -1,4 +1,4 @@
-## macOS 14.5.0
+## macOS 26.6.2
 
 ![Today](0_today.png)
 

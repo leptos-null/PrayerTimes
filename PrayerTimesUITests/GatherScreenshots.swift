@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import CoreImage.CIFilterBuiltins
 
 class GatherScreenshots: XCTestCase {
     private var directory: URL?
@@ -75,13 +76,59 @@ class GatherScreenshots: XCTestCase {
         try! readMe.write(to: fileName, atomically: true, encoding: .ascii)
     }
     
+    private func screenshotPngData(cornerRadius: Float, pngRepresentation: Data) -> Data {
+        guard cornerRadius > 0 else { return pngRepresentation }
+        
+        guard let image = CIImage(data: pngRepresentation) else {
+            fatalError("failed to decode screenshot")
+        }
+        
+        let maskFilter = CIFilter.roundedRectangleGenerator()
+        maskFilter.extent = image.extent
+        maskFilter.radius = cornerRadius
+        maskFilter.color = .white
+        
+        // per <https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications>
+        // > **Note:** Images can’t include alpha channels or transparencies.
+        //
+        // use a gray background so the masked image isn't too big of a jump against either a white or black background
+        let backgroundColor: CIColor = .init(red: 0.5, green: 0.5, blue: 0.5)
+        let blendFilter = CIFilter.blendWithAlphaMask()
+        blendFilter.inputImage = image
+        blendFilter.backgroundImage = CIImage(color: backgroundColor).cropped(to: image.extent)
+        blendFilter.maskImage = maskFilter.outputImage
+        
+        guard let outputImage = blendFilter.outputImage else {
+            fatalError("failed to mask screenshot")
+        }
+        
+        let colorSpace = image.colorSpace ?? CGColorSpace(name: CGColorSpace.sRGB)!
+        let ciContext = CIContext()
+        guard let pngData = ciContext.pngRepresentation(of: outputImage, format: .RGBX8, colorSpace: colorSpace) else {
+            fatalError("failed to encode screenshot")
+        }
+        return pngData
+    }
+    
     private func write(screenshot: XCUIScreenshot, name: String, description: String? = nil) {
         guard let directory = directory else {
             fatalError("directory is unset")
         }
         
+        let cornerRadius: Float
+#if targetEnvironment(macCatalyst)
+        cornerRadius = if #available(macCatalyst 26.0, *) {
+            50
+        } else {
+            12 // TODO: confirm
+        }
+#else
+        cornerRadius = 0
+#endif
+        let pngData = screenshotPngData(cornerRadius: cornerRadius, pngRepresentation: screenshot.pngRepresentation)
+        
         let path = directory.appendingPathComponent(name).appendingPathExtension("png")
-        try! screenshot.pngRepresentation.write(to: path, options: .atomic)
+        try! pngData.write(to: path, options: .atomic)
         paths[path.lastPathComponent] = (description ?? name)
     }
     
